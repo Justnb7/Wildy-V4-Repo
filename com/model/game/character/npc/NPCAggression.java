@@ -76,7 +76,7 @@ public final class NPCAggression {
     	}
         if(npc.isPet) {
             return false;
-        }
+        }//
         if (p.heightLevel != npc.heightLevel || !p.isVisible()) {
             return false;
         }
