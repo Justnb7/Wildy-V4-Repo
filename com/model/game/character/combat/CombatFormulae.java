@@ -26,11 +26,11 @@ public class CombatFormulae {
 
     private static int npcDef(NPC npc, int att_type) {
         if (att_type == 0)
-            return npc.melee_defence;
+            return npc.melee_defence*2;
         else if (att_type == 1)
-            return npc.range_defence;
+            return npc.range_defence*2;
         else if (att_type == 2)
-            return npc.magic_defence;
+            return npc.magic_defence*2;
         throw new IllegalStateException();
     }
 
@@ -77,7 +77,7 @@ public class CombatFormulae {
         double tar_block_chance = 0;
 
         double tar_effective_defence = 0;
-
+        
         if (attacker.isPlayer()) {
             Player p = attacker.toPlayer();
 
@@ -155,7 +155,7 @@ public class CombatFormulae {
             }
 
         }
-
+        
         switch (att_type) {
         case 0:
             att_effective_attack = Math

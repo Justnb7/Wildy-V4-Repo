@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 import com.model.Server;
 import com.model.game.Constants;
 import com.model.game.World;
@@ -1054,6 +1053,25 @@ public class Player extends Entity {
 	public Set<Player> localPlayers = new LinkedHashSet<>(255);
 	public Set<NPC> localNpcs = new LinkedHashSet<>(255);
 
+	 /**
+     * Gets the hash collection of the local players.
+     *
+     * @return the local players.
+     */
+    public Set<Player> getLocalPlayers() {
+        return localPlayers;
+    }
+
+    /**
+     * Gets the hash collection of the local npcs.
+     *
+     * @return the local npcs.
+     */
+    public Set<NPC> getLocalNpcs() {
+        return localNpcs;
+    }
+
+    
 	public boolean withinDistance(Player otherPlr) {
 		if (heightLevel != otherPlr.heightLevel) {
 			return false;
@@ -2956,6 +2974,10 @@ public class Player extends Entity {
 	isSkulled, hasMultiSign, saveCharacter,
 	properLogout, playerIsFiremaking,
 	acceptedTrade, saveFile, takeAsNote, didTeleport, mapRegionDidChange;
+	
+	public boolean isMapRegionChanging(){
+		return mapRegionDidChange;
+	}
 	
 	/**
 	 * Strings

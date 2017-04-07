@@ -327,7 +327,9 @@ public final class NPCHandler {
 		
 
 		if(isBoss){
-			// System.out.println("NPC: "+npc.getName()+" Combat Type: "+npc.getCombatType());
+			/*
+			 * Check not allowing Entity to attack through walls
+			 */
 			 if (Boundary.isIn(npc, Boundary.GODWARS_BOSSROOMS)) {
 					if (!Boundary.isIn(target, Boundary.GODWARS_BOSSROOMS)) {
 						System.out.println("Well were here");
@@ -337,24 +339,14 @@ public final class NPCHandler {
 						return;
 					}
 				}
-		 if (npc.getCombatType() == CombatStyle.MAGIC || npc.getCombatType() == CombatStyle.RANGE) {
+		/* if (npc.getCombatType() == CombatStyle.MAGIC || npc.getCombatType() == CombatStyle.RANGE) {
 			 if(target.goodDistance(target.getX(), target.getY(), npc.getX(), npc.getY(), boss_cb.distance(npc))) {
+			 System.out.println("Stopping");
 				 return;
 			 }
-		 } 
+		 } */
 	}
-		// Only check rooms if npc is even remotely related to GWD.. otherwise.. LAG!
-		/*if (isBoss) {
-			if (Boundary.isIn(npc, Boundary.GODWARS_BOSSROOMS)) {
-				if (!Boundary.isIn(target, Boundary.GODWARS_BOSSROOMS)) {
-					System.out.println("Well were here");
-					npc.setFollowing(null);
-					npc.resetFace();
-					npc.targetId = 0; // reset cb as well.. not valid
-					return;
-				}
-			}
-		}*/
+		
 
 		if (target.isDead() || !target.isVisible() || npc.heightLevel != target.heightLevel) {
 			npc.setFollowing(null);

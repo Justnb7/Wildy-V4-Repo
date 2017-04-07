@@ -105,16 +105,174 @@ public class PlayerUpdating {
 	 * @param buffer
 	 *            The buffer to write data too
 	 */
-	public static void updatePlayer(Player player, GameBuffer buffer) {
-
-		/*
+	 public static void updatePlayer(Player player, GameBuffer buffer) {
+	       
+	        //long startTime = System.currentTimeMillis();
+	       
+	        /*
+	         * If the map region changed send the new one. We do this immediately as
+	         * the client can begin loading it before the actual packet is received.
+	         */
+	        if (player.isMapRegionChanging()) {
+	            player.getOutStream().writeFrame(73);
+	            player.getOutStream().writeWordA(player.mapRegionX + 6);
+	            player.getOutStream().writeShort(player.mapRegionY + 6);
+	        }
+	 
+	        /*
+	         * The update block packet holds update blocks and is send after the
+	         * main packet.
+	         */
+	        GameBuffer updateBlock = new GameBuffer(new byte[5000]);
+	 
+	        /*
+	         * Send our server update
+	         */
+	        if (World.updateRunning && !World.updateAnnounced) {
+	            buffer.writeFrame(114);
+	            buffer.writeWordBigEndian(World.updateSeconds * 50 / 30);
+	        }
+	       
+	        /*
+	         * The main packet is written in bits instead of bytes and holds
+	         * information about the local list, players to add and remove, movement
+	         * and which updates are required.
+	         */
+	        buffer.putFrameVarShort(81);
+	        int start = buffer.offset;
+	        buffer.initBitAccess();
+	 
+	        /*
+	         * Updates this player.
+	         */
+	        updateThisPlayerMovement(player, buffer);
+	        appendPlayerUpdateBlock(player, updateBlock, false, player, true);
+	 
+	        /*
+	         * Write the current size of the player list.
+	         */
+	        buffer.writeBits(8, player.getLocalPlayers().size());
+	 
+	        /*
+	         * Iterate through the local player list.
+	         */
+	        for (Iterator<Player> it$ = player.getLocalPlayers().iterator(); it$.hasNext();) {
+	            /*
+	             * Get the next player.
+	             */
+	            Player otherPlayer = it$.next();
+	           
+	            /*
+	             * If the player should still be in our list.
+	             */
+	            if (World.getWorld().getPlayers().contains(otherPlayer) && otherPlayer.isVisible() && otherPlayer.isActive() && !otherPlayer.isTeleporting() && player.withinDistance(otherPlayer)) {
+	                /*
+	                 * Update the movement.
+	                 */
+	                updatePlayerMovement(otherPlayer, buffer);
+	               
+	                /*
+	                 * Check if an update is required, and if so, send the update.
+	                 */
+	                appendPlayerUpdateBlock(otherPlayer, updateBlock, false, otherPlayer, player.getFAI().hasIgnored(otherPlayer.usernameHash));
+	            } else {
+	                /*
+	                 * Otherwise, remove the player from the list.
+	                 */
+	                it$.remove();
+	 
+	                /*
+	                 * Tell the client to remove the player from the list.
+	                 */
+	                buffer.writeBits(1, 1);
+	                buffer.writeBits(2, 3);
+	            }
+	        }
+	 
+	        int amount = 0;
+	 
+	        /*
+	         * Loop through online players and add close players and update them
+	         */
+	        for (Player otherPlayer : World.getWorld().getPlayers()) {
+	            if (amount == 15) {
+	                break;
+	            }
+	            /*
+	             * Check if there is room left in the local list.
+	             */
+	            if (player.getLocalPlayers().size() >= 255) {
+	                /*
+	                 * There is no more room left in the local list. We cannot add
+	                 * more players, so we just ignore the extra ones. They will be
+	                 * added as other players get removed.
+	                 */
+	                break;
+	            }
+	            /*
+	             * If they should not be added ignore them.
+	             */
+	            if (otherPlayer == null || otherPlayer.equals(player) || !otherPlayer.isActive() || player.getLocalPlayers().contains(otherPlayer)
+	                    || !otherPlayer.isVisible()) {
+	                continue;
+	            }
+	 
+	            if (player.withinDistance(otherPlayer)) {
+	                /*
+	                 * Add the player to the local list if it is within distance.
+	                 */
+	                player.getLocalPlayers().add(otherPlayer);
+	 
+	                /*
+	                 * Add the player in the packet.
+	                 */
+	                addNewPlayer(player, otherPlayer, buffer);
+	               
+	                /*
+	                 * Update the player, forcing the appearance flag.
+	                 */
+	                appendPlayerUpdateBlock(otherPlayer, updateBlock, true, otherPlayer, player.getFAI().hasIgnored(otherPlayer.usernameHash));
+	                amount++;
+	            }
+	        }
+	 
+	        if (updateBlock.offset > 0) {
+	            /*
+	             * Write a magic id indicating an update block follows.
+	             */
+	            buffer.writeBits(11, 2047);
+	            buffer.finishBitAccess();
+	            /*
+	             * Add the update block at the end of this packet.
+	             */
+	            buffer.writeBytes(updateBlock.buffer, updateBlock.offset, 0);
+	        } else {
+	            /*
+	             * Terminate the packet normally.
+	             */
+	            buffer.finishBitAccess();
+	        }
+	 
+	        /*
+	         * Write the packet.
+	         */
+	        buffer.putFrameSizeShort(start);
+	        player.flushOutStream();
+	       
+	        //long endTime = System.currentTimeMillis() - startTime;
+	        //System.out.println(endTime + " : " + World.getWorld().getPlayers().size());
+	 
+	    }
+	/*public static void updatePlayer(Player player, GameBuffer buffer) {
+		long startTime = System.currentTimeMillis();
+		
 		 * Reset the update block offset
-		 */
+		 
 		GameBuffer updateBlock = new GameBuffer(new byte[5000]);
 
-		/*
+		
 		 * Send our server update
-		 */
+		 
 		if (World.updateRunning && !World.updateAnnounced) {
 			buffer.writeFrame(114);
 			buffer.writeWordBigEndian(World.updateSeconds * 50 / 30);
@@ -130,22 +288,22 @@ public class PlayerUpdating {
 		int start = buffer.offset;
 		buffer.initBitAccess();
 
-		/*
+		
 		 * Update our own player
-		 */
+		 
 		updateThisPlayerMovement(player, buffer);
 		appendPlayerUpdateBlock(player, updateBlock, false, player, true);
 
-		/*
+		
 		 * Write our local player size size
-		 */
+		 
 		buffer.writeBits(8, player.localPlayers.size());
 
 		Iterator<Player> $it = player.localPlayers.iterator();
-		/*
+		
 		 * Iterate through our local players and update them if we can, else
 		 * remove them
-		 */
+		 
 		while ($it.hasNext()) {
 			Player target = $it.next();
 			if (target.isVisible() && target.isActive() && !player.didTeleport && !target.didTeleport
@@ -162,9 +320,9 @@ public class PlayerUpdating {
 
 		int amount = 0;
 
-		/*
+		
 		 * Loop through online players and add close players and update them
-		 */
+		 
 		for (Player target : World.getWorld().getPlayers()) {
 			if (amount == 15) {
 				break;
@@ -198,7 +356,7 @@ public class PlayerUpdating {
 
 		player.flushOutStream();
 
-	}
+	}*/
 
 	/**
 	 * Writes the players update block to the {@link GameBuffer}

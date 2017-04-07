@@ -97,7 +97,7 @@ public class NpcVsPlayerCombat {
 				}
 			}
 			if (!validateAttack(player, npc)) {
-				System.out.println("Stopping npc validation "+npc.getName());
+				//System.out.println("Stopping npc validation "+npc.getName());
 				return;
 			}
 			
@@ -197,7 +197,7 @@ public class NpcVsPlayerCombat {
 		boolean ignoreClip = npc.getId() == 494 || npc.getId() == 492 || npc.getId() == 5862 || npc.getId() == 493
 				|| npc.getId() == 496 || npc.getId() == 2054 || npc.getId() == 5947 || npc.getId() == 2215 || npc.getId() == 2218 
 				|| npc.getId() == 2217 || npc.getId() == 2216;
-		if (ignoreClip) {
+		if (ignoreClip || Boundary.isIn(npc, Boundary.GODWARS_BOSSROOMS)) {
 			return true;
 		}
 
