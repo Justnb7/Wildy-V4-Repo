@@ -665,7 +665,7 @@ public class NPC extends Entity {
 	}
 	
 	public boolean isArmadylNpc() {
-		return npcId >= 3162 && npcId <= 3165;
+		return npcId >= 3162 && npcId <= 3183;
 	}
 	
 	@Override

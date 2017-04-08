@@ -28,7 +28,9 @@ import com.model.utility.json.definitions.NpcDefinition;
 import com.model.utility.logging.PlayerLogging;
 import com.model.utility.logging.PlayerLogging.LogType;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -227,6 +229,9 @@ public class CommandPacketHandler implements PacketType {
 			return true;
     	case "barrows":
     		TeleportExecutor.teleport(player, new Position(3564, 3288, 0));
+    		return true;
+    	case "gws":
+    		TeleportExecutor.teleport(player, new Position(2913, 3747, 0));
     		return true;
     	case "dz":
     	case "donzatorzone":
@@ -597,7 +602,33 @@ public class CommandPacketHandler implements PacketType {
     		}
 
 		return true;
-    	
+    	case "anpc":
+			BufferedWriter BW = null;
+			String args = ""+cmd[1];
+	
+				String NPCid = String.valueOf(args);
+				int walkType = 1;
+				String description = NPC.getName(Integer.parseInt(NPCid));
+				try {
+					BW = new BufferedWriter(new FileWriter("Data/text_files/npc_spawns.txt", true));
+					BW.write("spawn	-	" + NPCid + "	" + player.absX + "	" +player.absY + "	" + player.heightLevel + "	" + walkType + " " + description);
+					BW.newLine();
+					BW.flush();
+					player.getActionSender().sendMessage("You added an NPC.");
+				} catch (IOException e) {
+					e.printStackTrace();
+					player.getActionSender().sendMessage("Oops, something went wrong. Try again.");
+				} finally {
+					if (BW != null) {
+						try {
+							BW.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			
+		break;
     	
     	case "getid":
  		   try {

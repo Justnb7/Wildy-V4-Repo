@@ -17,6 +17,10 @@ public abstract class AbstractBossCombat {
 		this.npcId = npcId;
 	}
 	
+	public AbstractBossCombat(int[] npcId2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public abstract void execute(Entity attacker, Entity victim);
 	
 	public abstract int distance(Entity attacker);

@@ -27,6 +27,7 @@ import com.model.game.character.player.skill.woodcutting.Woodcutting;
 import com.model.game.location.Position;
 import com.model.game.object.GlobalObject;
 import com.model.game.object.SlashWebObject;
+import com.model.game.regions.AreaHandler;
 import com.model.game.shop.Shop;
 import com.model.task.ScheduledTask;
 import com.model.utility.Utility;
@@ -52,7 +53,7 @@ public class ActionHandler {
 		player.face(player, new Position(x, y));
 
 		player.setFollowing(null);
-
+		AreaHandler.firstClickObject(player, id);
 		player.getMining().mine(id, new Position(x, y, player.heightLevel));
 		
 		/* if (Barrows.handleObject(player, new GlobalObject(id, x, y, player.getHeight()))) {
@@ -228,38 +229,6 @@ public class ActionHandler {
 						player.getPA().movePlayer(player.absX, player.absY + 1, 0);
 					player.face(player, new Position(x, y));
 				}
-			}
-			break;
-		
-		case 26502:
-			if(player.getY() == 5294) {
-				player.getPA().movePlayer(new Position(2839, 5295, 2));
-			} else if(player.getY() == 5295 || player.getY() == 5296) {
-				player.getPA().movePlayer(new Position(2839, 5294, 2));
-			}
-			break;
-		
-		case 26503:
-			if(player.getX() == 2862) {
-				player.getPA().movePlayer(new Position(2863, 5354, 2));
-			} else if(player.getX() == 2863) {
-				player.getPA().movePlayer(new Position(2862, 5354, 2));
-			}
-			break;
-			
-		case 26504:
-			if(player.getX() == 2909) {
-				player.getPA().movePlayer(new Position(2908, 5265, 0));
-			} else if(player.getX() == 2908) {
-				player.getPA().movePlayer(new Position(2909, 5265, 0));
-			}
-			break;
-			
-		case 26505:
-			if(player.getY() == 5333) {
-				player.getPA().movePlayer(new Position(2925, 5332, 2));
-			} else if(player.getY() == 5332) {
-				player.getPA().movePlayer(new Position(2925, 5333, 2));
 			}
 			break;
 		

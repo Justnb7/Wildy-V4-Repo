@@ -18,10 +18,10 @@ import com.model.game.character.player.Player;
 import com.model.task.ScheduledTask;
 import com.model.utility.Utility;
 
-public class Zakln_Gritch extends AbstractBossCombat {
+public class Aviansie extends AbstractBossCombat {
 	
 
-	public Zakln_Gritch(int npcId) {
+	public Aviansie(int npcId) {
 		super(npcId);
 	}
 
@@ -32,17 +32,19 @@ public class Zakln_Gritch extends AbstractBossCombat {
 			return;
 		}
 		
-		CombatStyle style = /*Utility.random(1) == 0 ? CombatStyle.MAGIC : attacker.getPosition().distanceToEntity(attacker, victim) <= 1 ? CombatStyle.MELEE : */CombatStyle.MAGIC;
+		CombatStyle style = CombatStyle.RANGE;
 		NPC npc = (NPC) attacker;
-		int maxHit = 16;
+		Player player = (Player) victim;
+		int maxHit = npc.getDefinition().getMaxHit();
 		
 		switch (style) {
 
-		case MAGIC:
+		case RANGE:
 			int randomHit = Utility.random(maxHit);
 			npc.setCombatType(style);
-			npc.playAnimation(Animation.create(attacker.asNpc().getDefinition().getAttackAnimation()));
+			npc.playAnimation(Animation.create(npc.getDefinition().getAttackAnimation()));
 			randomHit = Utility.random(maxHit);
+				attacker.playAnimation(Animation.create(npc.getDefinition().getAttackAnimation()));
 				int speedEquation;
 				if (attacker.getPosition().isWithinDistance(attacker, victim, 1)) {
 					speedEquation = 70;
@@ -52,25 +54,16 @@ public class Zakln_Gritch extends AbstractBossCombat {
 					speedEquation = 85;
 				} else {
 					speedEquation = 90;
-				}	
-				attacker.playProjectile(Projectile.create(attacker.getCentreLocation(), victim.getCentreLocation(), 1227, 45, 50, speedEquation, 43, 35, victim.getProjectileLockonIndex(), 10, 48));
-				Hit  hitInfo = victim.take_hit(attacker, randomHit, style, false);
-				Combat.hitEvent(attacker, victim, 2, hitInfo, style);
-			break;
-			
-		case MELEE:
-			randomHit = Utility.random(maxHit);
-			npc.setCombatType(style);
-			npc.playAnimation(Animation.create(64));
-			hitInfo = victim.take_hit(attacker, randomHit, style, false);
-			Combat.hitEvent(attacker, victim, 2, hitInfo, style);
+				}
+				attacker.playProjectile(Projectile.create(attacker.getCentreLocation(), victim.getCentreLocation(), npc.getId() == 3169 ? 1193 : 1192, 45, 50, speedEquation, 43, 35, victim.getProjectileLockonIndex(), 10, 48));
+				Hit  hitInfo = victim.take_hit(attacker, randomHit, CombatStyle.RANGE, false);
+				Combat.hitEvent(attacker, victim, 2, hitInfo, CombatStyle.RANGE);
 			break;
 		default:
 			break;
 		
 		}
 		((NPC)attacker).attackTimer = npc.getDefinition().getAttackSpeed();
-		npc.setCombatType(style);
 	}
 
 	@Override

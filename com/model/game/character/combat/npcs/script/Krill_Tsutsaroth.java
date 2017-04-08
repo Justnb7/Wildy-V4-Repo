@@ -71,8 +71,8 @@ public class Krill_Tsutsaroth extends AbstractBossCombat {
 		case MELEE:
 			npc.setCombatType(style);
 			int randomHit = Utility.random(maxHit);
-			npc.playAnimation(Animation.create(6948));
-			if (victim.asPlayer().isActivePrayer(Prayers.PROTECT_FROM_MELEE)) {
+			attacker.playAnimation(Animation.create(attacker.asNpc().getDefinition().getAttackAnimation()));
+			if (victim.asPlayer().isActivePrayer(Prayers.PROTECT_FROM_MELEE) && r.nextInt(10) == 0) {
 				sendSpecialAttack(victim, attacker);
 				attacker.setAttribute("prayer hitthrough", true);
 				Hit hitInfo = victim.take_hit(attacker,  Utility.random(specMax), CombatStyle.MELEE, false);

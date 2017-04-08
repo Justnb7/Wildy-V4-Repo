@@ -1461,7 +1461,8 @@ public class Player extends Entity {
 							HideMiniMap.toggle(player);
 						}
 						player.getActionSender().sendMessage("Welcome to the Wildy Reborn Alpha. You can use ::item, ::getid && ::master");
-						player.getActionSender().sendMessage("Please remember this is still beta, newest update ::barrows");
+						player.getActionSender().sendMessage("Previous content updates: ::barrows");
+						player.getActionSender().sendMessage("Please remember this is still beta, newest update ::gws");
 				//player.getActionSender().sendMessage("Welcome back to " + Constants.SERVER_NAME + ".");
 				
 				if (!receivedStarter() && inTutorial()) {

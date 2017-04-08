@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.model.game.character.combat.npcs.script.AhrimTheBlighted;
+import com.model.game.character.combat.npcs.script.Aviansie;
+import com.model.game.character.combat.npcs.script.Balfrug_Kreeyath;
 import com.model.game.character.combat.npcs.script.Bree;
 import com.model.game.character.combat.npcs.script.Commander_Zilyana;
 import com.model.game.character.combat.npcs.script.Dharoks;
@@ -22,9 +24,11 @@ import com.model.game.character.combat.npcs.script.Sergeant_Grimspike;
 import com.model.game.character.combat.npcs.script.Sergeant_Steelwill;
 import com.model.game.character.combat.npcs.script.TokXil;
 import com.model.game.character.combat.npcs.script.Torag;
+import com.model.game.character.combat.npcs.script.Tstanon_Karlak;
 import com.model.game.character.combat.npcs.script.TzTokJad;
 import com.model.game.character.combat.npcs.script.Verac;
 import com.model.game.character.combat.npcs.script.Wingman_Skree;
+import com.model.game.character.combat.npcs.script.Zakln_Gritch;
 
 
 /**
@@ -55,6 +59,12 @@ public class BossScripts {
 	private static final Flockleader_Geerin FLOCKLEADER_GEERIN = new Flockleader_Geerin(3164);
 	private static final Wingman_Skree WINGMAN_SKREE = new Wingman_Skree(3163);
 	
+
+	private static final Aviansie AVIANSIE = new Aviansie(3169);
+	private static final Aviansie AVIANSIE2 = new Aviansie(3183);
+	private static final Aviansie AVIANSIE3 = new Aviansie(3182);
+	
+	
 	/*
 	 * Saradomin
 	 */
@@ -66,10 +76,10 @@ public class BossScripts {
 	 * Zamorak
 	 */
 	
-	//private static final Balfrug_Kreeyath BALFRUG_KREEYATH = new Balfrug_Kreeyath(3132);
-	//private static final Zakln_Gritch ZAKLN_GRITCH = new Zakln_Gritch(3131);
+	private static final Balfrug_Kreeyath BALFRUG_KREEYATH = new Balfrug_Kreeyath(3132);
+	private static final Zakln_Gritch ZAKLN_GRITCH = new Zakln_Gritch(3131);
 	private static final Krill_Tsutsaroth KRILL_TSUTAROTH = new Krill_Tsutsaroth(3129);
-	
+	private static final Tstanon_Karlak TSTANON_KARLAK = new Tstanon_Karlak(3130);
 	/*
 	 * Fight Caves
 	 */
@@ -102,6 +112,9 @@ public class BossScripts {
 		bosses.put(FLOCKLEADER_GEERIN.npcId, FLOCKLEADER_GEERIN);
 		bosses.put(FLIGHT_KILISA.npcId, FLIGHT_KILISA);
 		bosses.put(KREE_ARRA.npcId, KREE_ARRA);
+		bosses.put(AVIANSIE.npcId, AVIANSIE);
+		bosses.put(AVIANSIE2.npcId, AVIANSIE2);
+		bosses.put(AVIANSIE3.npcId, AVIANSIE2);
 		/*
 		 * Saradomin
 		 */
@@ -112,10 +125,10 @@ public class BossScripts {
 		/*
 		 * Zamorak
 		 */
-		//bosses.put(BALFRUG_KREEYATH.npcId, BALFRUG_KREEYATH);
-		//bosses.put(ZAKLN_GRITCH.npcId, ZAKLN_GRITCH);
+		bosses.put(BALFRUG_KREEYATH.npcId, BALFRUG_KREEYATH);
+		bosses.put(ZAKLN_GRITCH.npcId, ZAKLN_GRITCH);
 		bosses.put(KRILL_TSUTAROTH.npcId, KRILL_TSUTAROTH);
-		
+		bosses.put(TSTANON_KARLAK.npcId, TSTANON_KARLAK);
 		/*
 		 * Fight Caves
 		 */

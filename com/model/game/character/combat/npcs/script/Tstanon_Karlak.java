@@ -18,10 +18,10 @@ import com.model.game.character.player.Player;
 import com.model.task.ScheduledTask;
 import com.model.utility.Utility;
 
-public class Zakln_Gritch extends AbstractBossCombat {
+public class Tstanon_Karlak extends AbstractBossCombat {
 	
 
-	public Zakln_Gritch(int npcId) {
+	public Tstanon_Karlak(int npcId) {
 		super(npcId);
 	}
 
@@ -31,38 +31,15 @@ public class Zakln_Gritch extends AbstractBossCombat {
 		if(!attacker.isNPC()) {
 			return;
 		}
-		
-		CombatStyle style = /*Utility.random(1) == 0 ? CombatStyle.MAGIC : attacker.getPosition().distanceToEntity(attacker, victim) <= 1 ? CombatStyle.MELEE : */CombatStyle.MAGIC;
+		CombatStyle style = CombatStyle.MELEE;
 		NPC npc = (NPC) attacker;
 		int maxHit = 16;
-		
 		switch (style) {
-
-		case MAGIC:
+		case MELEE:
 			int randomHit = Utility.random(maxHit);
 			npc.setCombatType(style);
 			npc.playAnimation(Animation.create(attacker.asNpc().getDefinition().getAttackAnimation()));
-			randomHit = Utility.random(maxHit);
-				int speedEquation;
-				if (attacker.getPosition().isWithinDistance(attacker, victim, 1)) {
-					speedEquation = 70;
-				} else if (attacker.getPosition().isWithinDistance(attacker, victim, 5)) {
-					speedEquation = 75;
-				} else if (attacker.getPosition().isWithinDistance(attacker, victim, 8)) {
-					speedEquation = 85;
-				} else {
-					speedEquation = 90;
-				}	
-				attacker.playProjectile(Projectile.create(attacker.getCentreLocation(), victim.getCentreLocation(), 1227, 45, 50, speedEquation, 43, 35, victim.getProjectileLockonIndex(), 10, 48));
-				Hit  hitInfo = victim.take_hit(attacker, randomHit, style, false);
-				Combat.hitEvent(attacker, victim, 2, hitInfo, style);
-			break;
-			
-		case MELEE:
-			randomHit = Utility.random(maxHit);
-			npc.setCombatType(style);
-			npc.playAnimation(Animation.create(64));
-			hitInfo = victim.take_hit(attacker, randomHit, style, false);
+			Hit hitInfo = victim.take_hit(attacker, randomHit, style, false);
 			Combat.hitEvent(attacker, victim, 2, hitInfo, style);
 			break;
 		default:
@@ -75,7 +52,7 @@ public class Zakln_Gritch extends AbstractBossCombat {
 
 	@Override
 	public int distance(Entity attacker) {
-		return 8;
+		return 1;
 	}
 
 }

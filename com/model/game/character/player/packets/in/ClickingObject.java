@@ -4,6 +4,7 @@ import com.model.Server;
 import com.model.game.character.combat.Combat;
 import com.model.game.character.player.Player;
 import com.model.game.character.player.packets.PacketType;
+import com.model.game.index.ObjectIndex;
 import com.model.game.location.Position;
 import com.model.utility.Utility;
 
@@ -52,7 +53,7 @@ public class ClickingObject implements PacketType {
 				player.objectDistance = 2;
 				break;
 			
-			case 26380:
+		
 			case 677:
 			case 538:
 				player.objectDistance = 9;
@@ -97,6 +98,9 @@ public class ClickingObject implements PacketType {
 				} else if (player.absX == 3008 && player.absY == 3850) {
 						player.getPA().movePlayer1(3007, 3850);
 				}
+				break;
+			case ObjectIndex.ARMADYL_GRAPPLE:
+				player.getPA().movePlayer(2871, 5269, 2);
 				break;
 			case 23566:
 				player.getPA().movePlayer1(3120, 9970);
