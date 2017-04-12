@@ -42,7 +42,6 @@ public final class NPCDefinitionLoader extends JsonLoader {
         int meleeDefence = reader.get("defenceMelee").getAsInt();
         int rangedDefence = reader.get("defenceRange").getAsInt();
         int magicDefence = reader.get("defenceMage").getAsInt();
-
         NpcDefinition.getDefinitions()[index] = new NpcDefinition(index, name, description, combatLevel, size, attackable, aggressive, retreats,
             poisonous, respawnTime, maxHit, hitpoints, attackSpeed, attackAnim, defenceAnim, deathAnim, attackBonus, meleeDefence,
             rangedDefence, magicDefence);

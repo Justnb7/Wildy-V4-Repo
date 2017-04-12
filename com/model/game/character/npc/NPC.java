@@ -615,6 +615,10 @@ public class NPC extends Entity {
 	
 	public int walkX, walkY;
 
+
+
+	public boolean ignoreClipping = false;
+
 	public void getNextNPCMovement(NPC npc) {
 		if (direction != -1) {
 			return;
@@ -668,6 +672,17 @@ public class NPC extends Entity {
 		return npcId >= 3162 && npcId <= 3183;
 	}
 	
+	public boolean isBandosNpc() {
+		return npcId >= 2233 && npcId <= 2249;
+	}
+	
+	public boolean isSaraNpc() {
+		return npcId >= 2205 && npcId <= 2214;
+	}
+	public boolean isZammyNpc() {
+		return npcId >= 3129 && npcId <= 3161;
+	}
+	
 	@Override
 	public ActionSender getActionSender() {
 		return null;
@@ -689,7 +704,7 @@ public class NPC extends Entity {
 			return true;
 		}
 		
-		if (Boundary.isIn(this, Boundary.GODWARS_BOSSROOMS) || Boundary.isIn(this, Boundary.SCORPIA_PIT)) {
+		if (Boundary.isIn(this, Boundary.GWS_MAINROOM) ||Boundary.isIn(this, Boundary.GODWARS_BOSSROOMS) || Boundary.isIn(this, Boundary.SCORPIA_PIT)) {
 			return true;
 		}
 		

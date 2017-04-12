@@ -43,7 +43,7 @@ public final class NPCAggression {
                 continue;
             // Can the Npc attack the <player>? Will check distance, clipping, slayer level req etc. 
             if (validate(npc, player)) {
-            	System.out.println("npc "+npc.getName()+" will agro "+player.getName());
+            //	System.out.println("npc "+npc.getName()+" will agro "+player.getName());
                 npc.targetId = player.getIndex();
             }
         }

@@ -187,13 +187,15 @@ public class Boundary {
 	public static final Boundary ARMADYL_GODWARS = new Boundary(2824, 5296, 2842, 5308);
 	public static final Boundary ZAMORAK_GODWARS = new Boundary(2918, 5318, 2936, 5331);
 	public static final Boundary SARADOMIN_GODWARS = new Boundary(2889, 5258, 2907, 5276);
-	
+	public static final Boundary GWS_MAINROOM = new Boundary(2829, 5252, 2939, 5370);
 	public static final Boundary[] GODWARS_BOSSROOMS = {
 		BANDOS_GODWARS,
 		ARMADYL_GODWARS,
 		ZAMORAK_GODWARS,
 		SARADOMIN_GODWARS
 	};
+	
+	
 	
 	public static final Boundary RESOURCE_AREA = new Boundary(3174, 3924, 3196, 3944);
 	public static final Boundary KBD_AREA = new Boundary(2251, 4675, 2296, 4719);

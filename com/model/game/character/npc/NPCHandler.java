@@ -6,6 +6,7 @@ import com.model.game.character.Entity;
 import com.model.game.character.combat.combat_data.CombatStyle;
 import com.model.game.character.combat.npcs.AbstractBossCombat;
 import com.model.game.character.combat.npcs.BossScripts;
+import com.model.game.character.combat.nvp.NPCCombatData;
 import com.model.game.character.npc.drops.NpcDropSystem;
 import com.model.game.character.player.Boundary;
 import com.model.game.character.player.Player;
@@ -16,6 +17,7 @@ import com.model.game.character.player.content.cluescrolls.ClueDifficulty;
 import com.model.game.character.player.content.cluescrolls.ClueScrollHandler;
 import com.model.game.character.player.minigames.warriors_guild.AnimatedArmour;
 import com.model.game.character.player.packets.out.SendKillFeedPacket;
+import com.model.game.character.player.packets.out.SendWalkableInterfacePacket;
 import com.model.game.location.Position;
 import com.model.utility.Utility;
 import com.model.utility.json.NPCDefinitionLoader;
@@ -97,7 +99,6 @@ public final class NPCHandler {
 	public static void newNPC(int npcType, int x, int y, int heightLevel, int WalkingType) {
 
 		NPC newNPC = new NPC(npcType);
-
 		newNPC.setAbsX(x);
 		newNPC.setAbsY(y);
 		newNPC.makeX = x;
@@ -281,10 +282,27 @@ public final class NPCHandler {
 		int weapon = player.playerEquipment[player.getEquipment().getWeaponId()];
 		player.write(new SendKillFeedPacket(Utility.formatPlayerName(player.getName()), npc.getDefinition().getName(), weapon, npc.isPoisoned()));
 		
-		player.getWarriorsGuild().dropDefender(npc.absX, npc.absY);
+		//add if in warrior guild check
+		/*player.getWarriorsGuild().dropDefender(npc.absX, npc.absY);
 		if(AnimatedArmour.isAnimatedArmourNpc(npc.npcId))
-			AnimatedArmour.dropTokens(player, npc.npcId, npc.absX, npc.absY);
+			AnimatedArmour.dropTokens(player, npc.npcId, npc.absX, npc.absY);*/
 		
+		
+		if ((Boundary.isIn(player, Boundary.GWS_MAINROOM) || Boundary.isIn(player, Boundary.GODWARS_BOSSROOMS))) {
+			if(npc.isBandosNpc()){
+					 player.bandosKillCount++;
+				  player.getActionSender().sendString("" +  player.bandosKillCount, 16217);
+			} else if(npc.isArmadylNpc()){
+				player.armadylKillCount++;
+				  player.getActionSender().sendString("" +  player.armadylKillCount, 16216);
+			} else if(npc.isZammyNpc()){
+				player.zamorakKillCount++;
+				  player.getActionSender().sendString("" +  player.zamorakKillCount, 16219);
+			} else if(npc.isSaraNpc()){
+				player.saradominKillCount++;
+				  player.getActionSender().sendString("" +  player.saradominKillCount, 16218);
+			}
+		}
 		// get the drop table
 		
 		float yourIncrease = 0;
@@ -304,8 +322,27 @@ public final class NPCHandler {
 			NpcDropSystem.get().drop(player, npc, yourIncrease);
 		}
 	}
+	public final static int[] AMARDYL_KC = {  6230, 6231, 6229, 6232, 6240, 6241, 6242, 6233, 6234, 6243, 6244, 6245, 6246, 6238, 6239, 6227, 6625, 6223, 6222 };
 	
+	public final static int[] BANDOS_KC = { 6278, 6277, 6276, 6283, 6282, 6281, 6280, 6279, 6275, 6271, 6272, 6273, 6274, 6269, 6270, 6268, 6265, 6263, 6261, 6260};
 	
+	public final static int[] SARADOMIN_KC = { 6257, 6255, 6256, 6258, 6259, 6254, 6252, 6250, 6248, 6247};
+	
+	public final static int[] ZAMORAK_KC = { 6221, 6219, 6220, 6217, 6216, 6215, 6214, 6213, 6212, 6211, 6218, 6208, 6206, 6204, 6203};
+	public boolean isArmadylNpc(Entity entity) {
+		int[] armadylFollowers = { };
+		   for (int id : armadylFollowers) {
+		    if (entity.asNpc().npcId == id) {
+		     entity.asPlayer().saradominKillCount++;
+		     entity.asPlayer().getActionSender().sendString("" +  entity.asPlayer().saradominKillCount, 16216);
+		     return true;
+		    }
+		   }
+		return false;
+		
+		
+		
+	}
 	/**
 	 * Handles following a player
 	 * 

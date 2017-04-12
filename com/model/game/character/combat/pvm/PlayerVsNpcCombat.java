@@ -128,6 +128,7 @@ public class PlayerVsNpcCombat {
 	public static boolean canAttackNpc(Player player, NPC npc) {
 
 		if (npc.isDead || npc.maximumHealth <= 0 || player.isDead()) {
+			player.getActionSender().sendMessage("Here4");
 			player.getCombat().reset();
 			return false;
 		}
@@ -140,9 +141,11 @@ public class PlayerVsNpcCombat {
 			return false;
 		}*/
 		
+		player.getActionSender().sendMessage(""+npc.getName()+ " ID: "+npc.getId());
 		if (npc.isArmadylNpc() && player.getCombatType() == CombatStyle.MELEE) {
 			player.getActionSender().sendMessage("You can only use range or magic against this npc.");
 			Combat.resetCombat(player);
+			player.getActionSender().sendMessage("Here43");
 			return false;
 		}
 		
@@ -200,6 +203,7 @@ public class PlayerVsNpcCombat {
 
 		if (!player.getController().canAttackNPC(player)) {
 			//System.out.println("blocked");
+			player.getActionSender().sendMessage("Her34");
 			return false;
 		}
 		// Otherwise, we're good to go!

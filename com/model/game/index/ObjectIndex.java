@@ -5,6 +5,9 @@ package com.model.game.index;
  */
 public class ObjectIndex {
 	
+	/**
+	 * Godwars Index's
+	 */
 	public static final int GODWARS_ENTRANCE = 26419;
 	public static final int GODWARS_ROPE_EXIT = 26370;
 	public static final int SARADOMIN_ROCK_ENTRANCE_1 = 26561;

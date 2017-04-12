@@ -41,11 +41,11 @@ public class NpcVsPlayerCombat {
 			//npc.forceChat("atk timer: "+npc.attackTimer+" "+npc.walkingHome+" "+npc.randomWalk);
 		}
 		
-		if(!isBoss) {
+		/*if(!isBoss) {
 			if (npc.attackTimer == 1) {
 				executeDamage(npc);
 			}
-		}
+		}*/
 
 		// If we havent been attacked within last 5 secs reset who last attack us
 		if (System.currentTimeMillis() - npc.lastDamageTaken > 5000) {
@@ -97,7 +97,7 @@ public class NpcVsPlayerCombat {
 				}
 			}
 			if (!validateAttack(player, npc)) {
-				//System.out.println("Stopping npc validation "+npc.getName());
+				System.out.println("Stopping npc validation "+npc.getName());
 				return;
 			}
 			
@@ -114,9 +114,9 @@ public class NpcVsPlayerCombat {
 					// don't do any code below this, boss script handles all.
 				} else {
 					npc.attackTimer = npc.getDefinition().getAttackSpeed();
-					npc.playAnimation(Animation.create(npc.getAttackAnimation()));
-
-					if (npc.projectileId > 0) {
+					//npc.playAnimation(Animation.create(npc.getAttackAnimation()));
+					NPCCombatData.executeCombat(npc, player);
+					/*if (npc.projectileId > 0) {
 						int nX = npc.getX();
 						int nY = npc.getY();
 						int pX = player.getX();
@@ -127,7 +127,7 @@ public class NpcVsPlayerCombat {
 								NPCCombatData.getProjectileSpeed(npc), npc.projectileId,
 								NPCCombatData.getProjectileStartHeight(npc.npcId, npc.projectileId),
 								NPCCombatData.getProjectileEndHeight(npc.npcId, npc.projectileId), -player.getId() - 1, 65);
-					}
+					}*/
 				}
 				player.lastAttacker = npc;
 				player.lastWasHitTime = System.currentTimeMillis();
@@ -156,6 +156,7 @@ public class NpcVsPlayerCombat {
 	 */
 	private static boolean validateAttack(Player player, NPC npc) {
 		if (npc.isDead || player.isDead()) {
+			System.out.println("1");
 			return false;
 		}
 		
@@ -168,11 +169,15 @@ public class NpcVsPlayerCombat {
 		if (npc.npcId != 5535 && npc.npcId != 494) { // small tent and kraken can attack in single
 			if (!npc.inMulti() && npc.underAttackBy > 0 && npc.underAttackBy != player.getIndex()) {
 				npc.targetId = 0;
+				System.out.println("2");
 				return false;
 			}
+			//stopping npc multi attacks
 			if (!npc.inMulti()) {
 				if ((npc.lastAttacker != player && Combat.hitRecently(npc, 4000)) || npc != player.lastAttacker && Combat.hitRecently(player, 4000)) {
 					npc.targetId = 0;
+					
+					System.out.println("3 in multi? "+npc.inMulti());
 					return false;
 				}
 			}
@@ -191,13 +196,14 @@ public class NpcVsPlayerCombat {
 			return false;
 		}
 		if (PlayerVsNpcCombat.canTouch(player, npc, false)) {
+			System.out.println("4");
 			return true;
 		}
 
 		boolean ignoreClip = npc.getId() == 494 || npc.getId() == 492 || npc.getId() == 5862 || npc.getId() == 493
 				|| npc.getId() == 496 || npc.getId() == 2054 || npc.getId() == 5947 || npc.getId() == 2215 || npc.getId() == 2218 
 				|| npc.getId() == 2217 || npc.getId() == 2216;
-		if (ignoreClip || Boundary.isIn(npc, Boundary.GODWARS_BOSSROOMS)) {
+		if (ignoreClip || Boundary.isIn(npc, Boundary.GODWARS_BOSSROOMS)|| npc.ignoreClipping) {
 			return true;
 		}
 

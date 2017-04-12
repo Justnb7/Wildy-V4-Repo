@@ -168,5 +168,9 @@ public class Constants {
 			'5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*',
 			'(', ')', '-', '+', '=', ':', ';', '.', '>', '<', ',', '"', '[',
 			']', '|', '?', '/', '`' };
+	/**
+	*Godwars killcount
+	*/
+	public static final int GODWARS_KILLCOUNT = 5;
 
 }

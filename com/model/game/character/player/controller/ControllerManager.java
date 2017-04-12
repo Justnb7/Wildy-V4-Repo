@@ -1,9 +1,11 @@
 package com.model.game.character.player.controller;
 
+import com.model.game.character.player.Boundary;
 import com.model.game.character.player.Player;
 import com.model.game.character.player.controller.impl.BarrowsController;
 import com.model.game.character.player.controller.impl.DefaultController;
 import com.model.game.character.player.controller.impl.DuelArenaController;
+import com.model.game.character.player.controller.impl.GodwarsController;
 import com.model.game.character.player.controller.impl.WildernessController;
 
 /**
@@ -36,6 +38,10 @@ public class ControllerManager {
 	 * The controller for the duel arena
 	 */
 	private static final DuelArenaController DUEL_ARENA_CONTROLLER = new DuelArenaController();
+	/**
+	 * The controller for the GODWARS
+	 */
+	private static final GodwarsController GOD_WARS_CONTROLLER = new GodwarsController();
 
 	/**
 	 * Sets the controller when a player takes a step or teleports
@@ -56,6 +62,8 @@ public class ControllerManager {
 				controller = DUEL_ARENA_CONTROLLER;
 			} else if (player.getArea().inBarrows()){
 				controller = BARROWS_CONTROLLER;
+			} else if (( Boundary.isIn(player, Boundary.GWS_MAINROOM) || Boundary.isIn(player, Boundary.GODWARS_BOSSROOMS))) {
+				controller = GOD_WARS_CONTROLLER;
 			}
 			if ((controller == null) || (player.getController() == null) || (!player.getController().equals(controller))) {
 				player.getController().onControllerLeave(player);

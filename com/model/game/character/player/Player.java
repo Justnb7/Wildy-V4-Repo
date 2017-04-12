@@ -114,6 +114,18 @@ public class Player extends Entity {
     public MutableNumber getPoisonImmunity() {
         return poisonImmunity;
     }
+    
+    
+	/**
+	 * Godwars variables
+	 * 
+	 */
+
+	public int bandosKillCount;
+	public int zamorakKillCount;
+	public int saradominKillCount;
+	public int armadylKillCount;
+	
 	
 	//Fletching variables
 	public boolean isFletching = false, needsFletchDelay = false;

@@ -60,9 +60,9 @@ public class BossScripts {
 	private static final Wingman_Skree WINGMAN_SKREE = new Wingman_Skree(3163);
 	
 
-	private static final Aviansie AVIANSIE = new Aviansie(3169);
+/*	private static final Aviansie AVIANSIE = new Aviansie(3169);
 	private static final Aviansie AVIANSIE2 = new Aviansie(3183);
-	private static final Aviansie AVIANSIE3 = new Aviansie(3182);
+	private static final Aviansie AVIANSIE3 = new Aviansie(3182);*/
 	
 	
 	/*
@@ -112,9 +112,9 @@ public class BossScripts {
 		bosses.put(FLOCKLEADER_GEERIN.npcId, FLOCKLEADER_GEERIN);
 		bosses.put(FLIGHT_KILISA.npcId, FLIGHT_KILISA);
 		bosses.put(KREE_ARRA.npcId, KREE_ARRA);
-		bosses.put(AVIANSIE.npcId, AVIANSIE);
+		/*bosses.put(AVIANSIE.npcId, AVIANSIE);
 		bosses.put(AVIANSIE2.npcId, AVIANSIE2);
-		bosses.put(AVIANSIE3.npcId, AVIANSIE2);
+		bosses.put(AVIANSIE3.npcId, AVIANSIE2);*/
 		/*
 		 * Saradomin
 		 */
