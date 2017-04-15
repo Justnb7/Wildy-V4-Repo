@@ -22,6 +22,7 @@ import com.model.game.character.player.content.questtab.QuestTabPages;
 import com.model.game.character.player.content.teleport.TeleportHandler;
 import com.model.game.character.player.content.teleport.TeleportHandler.TeleportationTypes;
 import com.model.game.character.player.content.teleport.Teleports;
+import com.model.game.character.player.dialogue.impl.slayer.interfaceController.InterfaceController;
 import com.model.game.character.player.minigames.BarrowsFull.CorrectFirstClickButton;
 import com.model.game.character.player.packets.PacketType;
 import com.model.game.character.player.packets.buttons.ActionButtonEventListener;
@@ -31,6 +32,7 @@ import com.model.game.item.bank.BankItem;
 import com.model.game.item.bank.BankTab;
 import com.model.utility.Utility;
 import com.model.utility.json.definitions.ItemDefinition;
+
 
 import java.util.Objects;
 
@@ -58,7 +60,9 @@ public class ActionButtonPacketHandler implements PacketType {
 		
 		CorrectFirstClickButton.handleButton(player, button);
 		
-		
+		if (InterfaceController.selection(player, button)) {
+			return;
+		}
 		if (button == 165179) {
 			player.getGameModeSelection().confirm(player);
 			return;
@@ -112,7 +116,26 @@ public class ActionButtonPacketHandler implements PacketType {
 		// AttackStyle.switchAttackStyle(player, buttonId);
 		ActionButtonEventListener.onButtonClick(player, button);
 		switch (button) {
-		
+		case 176172:
+			player.getPA().showAccountSleection(player, 0); 
+			//player.accountSelect = 0;// hero
+			break;
+		case 176174:
+			player.getPA().showAccountSleection(player, 1);
+			//player.accountSelect = 1;//legend
+			break;
+		case 176176:
+			player.getPA().showAccountSleection(player, 2);
+			//player.accountSelect = 2;//hardcore
+			break;
+		case 176178:
+			player.getPA().showAccountSleection(player, 3);
+			//player.accountSelect = 3;//master
+			break;
+		case 176223:
+			player.getPA().showAccountSleection(player, 4);
+			//player.accountSelect = 4;//master
+			break;
 		case 114220:
 			player.getAchievements().drawInterface(0);
 			break;
