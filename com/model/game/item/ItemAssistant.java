@@ -2234,4 +2234,9 @@ public class ItemAssistant {
 		return found;
 	}
 
+	public void deleteItem2(int toremove, int toremove2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
