@@ -12,8 +12,8 @@ import com.model.game.character.player.dialogue.Type;
  */
 public class Snakeling extends Dialogue {
 	
-	private final int PET = player.getPet() == 2130 ? 2130 : player.getPet() == 2131 ? 2131 : player.getPet() == 2132 ? 2132 : -1;
-
+	private final int PET = 2130;
+	
 	@Override
 	protected void start(Object... parameters) {
 		send(Type.PLAYER, Expression.DEFAULT, "Hey little snake!");
@@ -24,7 +24,7 @@ public class Snakeling extends Dialogue {
 	protected void next() {
 		switch (getPhase()) {
 		case 0:
-			send(Type.NPC, Expression.DEFAULT, PET, "Soon, Zulrah shall establish dominion over this plane.");
+			send(Type.NPC, PET, Expression.DEFAULT, "Soon, Zulrah shall establish dominion over this plane.");
 			setPhase(1);
 			break;
 		case 1:
@@ -32,7 +32,7 @@ public class Snakeling extends Dialogue {
 			setPhase(2);
 			break;
 		case 2:
-			send(Type.NPC, Expression.DEFAULT, PET, "Submit to the almighty Zulrah.");
+			send(Type.NPC, PET, Expression.DEFAULT, "Submit to the almighty Zulrah.");
 			setPhase(3);
 			break;
 		case 3:
@@ -40,7 +40,7 @@ public class Snakeling extends Dialogue {
 			setPhase(4);
 			break;
 		case 4:
-			send(Type.NPC, Expression.DEFAULT, PET, "Zulrah's wilderness as a God will soon be demonstrated.");
+			send(Type.NPC, PET, Expression.DEFAULT, "Zulrah's wilderness as a God will soon be demonstrated.");
 			setPhase(5);
 			break;
 		case 5:

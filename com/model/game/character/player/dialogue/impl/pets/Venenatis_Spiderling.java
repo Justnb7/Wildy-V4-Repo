@@ -24,7 +24,7 @@ public class Venenatis_Spiderling extends Dialogue {
 	protected void next() {
 		switch (getPhase()) {
 		case 0:
-			send(Type.NPC, Expression.DEFAULT, PET, "We're misunderstood.", "Without us in your house, you'd be infested with flies and ", "other REAL nasties.");
+			send(Type.NPC, PET,  Expression.DEFAULT, "We're misunderstood.", "Without us in your house, you'd be infested with flies and ", "other REAL nasties.");
 			setPhase(1);
 			break;
 		case 1:
@@ -32,7 +32,7 @@ public class Venenatis_Spiderling extends Dialogue {
 			setPhase(2);
 			break;
 		case 2:
-			send(Type.NPC, Expression.DEFAULT, PET, "Everybody gets one.");
+			send(Type.NPC, PET, Expression.DEFAULT, "Everybody gets one.");
 			setPhase(3);
 			break;
 		case 3:

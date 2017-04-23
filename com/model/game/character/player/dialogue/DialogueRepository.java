@@ -23,6 +23,9 @@ import com.model.game.character.player.dialogue.impl.minigames.warriors_guild.No
 import com.model.game.character.player.dialogue.impl.minigames.warriors_guild.NoTokens;
 import com.model.game.character.player.dialogue.impl.minigames.warriors_guild.NotEnoughTokens;
 import com.model.game.character.player.dialogue.impl.pets.Olmlet;
+import com.model.game.character.player.dialogue.impl.pets.Snakeling;
+import com.model.game.character.player.dialogue.impl.pets.Venenatis_Spiderling;
+import com.model.game.character.player.dialogue.impl.pets.Vetion_Jr;
 import com.model.game.character.player.dialogue.impl.slayer.ChaeldarDialogue;
 import com.model.game.character.player.dialogue.impl.slayer.DuradelDialogue;
 import com.model.game.character.player.dialogue.impl.slayer.EnchantedGem;
@@ -81,8 +84,9 @@ public class DialogueRepository {
 		 * Pets
 		 */
 		dialogues.put("OLMLET", Olmlet.class);
-		
-		
+		dialogues.put("SNAKELING", Snakeling.class);
+		dialogues.put("VENENATIS_SPIDERLING", Venenatis_Spiderling.class);
+		dialogues.put("VETION_JR", Vetion_Jr.class);
 		/**
 		 * Shop dialogues
 		 */

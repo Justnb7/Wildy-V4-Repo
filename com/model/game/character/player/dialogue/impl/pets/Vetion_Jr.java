@@ -12,7 +12,7 @@ import com.model.game.character.player.dialogue.Type;
  */
 public class Vetion_Jr extends Dialogue {
 	
-	private final int PET = player.getPet() == 5536 ? 5536 : player.getPet() == 5537 ? 5537 : -1;
+	private final int PET = player.getPet() == 5559 ? 5559 : player.getPet() == 5560 ? 5560 : -1;
 
 	@Override
 	protected void start(Object... parameters) {
@@ -24,7 +24,7 @@ public class Vetion_Jr extends Dialogue {
 	protected void next() {
 		switch (getPhase()) {
 		case 0:
-			send(Type.NPC, Expression.DEFAULT, PET, "The mighty heir and lord of the Wilderness.");
+			send(Type.NPC, PET,  Expression.DEFAULT, "The mighty heir and lord of the Wilderness.");
 			setPhase(1);
 			break;
 		case 1:
@@ -32,7 +32,7 @@ public class Vetion_Jr extends Dialogue {
 			setPhase(2);
 			break;
 		case 2:
-			send(Type.NPC, Expression.DEFAULT, PET, "I have not fulfilled my purpose.");
+			send(Type.NPC, PET,  Expression.DEFAULT, "I have not fulfilled my purpose.");
 			setPhase(3);
 			break;
 		case 3:
@@ -40,7 +40,7 @@ public class Vetion_Jr extends Dialogue {
 			setPhase(4);
 			break;
 		case 4:
-			send(Type.NPC, Expression.DEFAULT, PET, "Not what is,", "what was. A great war tore this land apart and,", "for my failings in protecting this ", "land, I carry the burden of its waste.");
+			send(Type.NPC, PET,  Expression.DEFAULT, "Not what is,", "what was. A great war tore this land apart and,", "for my failings in protecting this ", "land, I carry the burden of its waste.");
 			setPhase(5);
 			break;
 		case 5:
