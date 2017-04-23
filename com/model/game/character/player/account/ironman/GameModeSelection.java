@@ -23,7 +23,7 @@ public class GameModeSelection {
 	 *
 	 */
 	enum GameModes {
-		NONE, IRON_MAN, ULTIMATE_IRON_MAN, HARDCORE_IRON_MAN;
+		NONE, IRON_MAN, ULTIMATE_IRON_MAN, HARDCORE_IRON_MAN, HARDCORE, HERO, LEGEND;
 		
 		/**
 		 * We don't have to set a constructor because the Enum only consists of Types

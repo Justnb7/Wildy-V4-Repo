@@ -16,9 +16,14 @@ import com.model.game.character.player.minigames.BarrowsFull.Barrows;
 import com.model.game.character.player.minigames.pest_control.PestControl;
 import com.model.game.character.player.packets.out.SendInterfacePacket;
 import com.model.game.character.player.packets.out.SendSidebarInterfacePacket;
+import com.model.game.character.player.skill.agility.BarbarianOutpost;
+import com.model.game.character.player.skill.agility.GnomeStrongholdAgilityCourse;
 import com.model.game.character.player.skill.agility.Shortcut;
+import com.model.game.character.player.skill.agility.rooftop.Draynor_Village;
 import com.model.game.character.player.skill.fishing.Fishing;
 import com.model.game.character.player.skill.fishing.FishingSpot;
+import com.model.game.character.player.skill.hunter.hunter;
+import com.model.game.character.player.skill.hunter.hunter.impData;
 import com.model.game.character.player.skill.runecrafting.Runecrafting;
 import com.model.game.character.player.skill.thieving.Pickpocket;
 import com.model.game.character.player.skill.thieving.Stalls;
@@ -36,6 +41,7 @@ import com.model.utility.cache.ObjectDefinition;
 public class ActionHandler {
 
 	private Player player;
+	
 
 	public ActionHandler(Player player) {
 		this.player = player;
@@ -48,6 +54,7 @@ public class ActionHandler {
 		if (player.inDebugMode()) {
 			player.getActionSender().sendMessage("[Debug] First click object - ObjectId: [@red@" + id + "@bla@] objectX:[@red@" + x + "@bla@]@bla@] objectY:[@red@" + y + "@bla@]");
 		}
+		
 
 		player.clickObjectType = 0;
 		player.face(player, new Position(x, y));
@@ -100,6 +107,13 @@ public class ActionHandler {
 			player.getSkills().getPrayer().prayAltar(position);
 			return;
 		}
+		
+		player.getFarming().patchObjectInteraction(id, -1, x, y);
+		
+		BarbarianOutpost.handleObject(id, player);
+		GnomeStrongholdAgilityCourse.handleObject(id, player);
+		Draynor_Village.usingObstacle(player, id);
+		
 		switch (def.name.toLowerCase()) {
 		
 		case "open chest":
@@ -145,7 +159,7 @@ public class ActionHandler {
 				});
 			}
 			break;
-		
+			
 		case "bank":
 		case "bank booth":
 			player.getPA().openBank();
@@ -603,11 +617,14 @@ public class ActionHandler {
 		}
 		
 		player.clickObjectType = 0;
+		player.getFarming().patchObjectInteraction(id, -1, x, y);
 		player.face(player, new Position(x, y));
 
 		ObjectDefinition objectDef = ObjectDefinition.getObjectDef(id);
 		switch (objectDef.name.toLowerCase()) {
-
+		
+		
+		
 		case "bank":
 		case "Bank":
 		case "bank booth":
@@ -666,6 +683,17 @@ public class ActionHandler {
 
 	public void firstClickNpc(NPC npc) {
 		player.clickNpcType = 0;
+		
+		int impling = player.npcClickIndex;
+		player.clickNpcType = 0;
+		player.rememberNpcIndex = player.npcClickIndex;
+		player.npcClickIndex = 0;
+		//maybe try the specific npc 
+		//if npc.getid() = IMPID {
+		//catch(player,npc etc....
+		if(hunter.impData.implings.containsKey(npc)) {
+			impData.Catch(player, npc, impling);
+		}
 		
 		if (player.inDebugMode()) {
 			player.getActionSender().sendMessage("First click "+npc.npcId);
@@ -825,6 +853,7 @@ public class ActionHandler {
 			return;
 		}
 		
+		
 		if (FishingSpot.fishingNPC(npc.npcId)) {
 			Fishing.attemptFishing(player, npc, 2);
 			return;
@@ -961,6 +990,10 @@ public class ActionHandler {
 		
 		if (player.inDebugMode()) {
 			player.getActionSender().sendMessage("Third click: "+npc.npcId);
+		}
+		
+		if (Pet.transformPet(player, npc)) {
+			return;
 		}
 		
 		switch (npc.npcId) {

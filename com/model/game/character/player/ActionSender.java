@@ -639,5 +639,10 @@ public class ActionSender {
 		}
 		return this;
 	}
+
+	public void requestUpdates() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

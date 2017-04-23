@@ -85,6 +85,14 @@ public class CommandPacketHandler implements PacketType {
     	
     	String message;
     	switch (cmd[0]) {
+    	
+    	case "slayer":
+    		player.getSlayerInterface().open(player);
+    		break;
+    	case "test2":
+    		player.getPA().showAccountSleection(player, 0);
+    		break;
+    		
     	case "item":
     		int spawnItem = Integer.parseInt(cmd[1]);
 			if (cmd.length == 3) {
