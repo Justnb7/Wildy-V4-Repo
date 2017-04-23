@@ -67,6 +67,192 @@ public class PlayerAssistant {
     public void movePlayer(Position p) {
         movePlayer(p.getX(), p.getY(), p.getZ());
     }
+    
+    public void showAccountSleection(Player player, int state) {
+    	player.write(new SendInterfacePacket(45200));
+		int counter2 = 0;
+		for (int i = 0; i < arrayItemsLegend.length; i++) {
+			player.getActionSender().sendUpdateItem(45245 + counter2, -1, 0, 1);
+			counter2++;
+		}
+		switch (state) {
+		case 0: // Hero
+			player.getActionSender().sendChangeSprite(45228, (byte) 2);//Ironman
+			player.getActionSender().sendChangeSprite(45230, (byte) 0);//Hardcore ironman
+			player.getActionSender().sendChangeSprite(45232, (byte) 0);//Ultimate ironman
+			player.getActionSender().sendChangeSprite(45234, (byte) 0);//None option
+			
+			player.getActionSender().sendString("Selection Info: <col=ff9900>Hero </col> ",
+					45209);
+			player.getActionSender().sendString("<col=ff9900>Selection Perks: </col> ",
+					45222);
+			player.getActionSender().sendString("As a Hero you get 500 exp", 45211);
+			player.getActionSender().sendString("This is our 'easy' mode", 45212);
+			player.getActionSender().sendString("If you are looking not to grind", 45213);
+			player.getActionSender().sendString("for hours this is your", 45214);
+			player.getActionSender().sendString("optimal mode of choice.", 45216);
+			player.getActionSender().sendString("You do have certain limitations", 45217);
+			player.getActionSender().sendString("in-game, that you will  ", 45218);
+			player.getActionSender().sendString("soon find out about.", 45219);
+			player.getActionSender().sendString("", 45220);
+
+			// Perks
+			player.getActionSender().sendString("Faster Exp", 45224);
+			player.getActionSender().sendString("Normal Game mode", 45225);
+			player.getActionSender().sendString("CANNOT Prestige", 45226);
+			player.getActionSender().sendString("<col=ff9900>10x ACTIVITY GOLD", 45227);
+
+			int counter = 0;
+			for (int i = 0; i < arrayItems.length; i++) {
+				
+				player.getActionSender().sendUpdateItem(45245 + counter, arrayItems[i][0], 0,
+						arrayItemsLegend[i][1]);
+				counter++;
+			}
+			break;
+
+		case 1: // legend
+			player.getActionSender().sendChangeSprite(45228, (byte) 0);//Ironman
+			player.getActionSender().sendChangeSprite(45230, (byte) 2);//Hardcore ironman
+			player.getActionSender().sendChangeSprite(45232, (byte) 0);//Ultimate ironman
+			player.getActionSender().sendChangeSprite(45234, (byte) 0);//None option
+			player.getActionSender().sendString(
+					"Selection Info: <col=ff9900>Legend </col> ", 45209);
+			player.getActionSender().sendString("<col=ff9900>Selection Perks: </col> ",
+					45222);
+			player.getActionSender().sendString("Our most popular game ", 45211);
+			player.getActionSender().sendString("mode with 50xp rates", 45212);
+			player.getActionSender().sendString("As a Legend you", 45213);
+			player.getActionSender().sendString("will have access to all server", 45214);
+			player.getActionSender().sendString(" features, plus some", 45216);
+			player.getActionSender().sendString("legend only content.", 45217);
+			player.getActionSender().sendString("optimal mode of choice.", 45218);
+			player.getActionSender().sendString("Want an exciting and rewarding", 45219);
+			player.getActionSender().sendString("experience? This is your mode", 45220);
+
+			// Perks
+			player.getActionSender().sendString("Boosted Drop Rate %", 45224);
+			player.getActionSender().sendString("Legends Only Whip", 45225);
+			player.getActionSender().sendString("<col=ff9900>20x Activity Gold", 45226);
+			player.getActionSender().sendString("Prestiging ", 45227);
+
+			int counter1 = 0;
+			for (int i = 0; i < arrayItemsLegend.length; i++) {
+				player.getActionSender().sendUpdateItem(45245 + counter1,
+						arrayItemsLegend[i][0], 0, arrayItemsLegend[i][1]);
+				counter1++;
+			}
+			break;
+		case 2: // Hardcore
+			player.getActionSender().sendChangeSprite(45228, (byte) 0);//Ironman
+			player.getActionSender().sendChangeSprite(45230, (byte) 0);//Hardcore ironman
+			player.getActionSender().sendChangeSprite(45232, (byte) 2);//Ultimate ironman
+			player.getActionSender().sendChangeSprite(45234, (byte) 0);//None option
+			player.getActionSender().sendString(
+					"Selection Info: <col=ff9900>Hardcore </col> ", 45209);
+			player.getActionSender().sendString("<col=ff9900>Selection Perks: </col> ",
+					45222);
+			player.getActionSender().sendString("Our most difficult game mode", 45211);
+			player.getActionSender().sendString("As a Hardcore you", 45212);
+			player.getActionSender().sendString("will have access", 45213);
+			player.getActionSender().sendString("to all server features. If you", 45214);
+			player.getActionSender().sendString("are looking for a great", 45216);
+			player.getActionSender().sendString("challenge and to live", 45217);
+			player.getActionSender().sendString("and breathe the grind", 45218);
+			player.getActionSender().sendString("This is the mode for you", 45219);
+			player.getActionSender().sendString("", 45220);
+
+			// Perks
+			player.getActionSender().sendString("Boosted Drop Rate 8%", 45224);
+			player.getActionSender().sendString("Hardcore Sword", 45225);
+			player.getActionSender().sendString("<col=ff9900>30x Activity Gold", 45226);
+			player.getActionSender().sendString("Base Bonus +8 Prayer, +5 Str", 45227);
+			int counter11 = 0;
+			for (int i = 0; i < arrayItemsHardcore.length; i++) {
+				player.getActionSender().sendUpdateItem(45245 + counter11,
+						arrayItemsHardcore[i][0], 0, arrayItemsLegend[i][1]);
+				counter11++;
+			}
+			break;
+		case 3: // Master
+			player.getActionSender().sendChangeSprite(45228, (byte) 0);//Ironman
+			player.getActionSender().sendChangeSprite(45230, (byte) 0);//Hardcore ironman
+			player.getActionSender().sendChangeSprite(45232, (byte) 0);//Ultimate ironman
+			player.getActionSender().sendChangeSprite(45234, (byte) 2);//None option
+			player.getActionSender().sendString(
+					"Selection Info: <col=ff9900>Master </col> ", 45209);
+			player.getActionSender().sendString("<col=ff9900>Selection Perks: </col> ",
+					45222);
+
+			player.getActionSender().sendString("Are you a pker? This is your", 45211);
+			player.getActionSender().sendString("mode. As a Master you can start", 45212);
+			player.getActionSender().sendString("off by setting your Combat stats", 45213);
+			player.getActionSender().sendString("to what you desire. This ", 45214);
+			player.getActionSender().sendString(" eliminates the 'grind' ", 45216);
+			player.getActionSender().sendString("and allows you to start ", 45217);
+			player.getActionSender().sendString("pking instantly. There are limitations  ",
+					45218);
+			player.getActionSender().sendString("to keep our gameplay fair. That", 45219);
+			player.getActionSender().sendString("are stated below.", 45220);
+
+			// Perks
+			player.getActionSender().sendString("Boosted PkP rate", 45224);
+			player.getActionSender().sendString("Extremely low drop rate %", 45225);
+			player.getActionSender().sendString("Cannot attack NPC's outside of wild", 45226);
+			player.getActionSender().sendString("etc", 45227);
+			int counter111 = 0;
+			for (int i = 0; i < arrayItems.length; i++) {
+				player.getActionSender().sendUpdateItem(45245 + counter111, arrayItems[i][0],
+						0, arrayItemsLegend[i][1]);
+				counter111++;
+			}
+			break;
+
+		case 4: // Iron man
+			player.getActionSender().sendString(
+					"Selection Info: <col=ff9900>Iron Man </col> ", 45209);
+			player.getActionSender().sendString("<col=ff9900>Selection Perks: </col> ",
+					45222);
+
+			player.getActionSender().sendString("Iron Man is an obvious", 45211);
+			player.getActionSender().sendString("mode. By selecting Iron", 45212);
+			player.getActionSender().sendString(
+					"man, <col=ff9900>You will need to talk to the ", 45213);
+			player.getActionSender().sendString(" <col=ff9900>Iron man instructor to ",
+					45214);
+			player.getActionSender().sendString(" <col=ff9900>complete your  ", 45216);
+			player.getActionSender().sendString(" <col=ff9900>IRON MAN ACCOUNT", 45217);
+			player.getActionSender().sendString(" ", 45218);
+			player.getActionSender().sendString("<col=ff9900>Find him west of here.", 45219);
+			player.getActionSender().sendString("", 45220);
+
+			// Perks
+			player.getActionSender().sendString("<col=ff9900>20x Activity Gold", 45224);
+			player.getActionSender().sendString("", 45225);
+			player.getActionSender().sendString("", 45226);
+			player.getActionSender().sendString("", 45227);
+			int counter1111 = 0;
+			for (int i = 0; i < arrayItems.length; i++) {
+				player.getActionSender().sendUpdateItem(45245 + counter1111, arrayItems[i][0],
+						0, arrayItemsLegend[i][1]);
+				counter1111++;
+			}
+			break;
+
+		}
+
+		// player.getPA().sendFrame34a(45245,14484, 0, 1);
+
+	}
+    public int arrayItems[][] = { {995, 500_000}, {1115,1}, {1153, 10000}, {1067, 1}, {1704, 1}, {3105 , 1 }, {1129, 1}, {1191,1}, {1323,1},
+			{6107,1}, {6108,1}, {6109,1}, {7458,1 }};
+
+	public int arrayItemsHardcore[][] = { {995, 500_000}, {13110,1}, {13319,1}, {1115,1}, {1153, 1}, {1067, 1}, {1704, 1}, {3105 , 1 }, {1129, 1}, {1191,1}, {1323,1},
+			{6107,1}, {6108,1}, {6109,1}, {7458,1 }};
+
+	public int arrayItemsLegend[][] = { {995, 500_000}, {3281,1}, {1052,1}, {1115,1}, {1115,1}, {1153, 1}, {1067, 1}, {1704, 1}, {3105 , 1 }, {1129, 1}, {1191,1}, {1323,1},
+			{6107,1}, {6108,1}, {6109,1}, {7458,1 }};
+
     public void checkObjectSpawn(int objectId, int objectX, int objectY, int face, int objectType) {
         Region.addWorldObject(objectId, objectX, objectY, player.heightLevel);
         if (player.distanceToPoint(objectX, objectY) > 60) {
@@ -476,5 +662,11 @@ public class PlayerAssistant {
         player.setFollowing(null);
 		player.getActionSender().sendRemoveInterfacePacket();
     }
+
+	
+
+
+	
+
 	
 }

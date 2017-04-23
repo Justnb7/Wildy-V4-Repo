@@ -22,7 +22,8 @@ import com.model.game.character.player.content.questtab.QuestTabPages;
 import com.model.game.character.player.content.teleport.TeleportHandler;
 import com.model.game.character.player.content.teleport.TeleportHandler.TeleportationTypes;
 import com.model.game.character.player.content.teleport.Teleports;
-import com.model.game.character.player.dialogue.impl.slayer.interfaceController.InterfaceController;
+import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerInterface;
+//import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerInterface;
 import com.model.game.character.player.minigames.BarrowsFull.CorrectFirstClickButton;
 import com.model.game.character.player.packets.PacketType;
 import com.model.game.character.player.packets.buttons.ActionButtonEventListener;
@@ -60,7 +61,7 @@ public class ActionButtonPacketHandler implements PacketType {
 		
 		CorrectFirstClickButton.handleButton(player, button);
 		
-		if (InterfaceController.selection(player, button)) {
+		if (SlayerInterface.selection(player, button)) {
 			return;
 		}
 		if (button == 165179) {

@@ -57,6 +57,8 @@ import com.model.game.character.player.content.trade.TradeState;
 import com.model.game.character.player.controller.Controller;
 import com.model.game.character.player.controller.ControllerManager;
 import com.model.game.character.player.dialogue.DialogueManager;
+import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerInterface;
+//import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerInterface;
 import com.model.game.character.player.instances.InstancedAreaManager;
 import com.model.game.character.player.instances.impl.KrakenInstance;
 import com.model.game.character.player.minigames.MinigameAttributes;
@@ -72,6 +74,7 @@ import com.model.game.character.player.packets.out.SendSkillPacket;
 import com.model.game.character.player.packets.out.SendSoundPacket;
 import com.model.game.character.player.skill.SkillCyclesTask;
 import com.model.game.character.player.skill.SkillTask;
+import com.model.game.character.player.skill.farming.Farming;
 import com.model.game.character.player.skill.herblore.Herblore;
 import com.model.game.character.player.skill.mining.Mining;
 import com.model.game.character.player.skill.thieving.Thieving;
@@ -104,6 +107,9 @@ import io.netty.buffer.Unpooled;
 
 public class Player extends Entity {
 	
+	
+	public static long farmingDelay = 0;
+	public static int playerSmithing;
 	private final MutableNumber poisonImmunity = new MutableNumber();
 	
 	/**
@@ -712,6 +718,12 @@ public class Player extends Entity {
 	public RunePouchContainer getRunePouchContainer() {
 		return runePouchContainer;
 	}
+	
+	/**
+	 * Slayer Task Saving
+	 */
+	
+	
 	
 	/**
 	 * The player's spell book.
@@ -3100,6 +3112,8 @@ public class Player extends Entity {
 		return select_game_mode;
 	}
 	
+	
+	
 	//Minigame variables
 	public int pestControlDamage;
 	public boolean isAnimatedArmourSpawned;
@@ -3186,7 +3200,39 @@ public class Player extends Entity {
 	private boolean auguryUnlocked;
 	public int barrowsChestsLooted;
 	public int barrowsChestRewards;
-
+	public int[] playerLevel;
+	public int event;
+	public int makeTimes;
+	public boolean[] playerSkilling;
+	public Object[] playerXP;
+	public boolean catchingImp;
+	public int playerWeapon;
+	public int rememberNpcIndex;
+	
+	/**
+	 * Agility.
+	 */
+	public boolean doingAgility;
+	public boolean isSkilling;
+	public boolean finishedRope;
+	public boolean finishedBranch2;
+	public boolean finishedNet2;
+	public boolean finishedLog;
+	public boolean finishedNet1;
+	public boolean finishedBranch1;
+	public boolean finishedPipe;
+	public int doAmount;
+	public int[] getLevel;
+	public boolean finishedBarbLog;
+	public boolean finishedBarbNet;
+	public boolean finishedBarbWall1;
+	public boolean finishedBarbWall2;
+	public boolean finishedBarbWall3;
+	public boolean finishedBarbStairs;
+	public boolean finishedBarbLedge;
+	public boolean finishedBarbRope;
+	
+	
 	public boolean isAuguryUnlocked() {
 		return auguryUnlocked;
 	}
@@ -3194,4 +3240,83 @@ public class Player extends Entity {
 	public void setAuguryUnlocked(boolean auguryUnlocked) {
 		this.auguryUnlocked = auguryUnlocked;
 	}
-}
+
+	public void turnPlayerTo(int objectX2, int objectY2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Farming refferences
+	 */
+	public int getFarmingSeedId(int index) {
+		return farmingSeedId[index];
+	}
+
+	public void setFarmingSeedId(int index, int farmingSeedId) {
+		this.farmingSeedId[index] = farmingSeedId;
+	}
+
+	public int getFarmingTime(int index) {
+		return this.farmingTime[index];
+	}
+
+	public void setFarmingTime(int index, int farmingTime) {
+		this.farmingTime[index] = farmingTime;
+	}
+
+	public int getFarmingState(int index) {
+		return farmingState[index];
+	}
+
+	public void setFarmingState(int index, int farmingState) {
+		this.farmingState[index] = farmingState;
+	}
+
+	public int getFarmingHarvest(int index) {
+		return farmingHarvest[index];
+	}
+
+	public void setFarmingHarvest(int index, int farmingHarvest) {
+		this.farmingHarvest[index] = farmingHarvest;
+	}
+	
+	public Farming getFarming() {
+		return farming;
+	}
+	
+	private Farming farming = new Farming(this);
+	
+	private int[] farmingState = new int[7], farmingHarvest = new int[7], farmingTime = new int[7], farmingSeedId = new int[7];
+	public int nextChat;
+	public Object[] getExperience;
+	
+	SlayerInterface slayerInterface = new SlayerInterface();
+	
+	public int slayerSelectionHolder;
+	public String slayerSelectString;
+	
+	
+	public void setSlayerSelection(int buttonId, String name) {
+		this.slayerSelectionHolder = buttonId;
+		this.slayerSelectString = name;
+	}
+	public String getSlayerSelectionName(){
+		return slayerSelectString;
+	}
+	public int getSlayerSelection() {
+		return slayerSelectionHolder;
+	}
+	public SlayerInterface getSlayerInterface() {
+		return slayerInterface;
+	}
+
+	
+	}
+	
+	/**
+	 * End of farming refferences
+	 */
+
+	
+

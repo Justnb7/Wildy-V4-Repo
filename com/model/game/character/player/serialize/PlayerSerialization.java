@@ -35,6 +35,8 @@ import com.model.utility.Utility;
 import com.model.utility.logging.PlayerLogging;
 import com.model.utility.logging.PlayerLogging.LogType;
 
+
+
 /**
  * Handles all player serialization
  *
@@ -650,6 +652,19 @@ public class PlayerSerialization {
 			writer.write("barrows-kc = " + barrows.getNpcController().getKillCount());
 			writer.newLine();
             
+			
+			writer.write("[Slayer]");
+			writer.newLine();
+			for (Entry<Integer, String> entrys : p.getSlayerInterface().unlocks.entrySet()) {
+				if (entrys != null) {
+					if (entrys.getKey() > 0) {
+						writer.write(entrys.getKey().toString() + " = " + entrys.getValue());
+						writer.newLine();
+					}
+				}
+			}
+			
+			writer.newLine();
             /* EQUIPMENT */
             writer.write("[CHARACTER-EQUIPMENT]");
             writer.newLine();
