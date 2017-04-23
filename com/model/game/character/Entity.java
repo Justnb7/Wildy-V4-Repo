@@ -616,6 +616,7 @@ public abstract class Entity {
 	 */
 	public static final Position DEFAULT_LOCATION = new Position(3087, 3495, 0);
 
+
     /**
      * The index of the entity
      */
@@ -837,6 +838,9 @@ public abstract class Entity {
 	
 	public int frozenForTicks, refreezeTicks;
 	public Entity frozenBy;
+
+
+
 	
 	// example: barrage = freeze(20s/.6 ticks = 33 ticks)
 	public void freeze(int ticks) {
@@ -934,5 +938,5 @@ public abstract class Entity {
 	 * @return The projectile lockon index of this mob.
 	 */
 	public abstract int getProjectileLockonIndex();
-	
 }
+

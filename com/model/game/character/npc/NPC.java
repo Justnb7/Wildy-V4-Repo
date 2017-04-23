@@ -619,6 +619,8 @@ public class NPC extends Entity {
 
 	public boolean ignoreClipping = false;
 
+	public int npcType;
+
 	public void getNextNPCMovement(NPC npc) {
 		if (direction != -1) {
 			return;

@@ -96,6 +96,46 @@ public class Pet extends NPC {
 	}
 	
 	/**
+     * Sends the pet transform mask.
+     *
+     * @param player
+     *            The player owning the pet.
+     * @param pet
+     *            The pet being transformed.
+     */
+    public static boolean transformPet(Player player, NPC pet) {
+        Pets pets = Pets.fromNpc(pet.getId());
+        int morphId = -1;
+        if (pets != null && player.isPetSpawned()) {
+            switch(pets) {
+            case SNAKELING:
+                morphId = 2131;
+                break;
+            case SNAKELING_RED:
+            	morphId = 2132;
+            	break;
+            case SNAKELING_BLUE:
+            	morphId = 2130;
+            	break;
+            case VETION_PURPLE:
+            	morphId = 5559;
+            	break;
+            case VETION_ORANGE:
+            	morphId = 5560;
+            	break;
+            default:
+                break;
+           
+            }
+            pet.transformId = morphId;
+            pet.requestTransform(morphId);
+            player.setPet(morphId);
+            return true;
+        }
+        return false;
+    }
+	
+	/**
 	 * Right click option to start talking to your pet.
 	 * @param player
 	 *        The player who owns the pet
@@ -223,20 +263,26 @@ public class Pet extends NPC {
 			case SMOKE_DEVIL:
 				break;
 			case SNAKELING:
+				player.dialogue().start("SNAKELING");
 				break;
 			case SNAKELING_BLUE:
+				player.dialogue().start("SNAKELING");
 				break;
 			case SNAKELING_RED:
+				player.dialogue().start("SNAKELING");
 				break;
 			case TANGLEROOT:
 				break;
 			case TZREK_JAD:
 				break;
 			case VENENATIS_SPIDERLING:
+				player.dialogue().start("VENENATIS_SPIDERLING");
 				break;
 			case VETION_ORANGE:
+				player.dialogue().start("VETION_JR");
 				break;
 			case VETION_PURPLE:
+				player.dialogue().start("VETION_JR");
 				break;
 			case ZILYANA:
 				break;

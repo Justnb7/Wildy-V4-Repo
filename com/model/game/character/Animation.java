@@ -39,7 +39,14 @@ public class Animation {
 	public final static Animation GOBLIN_BOW = create(2127);
 	public final static Animation GOBLIN_DANCE = create(2128);
 	public final static Animation DEATH = create(7185);
+	public final static Animation LOG_EMOTE = create(762);
+	public final static Animation PIPES_EMOTE = create(844);
+	public final static Animation CLIMB_UP_EMOTE = create(828);
+	public final static Animation CLIMB_DOWN_EMOTE = create(827);
+	public final static Animation CLIMB_UP_MONKEY_EMOTE = create(3487);
+	public final static Animation WALL_EMOTE = create(840);
 	
+
 	/**
 	 * Creates an animation with no delay.
 	 * @param id The id.
@@ -93,6 +100,11 @@ public class Animation {
 	 */
 	public int getDelay() {
 		return delay;
+	}
+
+	public static Animation endingEmote() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

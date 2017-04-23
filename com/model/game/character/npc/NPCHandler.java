@@ -18,6 +18,9 @@ import com.model.game.character.player.content.cluescrolls.ClueScrollHandler;
 import com.model.game.character.player.minigames.warriors_guild.AnimatedArmour;
 import com.model.game.character.player.packets.out.SendKillFeedPacket;
 import com.model.game.character.player.packets.out.SendWalkableInterfacePacket;
+import com.model.game.index.ItemIndex;
+import com.model.game.item.GameItem;
+import com.model.game.item.Item;
 import com.model.game.location.Position;
 import com.model.utility.Utility;
 import com.model.utility.json.NPCDefinitionLoader;
@@ -167,6 +170,7 @@ public final class NPCHandler {
 	
 	private static GroupRespawn tempGroup = null;
 	private static NPC tempboss = null;
+	public static NPC[] npcs;
 	
 	/**
 	 * This method links instances of NPCs to each other by using their Attribute system.
@@ -302,6 +306,13 @@ public final class NPCHandler {
 				player.saradominKillCount++;
 				  player.getActionSender().sendString("" +  player.saradominKillCount, 16218);
 			}
+			if(!npc.getName().contains("aviansie")){
+				if(Utility.random(60) == 1) {
+					player.getItems().addItem(new Item(ItemIndex.ECUMENICAL_KEY,1));
+					player.getActionSender().sendMessage("<img=7>You receive an Ecumenical Key<img=7>");
+				}
+			}
+			
 		}
 		// get the drop table
 		
@@ -550,5 +561,10 @@ public final class NPCHandler {
 			if (npc.spawnedBy == player.getIndex() || npc.targetId == player.getIndex())
 				return true;
 		return false;
+	}
+
+	public static void kill(int chinId, int i) {
+		// TODO Auto-generated method stub
+		
 	}
 }

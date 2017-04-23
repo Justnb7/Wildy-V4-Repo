@@ -84,12 +84,12 @@ public class NPCCombatData {
 				victim.playGraphics(Graphic.create(76, 0, 0));
 				attacker.playAnimation(Animation.create(npc.getDefinition().getAttackAnimation()));	
 				hitInfo = victim.take_hit(attacker, randomHit, style, false);
-				Combat.hitEvent(attacker, victim, 2, hitInfo, style);
+				Combat.hitEvent(attacker, victim, 1, hitInfo, style);
 			break;
 				default:
 				attacker.playAnimation(Animation.create(npc.getDefinition().getAttackAnimation()));	
 				hitInfo = victim.take_hit(attacker, randomHit, CombatStyle.MELEE, false);
-				Combat.hitEvent(attacker, victim, 2, hitInfo, CombatStyle.MELEE);
+				Combat.hitEvent(attacker, victim, 1, hitInfo, CombatStyle.MELEE);
 				break;
 	
 		}
