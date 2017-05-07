@@ -663,6 +663,11 @@ public class PlayerAssistant {
 		player.getActionSender().sendRemoveInterfacePacket();
     }
 
+	public void removeobject(int objectX, int objectY) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 

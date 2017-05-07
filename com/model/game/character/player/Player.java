@@ -106,7 +106,8 @@ import com.model.utility.Utility;
 import io.netty.buffer.Unpooled;
 
 public class Player extends Entity {
-	
+	//1 is blocking
+	public int slayerAction = 0;
 	
 	public static long farmingDelay = 0;
 	public static int playerSmithing;
@@ -3291,21 +3292,37 @@ public class Player extends Entity {
 	public int nextChat;
 	public Object[] getExperience;
 	
-	SlayerInterface slayerInterface = new SlayerInterface();
+
 	
 	public int slayerSelectionHolder;
 	public String slayerSelectString;
+	public int ordinal;
 	
-	
-	public void setSlayerSelection(int buttonId, String name) {
+	public void setSlayerSelection(int buttonId, String name, int ordinal) {
 		this.slayerSelectionHolder = buttonId;
 		this.slayerSelectString = name;
+		this.ordinal = ordinal;
 	}
 	public String getSlayerSelectionName(){
 		return slayerSelectString;
 	}
 	public int getSlayerSelection() {
 		return slayerSelectionHolder;
+	}
+	public int getSlayerOrdinal() {
+		return ordinal;
+	}
+	SlayerInterface slayerInterface = new SlayerInterface();
+
+	public int[] blkedTasks = new int[6];
+	public int[] getBlkedTasks() {
+		return blkedTasks;
+	}
+	public int getBlkedTasksIndex(int index) {
+		return blkedTasks[index];
+	}
+	public void setBlockedTasks(int index, int value) {
+		this.blkedTasks[index] = value;
 	}
 	public SlayerInterface getSlayerInterface() {
 		return slayerInterface;

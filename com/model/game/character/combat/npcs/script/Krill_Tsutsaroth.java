@@ -104,8 +104,8 @@ public class Krill_Tsutsaroth extends AbstractBossCombat {
 				} else {
 					speedEquation = 130;
 				}
-				attacker.playGraphics(Graphic.create(1210));
-				players.playGraphics(Graphic.create(1225, 0, 0));
+				attacker.playGraphics(Graphic.create(1210)); //gfx
+				players.playGraphics(Graphic.create(1225, 0, 0)); //gfx
 				attacker.playProjectile(Projectile.create(attacker.getCentreLocation(), players.getCentreLocation(), 1224, 45, 50, speedEquation, 43, 35, players.getProjectileLockonIndex(), 10, 48));
 				Hit hitInfo = players.take_hit(attacker, randomHit, style, false);
 				 Combat.hitEvent(attacker, players, 2, hitInfo, style);

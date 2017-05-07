@@ -1,5 +1,7 @@
 package com.model.game.character.combat.pvm;
 
+import java.util.Optional;
+
 import com.model.Server;
 import com.model.game.character.Animation;
 import com.model.game.character.combat.Combat;
@@ -11,6 +13,8 @@ import com.model.game.character.player.Player;
 import com.model.game.character.player.ProjectilePathFinder;
 import com.model.game.character.player.instances.impl.KrakenInstance;
 import com.model.game.character.player.minigames.warriors_guild.WarriorsGuild;
+import com.model.game.character.player.skill.slayer.Slayer;
+import com.model.game.character.player.skill.slayer.tasks.Task;
 import com.model.game.character.walking.PathFinder;
 import com.model.game.location.Position;
 import com.model.task.ScheduledTask;
@@ -145,7 +149,6 @@ public class PlayerVsNpcCombat {
 		if (npc.isArmadylNpc() && player.getCombatType() == CombatStyle.MELEE) {
 			player.getActionSender().sendMessage("You can only use range or magic against this npc.");
 			Combat.resetCombat(player);
-			player.getActionSender().sendMessage("Here43");
 			return false;
 		}
 		

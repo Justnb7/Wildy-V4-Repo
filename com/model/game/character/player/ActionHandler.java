@@ -481,11 +481,13 @@ public class ActionHandler {
 		 * Webs
 		 */
 		case 733:
-			//SlashWebObject.slashWeb(player, new Position(x, y), false);
-			//We need to find out how to replace the object, currently just adds object on top of one.
-			//TODO find out how to send object position
-			break;
-
+			SlashWebObject.slashWeb(player, new Position(x, y), false);
+			if (player.objectX == 3158 && player.objectY == 3951) {
+			new GlobalObject(734, position.getX(), position.getY(), position.getZ(), 0, 10, 733,50);
+			} else {
+				new GlobalObject(734, position.getX(), position.getY(), position.getZ(), 0, 10, 733, 50);
+			}
+		break;
 		/**
 		 * Brimhaven Dungeon
 		 */

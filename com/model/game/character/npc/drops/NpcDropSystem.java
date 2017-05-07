@@ -228,7 +228,7 @@ public class NpcDropSystem {
 							PlayerUpdating.executeGlobalMessage("@red@[News]@blu@" + player.getName() + "@bla@ just got a @red@" + ItemDefinition.forId(item.getId()).getName() + " @bla@drop.");
 							
 						}
-						Feed.submit("@whi@[@gre@"+Utility.getDateMMDD()+"@or1@" + player.getName() + "@whi@ Received@yel@ " + ItemDefinition.forId(item.getId()).getName());
+						Feed.submit("@whi@[@gre@"+Utility.getDate()+"@or1@" + player.getName() + "@whi@ Received@yel@ " + ItemDefinition.forId(item.getId()).getName());
 
 					}
 				}

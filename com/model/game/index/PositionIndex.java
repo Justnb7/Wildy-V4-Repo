@@ -14,4 +14,11 @@ public class PositionIndex {
 	public static final Position SARADOMIN_LEAVE_BOSSROOM = new Position(2909, 5265, 0);
 	public static final Position ZAMMY_CROSS_RIVER = new Position(2885, 5345);
 	public static final Position ZAMMY_LEAVE_RIVER = new Position(2885, 5335);
+	
+	
+	
+	
+	
+	
+	
 }

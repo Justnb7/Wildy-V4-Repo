@@ -846,14 +846,7 @@ public class Utility {
 	public static String getDate() {
 		return new SimpleDateFormat("MM/dd/yyyy").format(Calendar.getInstance().getTime());
 	}
-	/**
-	 * Gets the date of server.
-	 * 
-	 * @return
-	 */
-	public static String getDateMMDD() {
-		return new SimpleDateFormat("MM/dd").format(Calendar.getInstance().getTime());
-	}
+
 	/**
 	 * Gets the current server time and formats it
 	 * 

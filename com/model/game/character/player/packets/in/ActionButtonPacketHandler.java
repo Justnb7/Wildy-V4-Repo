@@ -61,9 +61,10 @@ public class ActionButtonPacketHandler implements PacketType {
 		
 		CorrectFirstClickButton.handleButton(player, button);
 		
-		if (SlayerInterface.selection(player, button)) {
+		if (player.getSlayerInterface().controlPanel(player, button)) {
 			return;
 		}
+		
 		if (button == 165179) {
 			player.getGameModeSelection().confirm(player);
 			return;

@@ -26,6 +26,7 @@ import com.model.game.character.combat.npcs.script.TokXil;
 import com.model.game.character.combat.npcs.script.Torag;
 import com.model.game.character.combat.npcs.script.Tstanon_Karlak;
 import com.model.game.character.combat.npcs.script.TzTokJad;
+import com.model.game.character.combat.npcs.script.Venenatis;
 import com.model.game.character.combat.npcs.script.Verac;
 import com.model.game.character.combat.npcs.script.Wingman_Skree;
 import com.model.game.character.combat.npcs.script.Zakln_Gritch;
@@ -98,6 +99,12 @@ public class BossScripts {
 	private static final AhrimTheBlighted AHRIM_THE_BLIGHTED = new AhrimTheBlighted(1672);
 	//private static final Dragons DRAGONS = new Dragons({247, 252, 264, 268, 270, 273, 274};
 	
+	/*
+	 * wildy bosses
+	 */
+	private static final  Venenatis VENENATIS = new Venenatis(6610);
+	//private static final  LizardShaman LIZARDSHAMAN = new LizardShaman(67666);
+    
 	static {
 		/*
 		 * Bandos
@@ -147,6 +154,12 @@ public class BossScripts {
 		bosses.put(TORAG.npcId, TORAG);
 		bosses.put(GUTHAN.npcId, GUTHAN);
 	
+		/*
+		 * wildy bosses
+		 */
+		bosses.put(VENENATIS.npcId, VENENATIS);
+		//bosses.put(LIZARDSHAMAN.npcId, LIZARDSHAMAN);
+		
 	}
 	
 	public static AbstractBossCombat get(int npcId) {

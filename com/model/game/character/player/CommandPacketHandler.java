@@ -15,6 +15,7 @@ import com.model.game.character.player.content.trivia.TriviaBot;
 import com.model.game.character.player.packets.PacketType;
 import com.model.game.character.player.packets.out.*;
 import com.model.game.character.player.serialize.PlayerSerialization;
+import com.model.game.character.player.skill.slayer.SlayerTaskManagement;
 import com.model.game.item.Item;
 import com.model.game.location.Position;
 import com.model.net.ConnectionHandler;
@@ -799,7 +800,9 @@ public class CommandPacketHandler implements PacketType {
 			}
              player.getActionSender().sendMessage(World.getWorld().getActivePlayers() + " players have been saved!");
              return true;
-    	
+         case "test1":
+        	 SlayerTaskManagement.beginnerTask(player);
+        	 return true;
     	case "resettask":
     		String searchFor = "";
 			for (int i = 1; i < cmd.length; i++)

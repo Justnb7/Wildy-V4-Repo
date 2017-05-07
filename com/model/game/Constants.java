@@ -62,7 +62,7 @@ public class Constants {
 	public static final String USERNAME_EXCEPTIONS[] = { 
 		"patrick", "matthew"
 	};
-	
+
 	/**
 	 * The current version of the client. Used to notify player to update
 	 * client.

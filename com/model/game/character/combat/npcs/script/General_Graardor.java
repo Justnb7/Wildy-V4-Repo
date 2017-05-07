@@ -43,7 +43,7 @@ public class General_Graardor extends AbstractBossCombat {
 		if (randomMessage == 1) {
 			attacker.forceChat(MESSAGES[(int) (Math.random() * MESSAGES.length)]);
 		}
-		
+				
 		CombatStyle style = Utility.random(1) == 0 ? CombatStyle.RANGE : attacker.getPosition().distanceToEntity(attacker, victim) <= 1 ? CombatStyle.MELEE : CombatStyle.RANGE;
 		NPC npc = (NPC) attacker;
 		Player player = (Player) victim;

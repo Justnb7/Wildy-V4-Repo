@@ -15,7 +15,7 @@ public class KorasiSword implements SpecialAttack {
 
 	@Override
 	public int[] weapons() {
-		return new int[] { 19780 };
+		return new int[] { 900 };
 	}
 
 	@Override

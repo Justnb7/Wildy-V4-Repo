@@ -14,7 +14,7 @@ public class HomeQuestTabPage extends QuestTabPage {
 
 	@Override
 	public void write(Player player) {
-		write(player, "<img=12><col=FFFFFF>Kill death ratio: <col=00CC00>"+player.getPA().displayRatio(player), 1);
+		write(player, "<img=27><col=FFFFFF>Kill death ratio: <col=00CC00>"+player.getPA().displayRatio(player), 1);
 		write(player, "<img=27><col=FFFFFF>Kills: <col=00CC00>"+ player.getKillCount(), 2);
 		write(player, "<img=27><col=FFFFFF>Deaths: <col=00CC00>"+ player.getDeathCount(), 3);
 		write(player, "<img=27><col=FFFFFF>Current killstreak: <col=00CC00>"+ player.getCurrentKillStreak(), 4);
@@ -26,13 +26,13 @@ public class HomeQuestTabPage extends QuestTabPage {
 		if(player.getSlayerTaskAmount() <= 0) {
 			write(player, "<img=28><col=FFFFFF>Task: <col=00CC00>None", 10);
 		} else {
-			write(player, "<img=28><col=FFFFFF>Task: <col=00CC00>"+player.getSlayerTaskAmount()+ " "+NPC.getName(player.getSlayerTask()), 10);
+			write(player, "<img=28><col=FFFFFF>Task: <col=00CC00>"+player.getSlayerTaskAmount()+ " "+NPC.getName(player.getSlayerTask()), 11);
 		}
-		write(player, "<img=28><col=FFFFFF>tasks completed: <col=00CC00>"+ player.getSlayerTasksCompleted(), 11);
-		write(player, "<img=28><col=FFFFFF>Slayer Reward Points: <col=00CC00>"+ player.getSlayerPoints(), 12);
-		write(player, "<img=29><col=FFFFFF>Total Votes: <col=00CC00>"+ player.getTotalVotes(), 13);
-		write(player, "<img=29><col=FFFFFF>Vote points: <col=00CC00>"+ player.getVotePoints(), 14);
-		write(player, "<img=26><col=FFFFFF>Amount Donated: <col=00CC00>"+ player.getTotalAmountDonated()+ "$", 15);
+		write(player, "<img=28><col=FFFFFF>tasks completed: <col=00CC00>"+ player.getSlayerTasksCompleted(), 12);
+		write(player, "<img=28><col=FFFFFF>Slayer Reward Points: <col=00CC00>"+ player.getSlayerPoints(), 13);
+		write(player, "<img=29><col=FFFFFF>Total Votes: <col=00CC00>"+ player.getTotalVotes(), 14);
+		write(player, "<img=29><col=FFFFFF>Vote points: <col=00CC00>"+ player.getVotePoints(), 15);
+		write(player, "<img=26><col=FFFFFF>Amount Donated: <col=00CC00>"+ player.getTotalAmountDonated()+ "$", 16);
 	}
 	
 	@Override

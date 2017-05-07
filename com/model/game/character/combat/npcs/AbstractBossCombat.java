@@ -1,6 +1,7 @@
 package com.model.game.character.combat.npcs;
 
 import com.model.game.character.Entity;
+import com.model.game.character.player.Player;
 
 /**
  * An abstract bossing system.
@@ -16,13 +17,10 @@ public abstract class AbstractBossCombat {
 	public AbstractBossCombat(int npcId) {
 		this.npcId = npcId;
 	}
-	
-	public AbstractBossCombat(int[] npcId2) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public abstract void execute(Entity attacker, Entity victim);
 	
 	public abstract int distance(Entity attacker);
+
 	
 }

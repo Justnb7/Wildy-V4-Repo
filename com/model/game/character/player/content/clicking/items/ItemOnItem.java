@@ -164,6 +164,61 @@ public class ItemOnItem {
 			return;
 		}
 		
+		if (usedItem.getId() == 13321 && withItem.getId() == 11822 || usedItem.getId() == 11822 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(11822, 1));
+			player.getItems().addItem(new Item(21187, 1));
+			return;
+		
 	}
-
+		if (usedItem.getId() == 13321 && withItem.getId() == 438 || usedItem.getId() == 438 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(438, 1));
+			player.getItems().addItem(new Item(21188, 1));
+			return;
+		
+	}
+		if (usedItem.getId() == 13321 && withItem.getId() == 440 || usedItem.getId() == 440 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(440, 1));
+			player.getItems().addItem(new Item(21189, 1));
+			return;
+		
+	}
+		if (usedItem.getId() == 13321 && withItem.getId() == 453 || usedItem.getId() == 453 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(453, 1));
+			player.getItems().addItem(new Item(21192, 1));
+			return;
+		
+	}	
+		if (usedItem.getId() == 13321 && withItem.getId() == 444 || usedItem.getId() == 444 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(444, 1));
+			player.getItems().addItem(new Item(21193, 1));
+			return;
+		
+	}
+		if (usedItem.getId() == 13321 && withItem.getId() == 447 || usedItem.getId() == 447 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(447, 1));
+			player.getItems().addItem(new Item(21194, 1));
+			return;
+		
+	}
+		if (usedItem.getId() == 13321 && withItem.getId() == 449 || usedItem.getId() == 449 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(449, 1));
+			player.getItems().addItem(new Item(21197, 1));
+			return;
+		
+	}
+		if (usedItem.getId() == 13321 && withItem.getId() == 451 || usedItem.getId() == 451 && withItem.getId() == 13321) {
+			player.getItems().remove(new Item(13321, 1));
+			player.getItems().remove(new Item(451, 1));
+			player.getItems().addItem(new Item(21197, 1));
+			return;
+		
+	}
+	}
 }

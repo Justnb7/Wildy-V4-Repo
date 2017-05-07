@@ -494,6 +494,10 @@ public abstract class Entity {
 			if (combat_type != null) {
 				// 40% Protection from player attacks, 100% protection from Npc attacks
 				double prayProtection = attacker.isPlayer() ? 0.6D : 0.0D;
+				
+				/**
+				 * Protect Prayers are handled
+				 */
 				if (combat_type == CombatStyle.MELEE && player_me.isActivePrayer(Prayers.PROTECT_FROM_MELEE) && !attacker.getAttribute("prayer hitthrough", false)) {
 					damage *= prayProtection;
 					player_me.getActionSender().sendMessage("prayer damage reduction is occuring");
