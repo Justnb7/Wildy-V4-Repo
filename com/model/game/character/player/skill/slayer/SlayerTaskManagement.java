@@ -1,5 +1,7 @@
 package com.model.game.character.player.skill.slayer;
 
+import java.util.ArrayList;
+
 import com.model.game.Constants;
 import com.model.game.World;
 import com.model.game.character.npc.NPC;
@@ -16,6 +18,7 @@ import com.model.game.location.Position;
 import com.model.game.character.player.skill.slayer.tasks.Chaeldar;
 import com.model.game.character.player.skill.slayer.tasks.Duradel;
 import com.model.game.character.player.skill.slayer.tasks.Mazchna;
+import com.model.utility.RandomGen;
 import com.model.utility.Utility;
 
 /**
@@ -24,7 +27,423 @@ import com.model.utility.Utility;
  */
 public class SlayerTaskManagement {
 	
-	public enum Teleports {
+	
+	/**
+	 * This method allows you to reset your current slayer task.
+	 * @param player
+	 * @return
+	 */
+	public static boolean resetTask(Player player) {
+		if (!Slayer.hasTask(player)) {
+			return false;
+		}
+		if(player.getItems().playerHasItem(13307, 10)) {
+			player.setSlayerTask(0);
+			player.setSlayerTaskAmount(0);
+			player.getItems().deleteItem(13307, 10);
+			player.getActionSender().sendRemoveInterfacePacket();
+			player.getActionSender().sendMessage("Your slayer task has been reset, talk to any slayer master for a new one.");
+			return true;
+		} else {
+			player.getActionSender().sendMessage("You do not have enough blood money in order to reset your slayer task.");
+			player.getActionSender().sendRemoveInterfacePacket();
+			return false;
+		}
+	}
+	
+	public static int extension(Player player, int id){
+		if(player.getSlayerInterface().getUnlocks().containsKey(id)) {
+			System.out.println("Adding extra points");
+			return Utility.random(10, 35);
+		}
+		return 0;
+	}
+	
+	/**
+	 * Randomises a beginner task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	
+	
+	public static Task beginnerTask(Player player) {
+		Task task = null;
+		int taskAmount = 5 + Utility.random(3, 10);
+		int currentCount = 1;
+		int totalPercentage = 1;
+			ArrayList<Turael> array = new ArrayList<Turael>();
+			for (Turael t : Turael.values()) {
+				if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				for (int i = 0; i < player.getBlkedTasks().length; i++) {
+					if (player.getBlkedTasksIndex(i) == t.getId()) {
+						break;
+					} 
+	
+				//System.out.println(array.toString());
+			}
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);
+			
+			
+			for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Turael.getTotal()) * 100));
+			System.out.print("NPC "+array.get(i).name()+ " Percentage:  "+array.get(i).getPercentage()+"\n");
+			totalPercentage += array.get(i).getPercentage();
+		}
+			System.out.println("\nRANDOM PERCENT ROLL: "+random);
+		for (int i =0; i < array.size(); i++) {
+					System.out.println("NAME "+array.get(i).name()+" ID: "+array.get(i).getId()+" CURRENT COUNT: "+currentCount+" Current Count limit "
+					+(currentCount+array.get(i).getPercentage())+" Percentage: "+array.get(i).getPercentage());
+		currentCount += array.get(i).getPercentage();
+		if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+			System.out.println("\nCURRENT COUNT: "+currentCount);
+				System.out.println("Assignment Found["+i+"] ID: "+array.get(i).getId());
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+				//WHAT TO DO IF ITS SAME ASSIGNMENT
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(0);
+				break;
+			}
+		}
+		System.out.println("\nTOTAL PERCENT "+totalPercentage);
+		System.out.println("TOTAL WEIGHT "+Turael.getTotal());
+		array.clear();
+		return task;
+	}
+	
+	
+	
+	
+	/**
+	 * Randomises an easy task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	
+	public static Task easyTask(Player player) {
+		Task task = null;
+		int taskAmount = 13 + Utility.random(5, 10);
+		int currentCount = 1;
+		int totalPercentage = 0;
+		ArrayList<Mazchna> array = new ArrayList<Mazchna>();
+		for (Mazchna t : Mazchna.values()) {
+		if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);	
+			
+		for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Mazchna.getTotal()) * 100));
+			totalPercentage += array.get(i).getPercentage();
+		}
+		for (int i =0; i < array.size(); i++) {
+			currentCount += array.get(i).getPercentage();
+			if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+					task = Mazchna.values()[(int)(Math.random() * Mazchna.values().length)];
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(1);
+				break;
+			}
+		}
+	
+		return task;
+	}
+	
+	/**
+	 * Randomises a medium task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	public static Task mediumTask(Player player) {
+		Task task = null;
+		int taskAmount = 25 + Utility.random(5, 15);
+		int currentCount = 1;
+		int totalPercentage = 0;
+		ArrayList<Vannaka> array = new ArrayList<Vannaka>();
+		for (Vannaka t : Vannaka.values()) {
+		if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);	
+			
+		for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Vannaka.getTotal()) * 100));
+			totalPercentage += array.get(i).getPercentage();
+		}
+		for (int i =0; i < array.size(); i++) {
+			currentCount += array.get(i).getPercentage();
+		if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+					task = Vannaka.values()[(int)(Math.random() * Vannaka.values().length)];
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(2);
+				break;
+			}
+			
+		}
+		return task;
+	}
+	
+	/**
+	 * Randomises a hard task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	public static Task hardTask(Player player) {
+		Task task = null;
+		int taskAmount = 25 + Utility.random(15, 35);
+		int currentCount = 1;
+		int totalPercentage = 1;
+		ArrayList<Chaeldar> array = new ArrayList<Chaeldar>();
+		for (Chaeldar t : Chaeldar.values()) {
+		if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);	
+			
+		for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Chaeldar.getTotal()) * 100));
+			totalPercentage += array.get(i).getPercentage();
+		} 
+		for (int i =0; i < array.size(); i++) {
+			currentCount += array.get(i).getPercentage();
+			if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+					task = Chaeldar.values()[(int)(Math.random() * Chaeldar.values().length)];
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(3);
+				break;
+			}
+			
+		}
+		return task;
+	}
+	
+	/**
+	 * Randomises an elite task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	public static Task eliteTask(Player player) {
+		Task task = null;
+		int taskAmount = 25 + Utility.random(15, 35);
+		int currentCount = 1;
+		int totalPercentage = 1;
+		
+		ArrayList<Nieve> array = new ArrayList<Nieve>();
+		
+		for (Nieve t : Nieve.values()) {
+		if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);	
+			
+		for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Nieve.getTotal()) * 100));
+			System.out.print("Percentage:  "+array.get(i).getPercentage()+"\n");
+			totalPercentage += array.get(i).getPercentage();
+		} 
+		
+		
+		for (int i =0; i < array.size(); i++) {
+			currentCount += array.get(i).getPercentage();
+		if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+					task = Nieve.values()[(int)(Math.random() * Nieve.values().length)];
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(4);
+				break;
+			}
+			
+		}
+		return task;
+	}
+	
+	/**
+	 * Randomises a boss task.
+	 * 
+	 * @param player
+	 * @return task
+	 */
+	public static Task bossTask(Player player) {
+		Task task = null;
+		int taskAmount = 25 + Utility.random(15, 35);		
+		int currentCount = 1;
+		int totalPercentage = 1;
+		ArrayList<Duradel> array = new ArrayList<Duradel>();
+		for (Duradel t : Duradel.values()) {
+		if(t.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
+				array.add(t);
+		}
+			RandomGen r = new RandomGen();
+			int random = r.inclusive(100);	
+			
+		for (int i =0; i < array.size(); i++) {
+			array.get(i).setPercentage((int) Math.round(((double)array.get(i).getWeight()/(double)Duradel.getTotal()) * 100));
+			totalPercentage += array.get(i).getPercentage();
+		}
+		for (int i =0; i < array.size(); i++) {
+			currentCount += array.get(i).getPercentage();
+		if(currentCount >= random && (currentCount - array.get(i).getPercentage()) < random) {
+				if (array.get(i).getId() == player.getLastSlayerTask()) {
+					task = Duradel.values()[(int)(Math.random() * Duradel.values().length)];
+				}
+				player.setSlayerTask(array.get(i).getId());
+				player.setSlayerTaskAmount(taskAmount);
+				player.setSlayerTaskDifficulty(5);
+				break;
+			}
+			
+		}
+		return task;
+	}
+	
+	/**
+	 * Decrease the slayer task, and reward the player when finished.
+	 * @param player
+	 *        The player killing the task
+	 * @param npc
+	 *        The slayer task
+	 */
+	public static void decreaseTask(Player player, NPC npc) {
+		
+		//Safety check
+		if (player != null) {
+			player = World.getWorld().getPlayers().get(npc.killedBy);
+			
+			//Decrease task
+			if (player.getSlayerTask() == npc.npcId) {
+				player.setSlayerTaskAmount(player.getSlayerTaskAmount() - 1);
+				player.getSkills().addExperience(Skills.SLAYER, npc.maximumHealth);
+				//player.getActionSender().sendMessage("Slayertask: "+Npc.getName(npc.npcId)+ " left: "+player.getSlayerTaskAmount()));
+				player.getActionSender().sendString("<img=28><col=FFFFFF>Task: <col=00CC00>"+player.getSlayerTaskAmount()+ " "+NPC.getName(player.getSlayerTask()), 29511);
+			}
+			
+			//Kills left messages
+			if(player.getSlayerTaskAmount() == 25) {
+				player.getActionSender().sendMessage("You still have to kill 25 more "+NPC.getName(npc.npcId));
+			} else if(player.getSlayerTaskAmount() == 10) {
+				player.getActionSender().sendMessage("You still have to kill 10 more "+NPC.getName(npc.npcId));
+			}
+			
+			// The player has completed their task, we can go ahead and reward them.
+			if (player.getSlayerTaskAmount() <= 0) {
+				
+				player.setSlayerTask(0);
+				player.setSlayerTaskAmount(0);
+				player.setSlayerTaskDifficulty(0);
+				player.setSlayerTasksCompleted(player.getSlayerTasksCompleted() + 1);
+				QuestTabPageHandler.write(player, QuestTabPages.HOME_PAGE);
+				
+				/**
+				 * Beginner task (Turael).
+				 */
+				if (player.getSlayerTaskDifficulty() == 0) {
+					player.getActionSender().sendMessage("You have completed your slayer assignment. You don't gain any slayer");
+					player.getActionSender().sendMessage("points for completing a task with Turael. Go back and speak to Turael");
+					player.getActionSender().sendMessage("to get a new assignment.");
+
+					/**
+					 * Easy task (Mazchna).
+					 */
+				} else if (player.getSlayerTaskDifficulty() == 1) {
+					if (Constants.SLAYER_REWARDS) {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
+						player.getActionSender().sendMessage("meaining you get @blu@4@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 4);
+					} else {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@2@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 2);
+					}
+
+					/**
+					 * Medium task (Vannaka).
+					 */
+				} else if (player.getSlayerTaskDifficulty() == 2) {
+					if (Constants.SLAYER_REWARDS) {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
+						player.getActionSender().sendMessage("meaining you get @blu@8@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 8);
+					} else {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@4@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 4);
+					}
+					/**
+					 * Hard task (Chaeldar).
+					 */
+				} else if (player.getSlayerTaskDifficulty() == 3) {
+					if (Constants.SLAYER_REWARDS) {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
+						player.getActionSender().sendMessage("meaining you get @blu@12@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 12);
+					} else {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@6@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 6);
+					}
+
+					/**
+					 * Elite task (Nieve).
+					 */
+				} else if (player.getSlayerTaskDifficulty() == 4) {
+					if (Constants.SLAYER_REWARDS) {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
+						player.getActionSender().sendMessage("meaining you get @blu@16@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 16);
+					} else {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@8@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 8);
+					}
+
+					/**
+					 * Boss task (Duradel).
+					 */
+				} else if (player.getSlayerTaskDifficulty() == 5) {
+					if (Constants.SLAYER_REWARDS) {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
+						player.getActionSender().sendMessage("meaining you get @blu@20@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 20);
+					} else {
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@10@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
+						player.setSlayerPoints(player.getSlayerPoints() + 10);
+					}
+				}
+			}
+		}
+	}
+
+public enum Teleports {
 		
 		/**
 		 * Turael
@@ -169,279 +588,5 @@ public class SlayerTaskManagement {
 			}
 		}
 	}
-
 	
-	/**
-	 * This method allows you to reset your current slayer task.
-	 * @param player
-	 * @return
-	 */
-	public static boolean resetTask(Player player) {
-		if (!Slayer.hasTask(player)) {
-			return false;
-		}
-		if(player.getItems().playerHasItem(13307, 10)) {
-			player.setSlayerTask(0);
-			player.setSlayerTaskAmount(0);
-			player.getItems().deleteItem(13307, 10);
-			player.getActionSender().sendRemoveInterfacePacket();
-			player.getActionSender().sendMessage("Your slayer task has been reset, talk to any slayer master for a new one.");
-			return true;
-		} else {
-			player.getActionSender().sendMessage("You do not have enough blood money in order to reset your slayer task.");
-			player.getActionSender().sendRemoveInterfacePacket();
-			return false;
-		}
-	}
-	
-	/**
-	 * Randomises a beginner task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task beginnerTask(Player player) {
-		Task task = null;
-		int taskAmount = 5 + Utility.random(3, 10);
-		do {
-			task = Turael.values()[(int)(Math.random() * Turael.values().length)];
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(0);
-		return task;
-	}
-	
-	/**
-	 * Randomises an easy task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task easyTask(Player player) {
-		Task task = null;
-		int taskAmount = 13 + Utility.random(5, 10);
-		do {
-			task = Mazchna.values()[(int)(Math.random() * Mazchna.values().length)];
-			if (task.getId() == player.getLastSlayerTask()) {
-				task = Mazchna.values()[(int)(Math.random() * Mazchna.values().length)];
-			}
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(1);
-		player.setLastSlayerTask(task.getId());
-		return task;
-	}
-	
-	/**
-	 * Randomises a medium task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task mediumTask(Player player) {
-		Task task = null;
-		int taskAmount = 25 + Utility.random(5, 15);
-		do {
-			task = Vannaka.values()[(int)(Math.random() * Vannaka.values().length)];
-			if (task.getId() == player.getLastSlayerTask()) {
-				task = Vannaka.values()[(int)(Math.random() * Vannaka.values().length)];
-			}
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(2);
-		player.setLastSlayerTask(task.getId());
-		return task;
-	}
-	
-	/**
-	 * Randomises a hard task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task hardTask(Player player) {
-		Task task = null;
-		int taskAmount = 25 + Utility.random(15, 35);
-		do {
-			task = Chaeldar.values()[(int)(Math.random() * Chaeldar.values().length)];
-			if (task.getId() == player.getLastSlayerTask()) {
-				task = Chaeldar.values()[(int)(Math.random() * Chaeldar.values().length)];
-			}
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(3);
-		player.setLastSlayerTask(task.getId());
-		return task;
-	}
-	
-	/**
-	 * Randomises an elite task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task eliteTask(Player player) {
-		Task task = null;
-		int taskAmount = 25 + Utility.random(15, 35);
-		do {
-			task = Nieve.values()[(int)(Math.random() * Nieve.values().length)];
-			if (task.getId() == player.getLastSlayerTask()) {
-				task = Nieve.values()[(int)(Math.random() * Nieve.values().length)];
-			}
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(4);
-		player.setLastSlayerTask(task.getId());
-		return task;
-	}
-	
-	/**
-	 * Randomises a boss task.
-	 * 
-	 * @param player
-	 * @return task
-	 */
-	public static Task bossTask(Player player) {
-		Task task = null;
-		int taskAmount = 25 + Utility.random(15, 35);
-		do {
-			task = Duradel.values()[(int)(Math.random() * Duradel.values().length)];
-			if (task.getId() == player.getLastSlayerTask()) {
-				task = Duradel.values()[(int)(Math.random() * Duradel.values().length)];
-			}
-		} while (task.getSlayerReq() > player.getSkills().getLevel(Skills.SLAYER));
-		player.setSlayerTask(task.getId());
-		player.setSlayerTaskAmount(taskAmount);
-		player.setSlayerTaskDifficulty(5);
-		player.setLastSlayerTask(task.getId());
-		return task;
-	}
-	
-	/**
-	 * Decrease the slayer task, and reward the player when finished.
-	 * @param player
-	 *        The player killing the task
-	 * @param npc
-	 *        The slayer task
-	 */
-	public static void decreaseTask(Player player, NPC npc) {
-		
-		//Safety check
-		if (player != null) {
-			player = World.getWorld().getPlayers().get(npc.killedBy);
-			
-			//Decrease task
-			if (player.getSlayerTask() == npc.npcId) {
-				player.setSlayerTaskAmount(player.getSlayerTaskAmount() - 1);
-				player.getSkills().addExperience(Skills.SLAYER, npc.maximumHealth);
-				//player.getActionSender().sendMessage("Slayertask: "+Npc.getName(npc.npcId)+ " left: "+player.getSlayerTaskAmount()));
-				player.getActionSender().sendString("<img=28><col=FFFFFF>Task: <col=00CC00>"+player.getSlayerTaskAmount()+ " "+NPC.getName(player.getSlayerTask()), 29511);
-			}
-			
-			//Kills left messages
-			if(player.getSlayerTaskAmount() == 25) {
-				player.getActionSender().sendMessage("You still have to kill 25 more "+NPC.getName(npc.npcId));
-			} else if(player.getSlayerTaskAmount() == 10) {
-				player.getActionSender().sendMessage("You still have to kill 10 more "+NPC.getName(npc.npcId));
-			}
-			
-			// The player has completed their task, we can go ahead and reward them.
-			if (player.getSlayerTaskAmount() <= 0) {
-				
-				player.setSlayerTask(0);
-				player.setSlayerTaskAmount(0);
-				player.setSlayerTaskDifficulty(0);
-				player.setSlayerTasksCompleted(player.getSlayerTasksCompleted() + 1);
-				QuestTabPageHandler.write(player, QuestTabPages.HOME_PAGE);
-				
-				/**
-				 * Beginner task (Turael).
-				 */
-				if (player.getSlayerTaskDifficulty() == 0) {
-					player.getActionSender().sendMessage("You have completed your slayer assignment. You don't gain any slayer");
-					player.getActionSender().sendMessage("points for completing a task with Turael. Go back and speak to Turael");
-					player.getActionSender().sendMessage("to get a new assignment.");
-
-					/**
-					 * Easy task (Mazchna).
-					 */
-				} else if (player.getSlayerTaskDifficulty() == 1) {
-					if (Constants.SLAYER_REWARDS) {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@4@bla@ Slayer Points. Please speak to a Slayer Master");
-						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 4);
-					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@2@bla@ Slayer Points!");
-						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 2);
-					}
-
-					/**
-					 * Medium task (Vannaka).
-					 */
-				} else if (player.getSlayerTaskDifficulty() == 2) {
-					if (Constants.SLAYER_REWARDS) {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@8@bla@ Slayer Points. Please speak to a Slayer Master");
-						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 8);
-					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@4@bla@ Slayer Points!");
-						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 4);
-					}
-					/**
-					 * Hard task (Chaeldar).
-					 */
-				} else if (player.getSlayerTaskDifficulty() == 3) {
-					if (Constants.SLAYER_REWARDS) {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@12@bla@ Slayer Points. Please speak to a Slayer Master");
-						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 12);
-					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@6@bla@ Slayer Points!");
-						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 6);
-					}
-
-					/**
-					 * Elite task (Nieve).
-					 */
-				} else if (player.getSlayerTaskDifficulty() == 4) {
-					if (Constants.SLAYER_REWARDS) {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@16@bla@ Slayer Points. Please speak to a Slayer Master");
-						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 16);
-					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@8@bla@ Slayer Points!");
-						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 8);
-					}
-
-					/**
-					 * Boss task (Duradel).
-					 */
-				} else if (player.getSlayerTaskDifficulty() == 5) {
-					if (Constants.SLAYER_REWARDS) {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@20@bla@ Slayer Points. Please speak to a Slayer Master");
-						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 20);
-					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@10@bla@ Slayer Points!");
-						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 10);
-					}
-				}
-			}
-		}
-	}
 }

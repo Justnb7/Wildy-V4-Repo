@@ -122,9 +122,9 @@ public class ExtendInterface {
 				+ " @red@100 points)"),	
 		
 		AUGMENT_MY_ABBIES(new int[]{91027}, SlayerConstants.ABYSSAL_DEMON, 
-				"Nechs please",
-				"Whenever you get a Nechryael task, it will"
-				+ "\\nbe a bigger task"
+				"Augment my abbies",
+				"Whenever you get an Abyssal Demon task,"
+				+ "\\nit will be a bigger task"
 				+ " @red@100 points)"),	
 		KRACK_ON(new int[]{91028}, SlayerConstants.CAVE_KRAKEN, 
 				"Krack on",

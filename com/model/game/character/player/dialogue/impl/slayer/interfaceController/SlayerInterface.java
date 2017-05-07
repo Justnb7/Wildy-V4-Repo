@@ -1,15 +1,22 @@
 package com.model.game.character.player.dialogue.impl.slayer.interfaceController;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Map.Entry;
 
+import com.model.Server;
+import com.model.game.character.npc.NPC;
 import com.model.game.character.player.Player;
 import com.model.game.character.player.dialogue.impl.slayer.interfaceController.ExtendInterface.ExtendButtons;
 import com.model.game.character.player.dialogue.impl.slayer.interfaceController.UnlockInterface.UnlockButtons;
 import com.model.game.character.player.packets.out.SendInterfacePacket;
 import com.model.game.character.player.packets.out.SendMessagePacket;
+import com.model.task.ScheduledTask;
+import com.model.utility.Utility;
 import com.model.utility.misc;
 
 
@@ -24,77 +31,78 @@ public class SlayerInterface {
 	
 
 	enum Action {
-		EXTEND_BUTTON, UNLOCK_BUTTON, INTERFACE, CLOSE, CONFIRM, BACK, EXTEND_INERFACE, PURCHASE;
+		UNBLOCK, TASK_INTERFACE, EXTEND_BUTTON, UNLOCK_BUTTON, INTERFACE, CLOSE, CONFIRM, BACK, EXTEND_INERFACE, PURCHASE, BLOCK;
 	}
 	
 	public enum ButtonData {
 		/**
 		 * Basic core actions
 		 */
-		UNLOCK_INTERFACE(new int[] {91005, 90161, 91105, 89222}, 23400, Action.INTERFACE),
-		SLAYER_EXTEND_INTERFACE(new int[] {91006, 90162, 91106, 89223}, 23300, Action.EXTEND_INERFACE),
-		SLAYER_BUY_INTERFACE(new int[] {91007, 90163, 91107, 89224}, 23000, Action.INTERFACE),
-		SLAYER_TASK_INTERFACE(new int[] {91008, 90164, 91108, 89225}, 23200, Action.INTERFACE),
-		BACK(new int[]{90062}, getPreviousInterface(), Action.BACK),
-		CLOSE(new int[]{89218}, 0, Action.CLOSE),
-		PURCHSAE(new int[]{90063}, 0, Action.PURCHASE),
-		
-		
+		UNLOCK_INTERFACE(new int[] {91005, 90161, 91105, 89222}, 23400, Action.INTERFACE, false),
+		SLAYER_EXTEND_INTERFACE(new int[] {91006, 90162, 91106, 89223}, 23300, Action.EXTEND_INERFACE, false),
+		SLAYER_BUY_INTERFACE(new int[] {91007, 90163, 91107, 89224}, 23000, Action.INTERFACE, false),
+		SLAYER_TASK_INTERFACE(new int[] {91008, 90164, 91108, 89225}, 23200, Action.TASK_INTERFACE, false),
+		BACK(new int[]{90062}, getPreviousInterface(), Action.BACK, false),
+		CLOSE(new int[]{89218}, 0, Action.CLOSE, false),
+		PURCHSAE(new int[]{90063}, 0, Action.PURCHASE, false),
+		BLOCK(new int[]{90170}, 0, Action.BLOCK, false),
+		UNBLOCK(new int[]{90186, 90187, 90188, 90189, 90190, 90191}, 0, Action.UNBLOCK, false),
 		/**
 		 * Unlock Buttons
 		 */
-		GARGOYLE_SMASHER(new int[]{91110}, 0, Action.UNLOCK_BUTTON),
-		SHROOM_SPRAYER(new int[]{91111}, 0, Action.UNLOCK_BUTTON),
-		BROADER_FLETCHING(new int[]{91112}, 0, Action.UNLOCK_BUTTON),
-		MALEVOLENT_MASQUERADE(new int[]{91113}, 0, Action.UNLOCK_BUTTON),
-		RING_BLING(new int[]{91114}, 0, Action.UNLOCK_BUTTON),
-		SEEING_RED(new int[]{91115}, 0, Action.UNLOCK_BUTTON),
-		MITH_ME(new int[]{91116}, 0, Action.UNLOCK_BUTTON),
-		BIRDIE(new int[]{91117}, 0, Action.UNLOCK_BUTTON),
-		HOT_STUFF(new int[]{91118}, 0, Action.UNLOCK_BUTTON),
-		REPTILE_GOT_RIPPED(new int[]{91119}, 0, Action.UNLOCK_BUTTON),
-		LIKE_A_BOSS(new int[]{91120}, 0, Action.UNLOCK_BUTTON),
-		KING_BLACK_BONNET(new int[]{91121}, 0, Action.UNLOCK_BUTTON),
-		KALPHITE_KAT(new int[]{91122}, 0, Action.UNLOCK_BUTTON),
-		UNHOLY_HELMET(new int[]{91123}, 0, Action.UNLOCK_BUTTON),
-		BIGGER_AND_BADDER(new int[]{91124}, 0, Action.UNLOCK_BUTTON),
-		DULY_NOTED(new int[]{91125}, 0, Action.UNLOCK_BUTTON),
-		//SLAYER_CONFIRM_INTERFACE(23100),
+		GARGOYLE_SMASHER(new int[]{91110}, 0, Action.UNLOCK_BUTTON, false),
+		SHROOM_SPRAYER(new int[]{91111}, 0, Action.UNLOCK_BUTTON, false),
+		BROADER_FLETCHING(new int[]{91112}, 0, Action.UNLOCK_BUTTON, false),
+		MALEVOLENT_MASQUERADE(new int[]{91113}, 0, Action.UNLOCK_BUTTON, false),
+		RING_BLING(new int[]{91114}, 0, Action.UNLOCK_BUTTON, false),
+		SEEING_RED(new int[]{91115}, 0, Action.UNLOCK_BUTTON, false),
+		MITH_ME(new int[]{91116}, 0, Action.UNLOCK_BUTTON, false),
+		BIRDIE(new int[]{91117}, 0, Action.UNLOCK_BUTTON, false),
+		HOT_STUFF(new int[]{91118}, 0, Action.UNLOCK_BUTTON, false),
+		REPTILE_GOT_RIPPED(new int[]{91119}, 0, Action.UNLOCK_BUTTON, false),
+		LIKE_A_BOSS(new int[]{91120}, 0, Action.UNLOCK_BUTTON, false),
+		KING_BLACK_BONNET(new int[]{91121}, 0, Action.UNLOCK_BUTTON, false),
+		KALPHITE_KAT(new int[]{91122}, 0, Action.UNLOCK_BUTTON, false),
+		UNHOLY_HELMET(new int[]{91123}, 0, Action.UNLOCK_BUTTON, false),
+		BIGGER_AND_BADDER(new int[]{91124}, 0, Action.UNLOCK_BUTTON, false),
+		DULY_NOTED(new int[]{91125}, 0, Action.UNLOCK_BUTTON, false),
 		
 		
 		/**
 		 * Extend Actions
 		 */
-		NEED_MORE_DARKNESS(new int[]{91010},0, Action.EXTEND_BUTTON),
-		ANKOU_VERY_MUCH(new int[]{91011},0, Action.EXTEND_BUTTON),
-		SUQ_A_NOTHER_ONE(new int[]{91012},0, Action.EXTEND_BUTTON),
-		FIRE_AND_DARKNESS(new int[]{91013},0,  Action.EXTEND_BUTTON),
-		PEDAL_TO_THE_METALS(new int[]{91014},0, Action.EXTEND_BUTTON),
-		I_REALLY_MITH_YOU(new int[]{91015},0, Action.EXTEND_BUTTON),
-		SPIRITUAL_FERVOUR(new int[]{91016},0, Action.EXTEND_BUTTON),
-		BIRDS_OF_A_FEATHER(new int[]{91017},0, Action.EXTEND_BUTTON),	
-		GREATER_CHALLENGE(new int[]{91018},0, Action.EXTEND_BUTTON),	
-		ITS_DARK_IN_HERE(new int[]{91019},0, Action.EXTEND_BUTTON),	
-		BLEED_ME_DRY(new int[]{91020},0, Action.EXTEND_BUTTON),	
-		SMELL_YA_LATER(new int[]{91021},0, Action.EXTEND_BUTTON),	
-		HORROIFIC(new int[]{91022},0, Action.EXTEND_BUTTON),	
-		DUST_YOU_SHALL_RETURN(new int[]{91023},0, Action.EXTEND_BUTTON),	
-		WYVER_ANOTHER_ONE(new int[]{91024},0, Action.EXTEND_BUTTON),	
-		GET_SMASHED(new int[]{91025},0, Action.EXTEND_BUTTON),	
-		NECHS_PLEASE(new int[]{91026},0, Action.EXTEND_BUTTON),	
-		AUGMENT_MY_ABBIES(new int[]{91027},0, Action.EXTEND_BUTTON),	
-		KRACK_ON(new int[]{91028}, 0, Action.EXTEND_BUTTON);	
+		NEED_MORE_DARKNESS(new int[]{91010},0, Action.EXTEND_BUTTON, false),
+		ANKOU_VERY_MUCH(new int[]{91011},0, Action.EXTEND_BUTTON, false),
+		SUQ_A_NOTHER_ONE(new int[]{91012},0, Action.EXTEND_BUTTON, false),
+		FIRE_AND_DARKNESS(new int[]{91013},0,  Action.EXTEND_BUTTON, false),
+		PEDAL_TO_THE_METALS(new int[]{91014},0, Action.EXTEND_BUTTON, false),
+		I_REALLY_MITH_YOU(new int[]{91015},0, Action.EXTEND_BUTTON, false),
+		SPIRITUAL_FERVOUR(new int[]{91016},0, Action.EXTEND_BUTTON, false),
+		BIRDS_OF_A_FEATHER(new int[]{91017},0, Action.EXTEND_BUTTON, false),	
+		GREATER_CHALLENGE(new int[]{91018},0, Action.EXTEND_BUTTON, false),	
+		ITS_DARK_IN_HERE(new int[]{91019},0, Action.EXTEND_BUTTON, false),	
+		BLEED_ME_DRY(new int[]{91020},0, Action.EXTEND_BUTTON, false),	
+		SMELL_YA_LATER(new int[]{91021},0, Action.EXTEND_BUTTON, false),	
+		HORROIFIC(new int[]{91022},0, Action.EXTEND_BUTTON, false),	
+		DUST_YOU_SHALL_RETURN(new int[]{91023},0, Action.EXTEND_BUTTON, false),	
+		WYVER_ANOTHER_ONE(new int[]{91024},0, Action.EXTEND_BUTTON, false),	
+		GET_SMASHED(new int[]{91025},0, Action.EXTEND_BUTTON, false),	
+		NECHS_PLEASE(new int[]{91026},0, Action.EXTEND_BUTTON, false),	
+		AUGMENT_MY_ABBIES(new int[]{91027},0, Action.EXTEND_BUTTON, false),	
+		KRACK_ON(new int[]{91028}, 0, Action.EXTEND_BUTTON, false);	
 		
 		
 		
 		private int[] button;
 		private int interfaceId;
 		Action action;
+		boolean playerOwns = false;
 		
-		private ButtonData(int[] button, int interfaceId, Action action){
+		private ButtonData(int[] button, int interfaceId, Action action, boolean playerOwns){
 			this.button = button;
 			this.interfaceId = interfaceId;
 			this.action = action;
+			this.playerOwns = playerOwns;
 		}
 		
 		public int[] getButton() {
@@ -109,6 +117,16 @@ public class SlayerInterface {
 			return action;
 		}
 		
+		public boolean getOwned(){
+			return playerOwns;
+		}
+		
+		public void setPlayerOwns(){
+			this.playerOwns = true;
+		}
+		public String format() {
+			return Utility.capitalize(name().toLowerCase().replaceAll("_", " ").trim());
+		}
 		
 
 		public static HashMap<Integer, ButtonData> buttonMap = new HashMap<Integer, ButtonData>();
@@ -123,8 +141,40 @@ public class SlayerInterface {
 	}
 	
 }
-	public static HashMap<Integer, String> unlocks = new HashMap<Integer, String>();
-
+	
+	
+	private ArrayList<Integer> blockedTasks = new ArrayList<Integer>(6);
+	
+	
+	public ArrayList<Integer> getBlockedTasks() {
+	    return blockedTasks;
+	 }
+	
+	/**
+	 * Stores all unlocked HashMaps
+	 */
+	private HashMap<Integer, String> unlocks = new HashMap<Integer, String>();
+	/**
+	 * Retuns the unlocked HashMaps
+	 * @return
+	 */
+	public HashMap<Integer, String> getUnlocks() {
+		return unlocks;
+	}
+	/**
+	 * Sets the unlocks
+	 * @param unlocks
+	 */
+	public void setUnlocks(HashMap<Integer, String> unlocks) {
+		this.unlocks = unlocks;
+	}
+	/**
+	 * Checks for unlocked hashmap
+	 * @unused
+	 */
+	public boolean playerHasUnlock(HashMap<Integer, String> Hash){
+		return true;
+	}
 	/**
 	 * Stores previous interface being viewed
 	 */
@@ -138,20 +188,46 @@ public class SlayerInterface {
 	/**
 	 * Sets the previous interface
 	 */
-	public static void setPreviousInterface(int interfaceId) {
+	public void setPreviousInterface(int interfaceId) {
 		prevInterfaceId = interfaceId;
 	}
-	
+	/**
+	 * Checks for existing purchases
+	 * and marks with checkmark
+	 * @param player
+	 */
+	public void generateCheckMarks(Player player){
+		for (Entry<Integer, String> entrys : player.getSlayerInterface().getUnlocks().entrySet()) {
+			for (ButtonData buttonData : ButtonData.values()) {
+				if(entrys.getValue().equals(buttonData.name())) {
+					player.getActionSender().sendMessage("We have found: "+entrys.getValue());
+					if(buttonData.getAction() == Action.UNLOCK_BUTTON) {
+						player.getActionSender().sendConfig(580+(buttonData.ordinal() - 7), 1);
+					} else
+					if(buttonData.getAction() == Action.EXTEND_BUTTON) {
+						player.getActionSender().sendConfig(560+(buttonData.ordinal() - 23), 1);
+					}
+				}
+			}
+		}
+	}
 	/**
 	 * Opens the interface (not used yet)
 	 * @param player
 	 */
 	public void open(Player player){
-		UnlockInterface unlock = new UnlockInterface();
-		unlock.write(player);
-		player.write(new SendInterfacePacket(23400));
-		
+		Server.getTaskScheduler().schedule(new ScheduledTask(1) {
+			@Override
+			public void execute() {
+				generateCheckMarks(player);
+				UnlockInterface unlock = new UnlockInterface();
+				unlock.write(player);
+				player.write(new SendInterfacePacket(23400));
+				this.stop();
+			}	
+		});	
 	}
+	
 	/**
 	 * 
 	 * @param player
@@ -159,7 +235,7 @@ public class SlayerInterface {
 	 * @return
 	 * Handles unlocking of slayer additions
 	 */
-	public static boolean unlock(Player player, int buttonId){
+	public boolean unlock(Player player, int buttonId){
 		UnlockButtons button = UnlockButtons.unlockButtons.get(buttonId);
 		if(button == null) {
 			player.write(new SendMessagePacket("Null unlock button"));
@@ -190,7 +266,22 @@ public class SlayerInterface {
 		player.write(new SendInterfacePacket(23100));
 		return true;
 	}
+	/**
+	 * 
+	 * @param player
+	 * @param buttonId
+	 * @return
+	 * Handles unlocking of slayer additions
+	 */
+	public static boolean block(Player player, int buttonId) {
+		player.slayerAction = 1;
+		player.getActionSender().sendString("You are about to block: "+NPC.getName(player.getSlayerTask()),23106); // make new classes for each tab
+		player.getActionSender().sendString("This costs 100 Slayer Points",23107);
+		player.getActionSender().sendString("<col=ff0000>Are you sure you want to pay?</col>",23110);
+		player.write(new SendInterfacePacket(23100));
 	
+		return true;
+	}
 	
 	/**
 	 * 
@@ -198,53 +289,143 @@ public class SlayerInterface {
 	 * @param buttonId
 	 * @return Handles the selection of the interface
 	 */
-	public static boolean selection(Player player, int buttonId) {
+	public boolean controlPanel(Player player, int buttonId) {
 		ButtonData button = ButtonData.buttonMap.get(buttonId);
 		if(button == null) {
 			player.write(new SendMessagePacket("Null"));
 			return false;
 		}
-		switch(button.getAction()) {
+		for (Entry<Integer, String> entrys : player.getSlayerInterface().getUnlocks().entrySet()) {
+			if(entrys.getKey() == buttonId) {
+				if(button.getAction() == Action.UNLOCK_BUTTON) {
+					player.getActionSender().sendConfig(580+(button.ordinal() - 7), 1);//turn back on
+					player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
+					return false;
+				}	else {
+				if(button.getAction() == Action.EXTEND_BUTTON)
+					player.getActionSender().sendConfig(560+(button.ordinal() - 23), 1); //turn back on
+					player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
+					return false;
+				}
+			}
+		}
+		
+		switch(button.getAction()) {	
+		
 		case INTERFACE:
 			player.write(new SendMessagePacket("Button: "+buttonId+" trying to open interface "+button.getInterface()));
 			player.write(new SendInterfacePacket(button.getInterface()));
 			setPreviousInterface(button.getInterface());
+			player.getActionSender().sendMessage("Previous interface = "+getPreviousInterface());
 			return true;
-		case PURCHASE:
-			unlocks.put(player.getSlayerSelection(), player.getSlayerSelectionName());
-			player.getActionSender().sendMessage("You successfully purchased X");
-			player.write(new SendInterfacePacket(getPreviousInterface()));
+		case BLOCK:
+			block(player, buttonId);
+			return true;
+		case UNBLOCK:
+			int max = 90186+blockedTasks.size();
+			System.out.println("SIZE: "+blockedTasks.size()+ " MAX: "+(90186+blockedTasks.size()));
+			if(buttonId == 90186) {
+				if(max >= 90186 && blockedTasks.size() >= 1) 
+				blockedTasks.remove(0);
+			} else 
+			if(buttonId == 90187 && blockedTasks.size() >= 2) {
+				if(max >= 90187)
+				blockedTasks.remove(1);
+			} else 
+			if(buttonId == 90188 && blockedTasks.size() >= 3) {
+				if(max >= 90188)
+				blockedTasks.remove(2);
+			} else 
+			if(buttonId == 90189 && blockedTasks.size() >= 4) { 
+				if(max >= 90189)
+				blockedTasks.remove(3);
+			} else 
+			if(buttonId == 90190 && blockedTasks.size() >= 5) { 
+				if(max >= 90190)
+				blockedTasks.remove(4);
+			} else 
+			if(buttonId == 90191 && blockedTasks.size() >= 6) {  
+				if(max >= 90191)
+				blockedTasks.remove(5);
+			}
+			blockedTasks.trimToSize();
+			TaskInterface task = new TaskInterface();
+			task.write(player);
+			return true;
+			
+			
+		case TASK_INTERFACE:
+			TaskInterface penis = new TaskInterface();
+			penis.write(player);
+			setPreviousInterface(button.getInterface());
+			player.write(new SendInterfacePacket(button.getInterface()));
 			return true;
 		case EXTEND_INERFACE:
 			ExtendInterface unlock = new ExtendInterface();
 			unlock.write(player);
 			player.write(new SendInterfacePacket(button.getInterface()));
+			setPreviousInterface(button.getInterface());
+			player.getActionSender().sendMessage("Previous interface = "+getPreviousInterface());
 			return true;
 		case UNLOCK_BUTTON:
 			unlock(player, buttonId);
-			player.setSlayerSelection(buttonId, button.name());
+			player.setSlayerSelection(buttonId, button.name(), button.ordinal() - 7);
 			player.write(new SendMessagePacket("Button: "+buttonId+" trying to open interface "+button.getInterface()));
-			player.getActionSender().sendConfig(580+(button.ordinal() - 6), 0);
 			return true;
 		case EXTEND_BUTTON:
 			extend(player, buttonId);
-			player.setSlayerSelection(buttonId, button.name());
+			player.setSlayerSelection(buttonId, button.name(), button.ordinal() - 23);
 			player.write(new SendMessagePacket("Button: "+buttonId+" trying to open interface "+button.getInterface()));
-			player.getActionSender().sendConfig(560+(button.ordinal() - 22), 0);
+			return true;
+		case PURCHASE:
+			if(player.slayerAction == 0) {
+			player.getSlayerInterface().getUnlocks().put(player.getSlayerSelection(), player.getSlayerSelectionName());
+			for (Entry<Integer, String> entrys : player.getSlayerInterface().getUnlocks().entrySet()) {
+				player.getActionSender().sendMessage("unlocked = "+entrys.getKey().toString() + " " + entrys.getValue());
+			}
+			player.getActionSender().sendMessage("You successfully purchased X");
+			player.write(new SendInterfacePacket(getPreviousInterface()));
+			return true;
+			} else 
+			if (player.slayerAction == 1) {
+				try {
+				for(int i = 0; i < 6; i++) {
+			if(blockedTasks.contains(player.getSlayerTask())){
+				player.getActionSender().sendMessage("This task is already blocked.");
+				player.getActionSender().closeAllWindows();
+				break;
+			}	
+			if(blockedTasks.size() >= 6) {
+				player.getActionSender().sendMessage("You have the maximum amount of blocks.");
+				break;
+			}
+			blockedTasks.add(player.getSlayerTask());
+			TaskInterface task1 = new TaskInterface();
+			task1.write(player);
+			return true;
+			} 
+		}catch (Exception name){
+					
+	}
+}
+		player.slayerAction = 0;
+		case BACK:
+			if(getPreviousInterface() == 23400) {
+				player.getActionSender().sendConfig(580+(player.getSlayerOrdinal()), 0); //turn off
+			}	else {
+				if(getPreviousInterface() == 23300) 
+				player.getActionSender().sendConfig(560+(player.getSlayerOrdinal()), 0);
+			} 
+			player.write(new SendInterfacePacket(getPreviousInterface()));
 			return true;
 		case CLOSE:
 			player.getActionSender().closeAllWindows();
-			return true;
-		case BACK:
-			player.write(new SendInterfacePacket(getPreviousInterface()));
 			return true;
 		default:
 			break;		
 		}
 		return false;
 	}
-	
-	
 	
 }
 

@@ -7,6 +7,8 @@ import com.model.game.character.player.dialogue.Type;
 import com.model.game.character.player.skill.slayer.Slayer;
 import com.model.game.character.player.skill.slayer.SlayerMasters;
 import com.model.game.character.player.skill.slayer.SlayerTaskManagement;
+import com.model.game.character.player.skill.slayer.tasks.Mazchna;
+import com.model.game.character.player.skill.slayer.tasks.Task;
 
 /**
  * The dialogue enacted by Mazchna the easy slayer master (Easy Tasks)

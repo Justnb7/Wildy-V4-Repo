@@ -6,28 +6,32 @@ package com.model.game.character.player.skill.slayer.tasks;
  */
 public enum Nieve implements Task {
 	
-	NECHRYAEL(11, 80), 
-	ABYSSAL_DEMON(415, 85), 
-	BLACK_DRAGON(252, 1), 
-	BLUE_DRAGON(268, 1), 
-	DARK_BEAST(4005, 90), 
-	CAVE_KRAKEN(492, 87), 
-	KRAKEN(494, 87), 
-	STEEL_DRAGON(274, 1), 
-	IRON_DRAGON(272, 1), 
-	BRONZE_DRAGON(270, 1), 
-	BLACK_DEMON(1432, 1), 
-	HELLHOUND(135, 1), 
-	CAVE_HORROR(3209, 58), 
-	FIRE_GIANT(2075, 1), 
-	GREATER_DEMON(2026, 1), 
-	BASILISK(417, 40), 
-	JELLY(437, 52), 
-	TUROTH(432, 55), 
-	INFERNAL_MAGE(443, 45), 
-	BLOODVELD(484, 50), 
-	DUST_DEVIL(423, 65),
-	LESSER_DEMON(2005, 1);
+	ABERRANT_SPECTRE(7,60,9,0),
+	ABYSSAL_DEMON(415, 85,9,0), 
+	ANKOU(7257,70,5,0),
+	//AVIANSIE
+	BLACK_DEMON(1432,1,9,0),
+	BLACK_DRAGON(252, 1,6,0), 
+	BLOODVELD(484, 50,9,0), 
+	BLUE_DRAGON(268, 1,4,0), 
+	CAVE_HORROR(3209, 58,5,0), 
+	CAVE_KRAKEN(492, 87,6,0), 
+	DAGANNOTH(140,1,8,0),
+	DARK_BEAST(4005, 90,5,0), 
+	DUST_DEVIL(423, 65,6,0),
+	GREATER_DEMON(2026, 1,7,0), 
+	HELLHOUND(135, 1,8,0), 
+	STEEL_DRAGON(274, 1,5,0), 
+	IRON_DRAGON(272, 1,5,0), 
+	MITHRIL_DRAGON(2919, 1, 5, 0),
+	RED_DRAGON(247, 1, 5, 0),
+	WYVERN(465, 72, 5, 0),
+	SMOKE_DEVIL(498, 93, 7, 0),
+	TUROTH(432, 55,3,0), 
+	NECHRYAEL(11, 80, 7, 0), 
+	KRAKEN(494, 87, 6, 0), 
+	FIRE_GIANT(2075, 1, 9, 0); 
+
 
 	/**
 	 * The slayer npc ID
@@ -42,16 +46,44 @@ public enum Nieve implements Task {
 	 * The experience multiplier
 	 */
 
-	Nieve(int id, int slayerRequirement) {
+	Nieve(int id, int slayerRequirement, int weight, int percentage) {
 		this.id = id;
 		this.slayerRequirement = slayerRequirement;
+		this.weight = weight;
+		this.percentage = percentage;
 	}
 
 	public int getId() {
 		return id;
 	}
-
+	
+	private int weight;
+	
+	private int percentage;
+	
+	public void setPercentage(int percentage){
+		this.percentage = percentage;
+	}
+	
+	public int getWeight(){
+		return weight;
+	}
+	
+	public static int getTotal() {
+		return total;
+	}
+	
+	public static int total;
+	
 	public int getSlayerReq() {
 		return slayerRequirement;
 	}
+	public int getPercentage(){
+		return percentage;
+	}
+	static {
+		for (Nieve t : Nieve.values()) {
+			total += t.getWeight();
+			}
+		}
 }

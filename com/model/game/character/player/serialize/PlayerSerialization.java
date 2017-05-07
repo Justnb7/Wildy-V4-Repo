@@ -27,6 +27,7 @@ import com.model.game.character.player.content.bounty_hunter.BountyHunterConstan
 import com.model.game.character.player.content.cluescrolls.ClueDifficulty;
 import com.model.game.character.player.content.cluescrolls.ClueScroll;
 import com.model.game.character.player.content.cluescrolls.ClueScrollContainer;
+import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerInterface;
 import com.model.game.character.player.minigames.BarrowsFull.Barrows;
 import com.model.game.character.player.minigames.BarrowsFull.Brother;
 import com.model.game.item.Item;
@@ -47,7 +48,6 @@ import com.model.utility.logging.PlayerLogging.LogType;
 public class PlayerSerialization {
 
     /**
-     * An executor service which saves accounts on its own thread
      */
     private static final ExecutorService executor = Executors.newCachedThreadPool();
 
@@ -220,6 +220,13 @@ public class PlayerSerialization {
 							int kc = Integer.parseInt(value);
 							p.getBarrows().getNpcController().setKillCount(kc);
 						}
+				
+                    	
+						/*} else if(key.equals("unlocked")) {
+                    		System.out.print("Adding player unlocks: "+value);
+                    		p.getSlayerInterface().getUnlocks().put(Integer.parseInt(key), value);
+                    	}*/
+						
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
@@ -439,7 +446,27 @@ public class PlayerSerialization {
                             p.deathShop.getContainer().container()[Integer.parseInt(values[0])] = new Item(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
                         }
                     	break;
-						
+                    case 27:
+                    	if(key.equals("blocked-tasks")) {
+                    		p.getSlayerInterface().getBlockedTasks().ensureCapacity(6);
+                    		System.out.println(values[0]);
+                    		p.getSlayerInterface().getBlockedTasks().add(Integer.parseInt(values[0]));
+                    	}
+                    	if(key.equals("slayer-unlocked")) {
+                    		//System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
+                    		p.getSlayerInterface().getUnlocks().put(Integer.parseInt(values[0]), values[1]);
+                    		}
+                    	break;
+                    	/*writer.write("[Slayer]");
+            			writer.newLine();
+            			for (Entry<Integer, String> entrys : p.getSlayerInterface().unlocks.entrySet()) {
+            				if (entrys != null) {
+            					if (entrys.getKey() > 0) {
+            						writer.write(entrys.getKey().toString() + " = " + entrys.getValue());
+            						writer.newLine();
+            					}
+            				}
+            			}*/
 					}
 				} else {
 					if (line.equals("[CHARACTER-ACCOUNT]")) {
@@ -494,6 +521,8 @@ public class PlayerSerialization {
                         mode = 25;
                     } else if (line.equals("[TASKS-DIFFICULTY-ELITE]")) {
                         mode = 26;
+                    } else if (line.equals("[SLAYER]")) {
+                        mode = 27;
                     }
 				}
 			}
@@ -653,12 +682,24 @@ public class PlayerSerialization {
 			writer.newLine();
             
 			
-			writer.write("[Slayer]");
+			writer.write("[SLAYER]");
 			writer.newLine();
-			for (Entry<Integer, String> entrys : p.getSlayerInterface().unlocks.entrySet()) {
+			for(int i = 0; i < p.getSlayerInterface().getBlockedTasks().size(); i++){
+				writer.write("blocked-tasks = ");
+				p.getSlayerInterface().getBlockedTasks().ensureCapacity(6);
+				if(p.getSlayerInterface().getBlockedTasks() != null)
+                writer.write(p.getSlayerInterface().getBlockedTasks().get(i) + "\t");
+                writer.newLine();
+				
+			}
+			writer.newLine();
+			for (Entry<Integer, String> entrys : p.getSlayerInterface().getUnlocks().entrySet()) {
 				if (entrys != null) {
 					if (entrys.getKey() > 0) {
-						writer.write(entrys.getKey().toString() + " = " + entrys.getValue());
+						//  writer.write("bank-tab = " + i + "\t" + item.getId() + "\t" + item.getAmount());
+						writer.write("slayer-unlocked = "+entrys.getKey().toString());
+						writer.write("	");
+						writer.write(entrys.getValue().toString());
 						writer.newLine();
 					}
 				}
