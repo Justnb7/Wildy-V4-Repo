@@ -98,6 +98,7 @@ public class Server {
 			World.getWorld().init();
 			globalObjects.pulse();
 			globalObjects.pulse();
+			Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 			ResourceLeakDetector.setLevel(io.netty.util.ResourceLeakDetector.Level.PARANOID);
 			bind(Constants.SERVER_PORT);
 			

@@ -219,9 +219,11 @@ public class World implements Service {
 	public void unregister(Entity entity) {
 		if (entity.getEntityType() == EntityType.PLAYER) {
 			Player player = (Player) entity;
-
+			
 			final int index = player.getIndex();
 
+			PlayerSerialization.saveGame(player);
+			
 			if (getPlayers().get(index) == null) {
 				// dont unregister a null player
 				return;
