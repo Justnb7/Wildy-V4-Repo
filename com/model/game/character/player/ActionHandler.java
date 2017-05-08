@@ -22,8 +22,6 @@ import com.model.game.character.player.skill.agility.Shortcut;
 import com.model.game.character.player.skill.agility.rooftop.Draynor_Village;
 import com.model.game.character.player.skill.fishing.Fishing;
 import com.model.game.character.player.skill.fishing.FishingSpot;
-import com.model.game.character.player.skill.hunter.hunter;
-import com.model.game.character.player.skill.hunter.hunter.impData;
 import com.model.game.character.player.skill.runecrafting.Runecrafting;
 import com.model.game.character.player.skill.thieving.Pickpocket;
 import com.model.game.character.player.skill.thieving.Stalls;
@@ -685,17 +683,6 @@ public class ActionHandler {
 
 	public void firstClickNpc(NPC npc) {
 		player.clickNpcType = 0;
-		
-		int impling = player.npcClickIndex;
-		player.clickNpcType = 0;
-		player.rememberNpcIndex = player.npcClickIndex;
-		player.npcClickIndex = 0;
-		//maybe try the specific npc 
-		//if npc.getid() = IMPID {
-		//catch(player,npc etc....
-		if(hunter.impData.implings.containsKey(npc)) {
-			impData.Catch(player, npc, impling);
-		}
 		
 		if (player.inDebugMode()) {
 			player.getActionSender().sendMessage("First click "+npc.npcId);
