@@ -456,6 +456,11 @@ public class PlayerSerialization {
                     		//System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
                     		p.getSlayerInterface().getUnlocks().put(Integer.parseInt(values[0]), values[1]);
                     		}
+                    	
+                    	if(key.equals("slayer-extensions")) {
+                    		//System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
+                    		p.getSlayerInterface().getExtensions().put(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+                    		}
                     	break;
                     	/*writer.write("[Slayer]");
             			writer.newLine();
@@ -693,6 +698,8 @@ public class PlayerSerialization {
 				
 			}
 			writer.newLine();
+			writer.write("[SLAYER-UNLOCKS]");
+			writer.newLine();
 			for (Entry<Integer, String> entrys : p.getSlayerInterface().getUnlocks().entrySet()) {
 				if (entrys != null) {
 					if (entrys.getKey() > 0) {
@@ -704,7 +711,20 @@ public class PlayerSerialization {
 					}
 				}
 			}
-			
+			writer.newLine();
+			writer.write("[SLAYER-EXTENSIONS]");
+			writer.newLine();
+			for (Entry<Integer, Integer> entrys : p.getSlayerInterface().getExtensions().entrySet()) {
+				if (entrys != null) {
+					if (entrys.getKey() > 0) {
+						//  writer.write("bank-tab = " + i + "\t" + item.getId() + "\t" + item.getAmount());
+						writer.write("slayer-extensions = "+entrys.getKey().toString());
+						writer.write("	");
+						writer.write(entrys.getValue().toString());
+						writer.newLine();
+					}
+				}
+			}
 			writer.newLine();
             /* EQUIPMENT */
             writer.write("[CHARACTER-EQUIPMENT]");

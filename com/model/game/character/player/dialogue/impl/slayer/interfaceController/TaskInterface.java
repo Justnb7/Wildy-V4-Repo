@@ -17,7 +17,7 @@ import com.model.game.character.player.packets.out.SendMessagePacket;
  *
  */
 public class TaskInterface {
-	@SuppressWarnings(value = { "" })
+	@SuppressWarnings(value = {""})
 	public void write(Player player) {
 		try { 
 		
