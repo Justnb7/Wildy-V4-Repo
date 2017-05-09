@@ -209,10 +209,7 @@ public class NPCDeathTask extends ScheduledTask {
 		if (npc.killedBy >= 0) {
 			Player player = World.getWorld().getPlayers().get(npc.killedBy);
 			if (player != null) {
-				System.out.println("1: "+NPC.getName(player.getSlayerTask()));
-				System.out.println("2 defin: "+npc.getDefinition().getName());
 				if (npc.npcId == player.getSlayerTask() || NPC.getName(npc.npcId).toLowerCase().equalsIgnoreCase(NPC.getName(player.getSlayerTask()).toLowerCase())) {
-					System.out.println("Were decreasin");
 					SlayerTaskManagement.decreaseTask(player, npc);
 				}
 				Combat.resetCombat(player);

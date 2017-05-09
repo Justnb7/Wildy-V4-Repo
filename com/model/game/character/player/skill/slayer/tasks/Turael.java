@@ -71,4 +71,9 @@ public enum Turael implements Task {
 		total += t.getWeight();
 		}
 	}
+
+
+	public int getStreak() {
+		return 0;
+	}
 }

@@ -1,5 +1,9 @@
 package com.model.game.character.player.skill.slayer.tasks;
 
+import com.model.game.character.player.Player;
+import com.model.game.character.player.PlayerUpdating;
+import com.model.utility.Utility;
+
 public enum Chaeldar implements Task {
 	
 	 ABYSSAL_DEMON(415, 85, 12, 0),
@@ -80,6 +84,22 @@ public enum Chaeldar implements Task {
 	
 	public int getPercentage(){
 		return percentage;
+	}
+	public static int getStreak(Player player) {
+		if(player.getSlayerStreak() % 10 == 0) {
+			return 50;
+		} else if(player.getSlayerStreak() % 50 == 0) {
+			return 150;
+		}  else if(player.getSlayerStreak() % 100 == 0) {
+			return 250;
+		} else 	if(player.getSlayerStreak() % 250 == 0) {
+			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 350;
+		} else if(player.getSlayerStreak() % 1000 == 0) {
+			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 500;
+		}
+		return 0;
 	}
 	static {
 		for (Chaeldar t : Chaeldar.values()) {

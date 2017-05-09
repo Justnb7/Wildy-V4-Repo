@@ -1,5 +1,9 @@
 package com.model.game.character.player.skill.slayer.tasks;
 
+import com.model.game.character.player.Player;
+import com.model.game.character.player.PlayerUpdating;
+import com.model.utility.Utility;
+
 /**
  * The enum holds all Nieve's task data.
  * @author <a href="http://www.rune-server.org/members/_Patrick_/">Patrick van Elderen</a>
@@ -80,6 +84,22 @@ public enum Nieve implements Task {
 	}
 	public int getPercentage(){
 		return percentage;
+	}
+	public static int getStreak(Player player) {
+		if(player.getSlayerStreak() % 10 == 0) {
+			return 60;
+		} else if(player.getSlayerStreak() % 50 == 0) {
+			return 180;
+		}  else if(player.getSlayerStreak() % 100 == 0) {
+			return 300;
+		} else 	if(player.getSlayerStreak() % 250 == 0) {
+			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 420;
+		} else if(player.getSlayerStreak() % 1000 == 0) {
+			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 600;
+		}
+		return 0;
 	}
 	static {
 		for (Nieve t : Nieve.values()) {

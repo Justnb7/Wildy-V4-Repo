@@ -46,6 +46,7 @@ public class SlayerTaskManagement {
 			player.setSlayerTask(0);
 			player.setSlayerTaskAmount(0);
 			player.getItems().deleteItem(13307, 10);
+			player.setSlayerStreak(0);
 			player.getActionSender().sendRemoveInterfacePacket();
 			player.getActionSender().sendMessage("Your slayer task has been reset, talk to any slayer master for a new one.");
 			return true;
@@ -436,6 +437,10 @@ public class SlayerTaskManagement {
 				player.setSlayerTaskAmount(0);
 				player.setSlayerTaskDifficulty(0);
 				player.setSlayerTasksCompleted(player.getSlayerTasksCompleted() + 1);
+				player.setSlayerStreak(player.getSlayerStreak() + 1);
+				if(player.getSlayerStreak() > player.getSlayerStreakRecord()) {
+					player.setSlayerStreakRecord(player.getSlayerStreak());
+				}
 				QuestTabPageHandler.write(player, QuestTabPages.HOME_PAGE);
 				
 				/**
@@ -454,11 +459,11 @@ public class SlayerTaskManagement {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
 						player.getActionSender().sendMessage("meaining you get @blu@4@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 4);
+						player.setSlayerPoints(player.getSlayerPoints() + (Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 4));
 					} else {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@2@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 2);
+						player.setSlayerPoints(player.getSlayerPoints() + (Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 2));
 					}
 
 					/**
@@ -469,11 +474,11 @@ public class SlayerTaskManagement {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
 						player.getActionSender().sendMessage("meaining you get @blu@8@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 8);
+						player.setSlayerPoints(player.getSlayerPoints() + (Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 8));
 					} else {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@4@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 4);
+						player.setSlayerPoints(player.getSlayerPoints() + (Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 4));
 					}
 					/**
 					 * Hard task (Chaeldar).
@@ -483,11 +488,11 @@ public class SlayerTaskManagement {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
 						player.getActionSender().sendMessage("meaining you get @blu@12@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 12);
+						player.setSlayerPoints(player.getSlayerPoints() + (Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 20));
 					} else {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@6@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 6);
+						player.setSlayerPoints(player.getSlayerPoints() + (Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 10));
 					}
 
 					/**
@@ -498,11 +503,11 @@ public class SlayerTaskManagement {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
 						player.getActionSender().sendMessage("meaining you get @blu@16@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 16);
+						player.setSlayerPoints(player.getSlayerPoints() + (Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 24));
 					} else {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@8@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 8);
+						player.setSlayerPoints(player.getSlayerPoints() + (Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 12));
 					}
 
 					/**
@@ -513,11 +518,11 @@ public class SlayerTaskManagement {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
 						player.getActionSender().sendMessage("meaining you get @blu@20@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 20);
+						player.setSlayerPoints(player.getSlayerPoints() + (Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) : 30));
 					} else {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@10@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
-						player.setSlayerPoints(player.getSlayerPoints() + 10);
+						player.setSlayerPoints(player.getSlayerPoints() + (Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) :15));
 					}
 				}
 			}

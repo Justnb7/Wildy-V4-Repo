@@ -60,7 +60,7 @@ public class Constants {
 	 * Players that can overwrite those username block.
 	 */
 	public static final String USERNAME_EXCEPTIONS[] = { 
-		"patrick", "matthew"
+		"mopar", "matthew"
 	};
 
 	/**

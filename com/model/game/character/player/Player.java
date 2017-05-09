@@ -73,6 +73,7 @@ import com.model.game.character.player.packets.out.SendSidebarInterfacePacket;
 import com.model.game.character.player.packets.out.SendSkillPacket;
 import com.model.game.character.player.packets.out.SendSoundPacket;
 import com.model.game.character.player.skill.SkillCyclesTask;
+import com.model.game.character.player.skill.SkillInterfaces;
 import com.model.game.character.player.skill.SkillTask;
 import com.model.game.character.player.skill.farming.Farming;
 import com.model.game.character.player.skill.herblore.Herblore;
@@ -396,6 +397,31 @@ public class Player extends Entity {
 	public void setSlayerTasksCompleted(int slayerTasksCompleted) {
 		this.slayerTasksCompleted = slayerTasksCompleted;
 	}
+	/**
+	 * Represents slayer streak record
+	 */
+	private int slayerStreak;
+	
+	public int getSlayerStreak() {
+		return slayerStreak;
+	}
+	
+	public void setSlayerStreak(int slayerStreak) {
+		this.slayerStreak = slayerStreak;
+	}
+	/**
+	 * Represents slayer streak record
+	 */
+	private int slayerStreakRecord;
+	
+	public int getSlayerStreakRecord() {
+		return slayerStreakRecord;
+	}
+	
+	public void setSlayerStreakRecord(int slayerStreakRecord) {
+		this.slayerStreakRecord = slayerStreakRecord;
+	}
+	
 	
 	/**
 	 * A reward for doing slayer tasks
@@ -1507,7 +1533,7 @@ public class Player extends Entity {
 		            World.getWorld().register(pet);
 		        }
 
-				if (player.getName().equalsIgnoreCase("Mopar")) {
+				if (player.getName().equalsIgnoreCase("mopar")) {
 					player.setDebugMode(true);
 				}
 				if (tempKey == null || tempKey.equals("") || tempKey.isEmpty()) {
@@ -1557,6 +1583,7 @@ public class Player extends Entity {
 
 	public void logout() {
 		//Are we allowed to logout
+	
 		if (!controller.canLogOut(this)) {
 			return;
 		}
@@ -2986,6 +3013,10 @@ public class Player extends Entity {
 			walkTutorial = 15, skullIcon = -1, bountyPoints;
 	public int objectDistance, teleHeight;
 	
+	private SkillInterfaces skillInterfaces = new SkillInterfaces(this);
+	public SkillInterfaces getSI() {
+		return skillInterfaces;
+	}
 	/**
 	 * Booleans
 	 */
@@ -3297,11 +3328,18 @@ public class Player extends Entity {
 	public int slayerSelectionHolder;
 	public String slayerSelectString;
 	public int ordinal;
-	
-	public void setSlayerSelection(int buttonId, String name, int ordinal) {
+	public int slayerNpcId;
+	public int type;
+	public void setSlayerSelection(int buttonId, int slayerNpcId, String name, int ordinal , int type) {
 		this.slayerSelectionHolder = buttonId;
+		this.slayerNpcId = slayerNpcId;
 		this.slayerSelectString = name;
 		this.ordinal = ordinal;
+		this.type = type;
+		
+	}
+	public int getType() {
+		return type;
 	}
 	public String getSlayerSelectionName(){
 		return slayerSelectString;
@@ -3309,12 +3347,16 @@ public class Player extends Entity {
 	public int getSlayerSelection() {
 		return slayerSelectionHolder;
 	}
+	public int getSlayerNpcId() {
+		return slayerNpcId;
+	}
 	public int getSlayerOrdinal() {
 		return ordinal;
 	}
 	SlayerInterface slayerInterface = new SlayerInterface();
 
 	public int[] blkedTasks = new int[6];
+
 	public int[] getBlkedTasks() {
 		return blkedTasks;
 	}
