@@ -221,6 +221,7 @@ public final class NPCHandler {
 		}
 		
 		Player player = World.getWorld().getPlayers().get(npc.killedBy);
+		player.lastWasHitTime = 0;
 		if (player == null) {
 			return;
 		}
