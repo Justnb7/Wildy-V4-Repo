@@ -86,18 +86,17 @@ public enum Chaeldar implements Task {
 		return percentage;
 	}
 	public static int getStreak(Player player) {
-		if(player.getSlayerStreak() % 10 == 0) {
+		
+		if(player.getSlayerStreak() % 1000 == 0) {
 			return 50;
-		} else if(player.getSlayerStreak() % 50 == 0) {
-			return 150;
-		}  else if(player.getSlayerStreak() % 100 == 0) {
-			return 250;
 		} else 	if(player.getSlayerStreak() % 250 == 0) {
-			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 150;
+		} else if(player.getSlayerStreak() % 100 == 0) {
+			return 250;
+		} else if(player.getSlayerStreak() % 50 == 0) {
 			return 350;
-		} else if(player.getSlayerStreak() % 1000 == 0) {
-			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
-			return 500;
+		}else 	if(player.getSlayerStreak() % 10 == 0) {
+				return 500;		
 		}
 		return 0;
 	}

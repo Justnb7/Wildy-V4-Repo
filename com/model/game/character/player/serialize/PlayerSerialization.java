@@ -189,14 +189,14 @@ public class PlayerSerialization {
                         	p.setSlayerTaskAmount(Integer.parseInt(value));
                         } else if (key.equals("task-difficulity")) {
                         	p.setSlayerTaskDifficulty(Integer.parseInt(value));
-                        } else if (key.equals("slayer-streak")) {
-                        	p.setSlayerStreak(Integer.parseInt(value));
-                        } else if (key.equals("slayer-streakrecord")) {
-                        	p.setSlayerStreakRecord(Integer.parseInt(value));
                         } else if (key.equals("first-slayer-task-completed")) {
                              p.setFirstSlayerTask(Boolean.parseBoolean(value));
                         } else if (key.equals("first-boss-slayer-task-completed")) {
                             p.setFirstBossSlayerTask(Boolean.parseBoolean(value));
+                        } else if (key.equals("slayer-streak")) {
+                            p.setSlayerStreak(Integer.parseInt(value));
+                        } else if (key.equals("slayer-streakrecord")) {
+                            p.setSlayerStreakRecord(Integer.parseInt(value));     
                         } else if (key.equals("lastClanChat")) {
                             p.setTempKey(value);
                         } else if (key.equals("clanChatPunishment")) {
@@ -654,6 +654,23 @@ public class PlayerSerialization {
             writer.newLine();
             writer.write("infection-type = " + p.infection);
             writer.newLine();
+            writer.newLine();  writer.newLine();  writer.newLine();
+			writer.write("slayer-task = " + p.getSlayerTask());
+            writer.newLine();
+            writer.write("can-teleport-to-slayer-tasks = " + p.canTeleportToSlayerTask());
+            writer.newLine();
+            writer.write("task-amount = " + p.getSlayerTaskAmount());
+            writer.newLine();
+            writer.write("task-difficulity = " + p.getSlayerTaskDifficulty());
+            writer.newLine();
+            writer.write("first-slayer-task-completed = " + p.getFirstSlayerTask());
+            writer.newLine();
+            writer.write("first-boss-slayer-task-completed = " + p.getFirstBossSlayerTask());
+            writer.newLine();
+            writer.write("slayer-streak = " + p.getSlayerStreak());
+            writer.newLine();
+            writer.write("slayer-streakrecord = " + p.getSlayerStreakRecord());
+            writer.newLine();  writer.newLine();  writer.newLine();
             writer.write("lastClanChat = ");
             writer.write(p.getClanMembership() == null ? "" : p.getClanMembership().getClanOwner());
             writer.newLine();
@@ -677,24 +694,8 @@ public class PlayerSerialization {
 			writer.newLine();
 			writer.write("barrows-kc = " + barrows.getNpcController().getKillCount());
 			writer.newLine();
-			writer.write("[SLAYER]");
-			writer.newLine();
-			writer.write("slayer-task = " + p.getSlayerTask());
-            writer.newLine();
-            writer.write("can-teleport-to-slayer-tasks = " + p.canTeleportToSlayerTask());
-            writer.newLine();
-            writer.write("task-amount = " + p.getSlayerTaskAmount());
-            writer.newLine();
-            writer.write("task-difficulity = " + p.getSlayerTaskDifficulty());
-            writer.newLine();
-            writer.write("slayer-streak = " + p.getSlayerStreak());
-            writer.newLine();
-            writer.write("slayer-streakrecord = " + p.getSlayerStreakRecord());
-            writer.newLine();
-            writer.write("first-slayer-task-completed = " + p.getFirstSlayerTask());
-            writer.newLine();
-            writer.write("first-boss-slayer-task-completed = " + p.getFirstBossSlayerTask());
-            writer.newLine();
+            
+			
 			writer.write("[SLAYER-BLOCKED]");
 			writer.newLine();
 			for(int i = 0; i < p.getSlayerInterface().getBlockedTasks().size(); i++){

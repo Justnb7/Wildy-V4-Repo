@@ -108,18 +108,16 @@ public enum Duradel implements Task {
 		return percentage;
 	}
 	public static int getStreak(Player player) {
-		if(player.getSlayerStreak() % 10 == 0) {
-			return 75;
+		if(player.getSlayerStreak() % 1000 == 0) {
+			return 750;
+		} else 	if(player.getSlayerStreak() % 250 == 0) {
+			return 525;
+		} else if(player.getSlayerStreak() % 100 == 0) {
+			return 375;
 		} else if(player.getSlayerStreak() % 50 == 0) {
 			return 225;
-		}  else if(player.getSlayerStreak() % 100 == 0) {
-			return 375;
-		} else 	if(player.getSlayerStreak() % 250 == 0) {
-			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
-			return 525;
-		} else if(player.getSlayerStreak() % 1000 == 0) {
-			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
-			return 750;
+		}else 	if(player.getSlayerStreak() % 10 == 0) {
+				return 75;		
 		}
 		return 0;
 	}

@@ -86,18 +86,18 @@ public enum Nieve implements Task {
 		return percentage;
 	}
 	public static int getStreak(Player player) {
-		if(player.getSlayerStreak() % 10 == 0) {
-			return 60;
-		} else if(player.getSlayerStreak() % 50 == 0) {
-			return 180;
-		}  else if(player.getSlayerStreak() % 100 == 0) {
-			return 300;
+		if(player.getSlayerStreak() % 1000 == 0) {
+			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+			return 600;
 		} else 	if(player.getSlayerStreak() % 250 == 0) {
 			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
 			return 420;
-		} else if(player.getSlayerStreak() % 1000 == 0) {
-			PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
-			return 600;
+		} else if(player.getSlayerStreak() % 100 == 0) {
+			return 300;
+		} else if(player.getSlayerStreak() % 50 == 0) {
+			return 180;
+		}else 	if(player.getSlayerStreak() % 10 == 0) {
+				return 60;		
 		}
 		return 0;
 	}

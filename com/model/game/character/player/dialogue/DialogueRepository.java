@@ -27,7 +27,6 @@ import com.model.game.character.player.dialogue.impl.pets.Olmlet;
 import com.model.game.character.player.dialogue.impl.pets.Snakeling;
 import com.model.game.character.player.dialogue.impl.pets.Venenatis_Spiderling;
 import com.model.game.character.player.dialogue.impl.pets.Vetion_Jr;
-import com.model.game.character.player.dialogue.impl.slayer.BlockTask;
 import com.model.game.character.player.dialogue.impl.slayer.ChaeldarDialogue;
 import com.model.game.character.player.dialogue.impl.slayer.DuradelDialogue;
 import com.model.game.character.player.dialogue.impl.slayer.EnchantedGem;
@@ -55,7 +54,6 @@ public class DialogueRepository {
 
 	static {
 		
-		dialogues.put("BLOCK_TASK", BlockTask.class);
 		/**
 		 * Fight caves
 		 */

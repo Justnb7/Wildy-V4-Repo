@@ -7,6 +7,7 @@ import com.model.game.Constants;
 import com.model.game.World;
 import com.model.game.character.npc.NPC;
 import com.model.game.character.player.Player;
+import com.model.game.character.player.PlayerUpdating;
 import com.model.game.character.player.Skills;
 import com.model.game.character.player.content.questtab.QuestTabPageHandler;
 import com.model.game.character.player.content.questtab.QuestTabPages;
@@ -42,16 +43,16 @@ public class SlayerTaskManagement {
 		if (!Slayer.hasTask(player)) {
 			return false;
 		}
-		if(player.getItems().playerHasItem(13307, 10)) {
+		if(player.getSlayerPoints() >= 10) {
 			player.setSlayerTask(0);
 			player.setSlayerTaskAmount(0);
-			player.getItems().deleteItem(13307, 10);
 			player.setSlayerStreak(0);
+			player.setSlayerPoints(player.getSlayerPoints() - 10);
 			player.getActionSender().sendRemoveInterfacePacket();
-			player.getActionSender().sendMessage("Your slayer task has been reset, talk to any slayer master for a new one.");
+			player.getActionSender().sendMessage("Your slayer task and streak has been reset , talk to any slayer master for a new one.");
 			return true;
 		} else {
-			player.getActionSender().sendMessage("You do not have enough blood money in order to reset your slayer task.");
+			player.getActionSender().sendMessage("You do not have enough Slayer Points to reset your slayer task.");
 			player.getActionSender().sendRemoveInterfacePacket();
 			return false;
 		}
@@ -435,7 +436,7 @@ public class SlayerTaskManagement {
 				
 				player.setSlayerTask(0);
 				player.setSlayerTaskAmount(0);
-				player.setSlayerTaskDifficulty(0);
+		
 				player.setSlayerTasksCompleted(player.getSlayerTasksCompleted() + 1);
 				player.setSlayerStreak(player.getSlayerStreak() + 1);
 				if(player.getSlayerStreak() > player.getSlayerStreakRecord()) {
@@ -457,13 +458,19 @@ public class SlayerTaskManagement {
 				} else if (player.getSlayerTaskDifficulty() == 1) {
 					if (Constants.SLAYER_REWARDS) {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@4@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("meaining you get @blu@"+(Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 4)+"@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 4));
+						if(Mazchna.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Mazchna.getStreak(player)+" bonus slayer points.");
 					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@2@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@ "+(Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 2)+"@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Mazchna.getStreak(player) > 0 ? Mazchna.getStreak(player) : 2));
+						if(Mazchna.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Mazchna.getStreak(player)+" bonus slayer points.");
 					}
 
 					/**
@@ -472,13 +479,19 @@ public class SlayerTaskManagement {
 				} else if (player.getSlayerTaskDifficulty() == 2) {
 					if (Constants.SLAYER_REWARDS) {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@8@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("meaining you get @blu@"+(Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 8)+"@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 8));
+						if(Vannaka.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Vannaka.getStreak(player)+" bonus slayer points.");
 					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@4@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@"+(Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 4)+"@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Vannaka.getStreak(player) > 0 ? Vannaka.getStreak(player) : 4));
+						if(Vannaka.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Vannaka.getStreak(player)+" bonus slayer points.");
 					}
 					/**
 					 * Hard task (Chaeldar).
@@ -486,13 +499,19 @@ public class SlayerTaskManagement {
 				} else if (player.getSlayerTaskDifficulty() == 3) {
 					if (Constants.SLAYER_REWARDS) {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@12@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("meaining you get @blu@"+(Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 20)+"@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 20));
+						if(Chaeldar.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Chaeldar.getStreak(player)+" bonus slayer points.");
 					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@6@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@"+(Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 10)+"@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Chaeldar.getStreak(player) > 0 ? Chaeldar.getStreak(player) : 10));
+						if(Chaeldar.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Chaeldar.getStreak(player)+" bonus slayer points.");
 					}
 
 					/**
@@ -501,13 +520,20 @@ public class SlayerTaskManagement {
 				} else if (player.getSlayerTaskDifficulty() == 4) {
 					if (Constants.SLAYER_REWARDS) {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@16@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("meaining you get @blu@"+(Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 24)+"@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 24));
+						if(Nieve.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Nieve.getStreak(player)+" bonus slayer points.");
 					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@8@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@"+(Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 12)+"@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Nieve.getStreak(player) > 0 ? Nieve.getStreak(player) : 12));
+						if(Nieve.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Nieve.getStreak(player)+" bonus slayer points.");
+					
 					}
 
 					/**
@@ -516,15 +542,27 @@ public class SlayerTaskManagement {
 				} else if (player.getSlayerTaskDifficulty() == 5) {
 					if (Constants.SLAYER_REWARDS) {
 						player.getActionSender().sendMessage("You have completed your slayer assignment. Double Slayer points is active");
-						player.getActionSender().sendMessage("meaining you get @blu@20@bla@ Slayer Points. Please speak to a Slayer Master");
+						player.getActionSender().sendMessage("meaining you get @blu@"+(Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) : 30)+"@bla@ Slayer Points. Please speak to a Slayer Master");
 						player.getActionSender().sendMessage("to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) : 30));
+						if(Duradel.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Duradel.getStreak(player)+" bonus slayer points.");
 					} else {
-						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@10@bla@ Slayer Points!");
+						player.getActionSender().sendMessage("You have completed your slayer assignment. You gain @blu@"+(Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) :15)+"@bla@ Slayer Points!");
 						player.getActionSender().sendMessage("Please speak to a Slayer Master to retrieve an another assignment.");
 						player.setSlayerPoints(player.getSlayerPoints() + (Duradel.getStreak(player) > 0 ? Duradel.getStreak(player) :15));
+						if(Duradel.getStreak(player) > 0)
+							player.getActionSender().sendMessage("You hit your streak of: "+player.getSlayerStreak()+" "
+									+ "and received  "+Duradel.getStreak(player)+" bonus slayer points.");
 					}
 				}
+				if(player.getSlayerStreak() % 1000 == 0) {
+					PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+				} else 	if(player.getSlayerStreak() % 250 == 0) {
+					PlayerUpdating.executeGlobalMessage("<shad=000000><col=FF5E00>News: " + Utility.formatPlayerName(player.getName()) + " has just completed " + player.getSlayerStreak() + "x Slayer tasks in a row!");
+				}
+				player.setSlayerTaskDifficulty(0);
 			}
 		}
 	}

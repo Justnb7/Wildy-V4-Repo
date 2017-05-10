@@ -56,7 +56,7 @@ public class NieveDialogue extends Dialogue {
 					setPhase(4);
 				} else {
 					if (getPhase() == 5) {
-						send(Type.NPC, NPC_ID, Expression.DEFAULT, "That will cost you 10 Slayer Points.", "Are you sure you wish to do this?");
+						send(Type.NPC, NPC_ID, Expression.ANGRY, " I charge 10 Slayer Points and will reset your streak.", "Are you sure you wish to do this?");
 						setPhase(6);
 					} else {
 						if (getPhase() == 6) {

@@ -1,13 +1,8 @@
 package com.model.game.character.player.dialogue.impl.slayer.interfaceController;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Map.Entry;
-
 import com.model.Server;
 import com.model.game.character.npc.NPC;
 import com.model.game.character.player.Player;
@@ -15,6 +10,7 @@ import com.model.game.character.player.dialogue.impl.slayer.interfaceController.
 import com.model.game.character.player.dialogue.impl.slayer.interfaceController.UnlockInterface.UnlockButtons;
 import com.model.game.character.player.packets.out.SendInterfacePacket;
 import com.model.game.character.player.packets.out.SendMessagePacket;
+import com.model.game.character.player.skill.slayer.Slayer;
 import com.model.task.ScheduledTask;
 import com.model.utility.Utility;
 import com.model.utility.misc;
@@ -379,6 +375,7 @@ public class SlayerInterface {
 		}
 		}
 	}
+		
 		switch(button.getAction()) {	
 		
 		case INTERFACE:
@@ -388,6 +385,8 @@ public class SlayerInterface {
 			player.getActionSender().sendMessage("Previous interface = "+getPreviousInterface());
 			return true;
 		case CANCEL:
+			if(!Slayer.hasTask(player))
+				return false;
 			if(!purchase(player, button.getPoints())) {
 				player.getActionSender().sendMessage("@red@You don't have enough points");
 				return false;
@@ -400,7 +399,9 @@ public class SlayerInterface {
 			player.getActionSender().sendString("" + currentTask, 23208); 
 			return true;
 		case BLOCK:
-			if(player.getSlayerTask() > 0)
+			if(blockedTasks.contains(player.getSlayerTask()))
+				return false;
+			if(Slayer.hasTask(player))
 			block(player, buttonId);
 			return true;
 		case UNBLOCK:
@@ -447,7 +448,7 @@ public class SlayerInterface {
 			unlock.write(player);
 			player.write(new SendInterfacePacket(button.getInterface()));
 			setPreviousInterface(button.getInterface());
-			player.getActionSender().sendString("Remaining tasks", 23399); 
+			player.getActionSender().sendString("Current Streak: "+player.getSlayerStreak()+" Record: "+player.getSlayerStreakRecord(), 23399); 
 			player.getActionSender().sendMessage("Previous interface = "+getPreviousInterface());
 			return true;
 		case UNLOCK_BUTTON:
@@ -476,32 +477,37 @@ public class SlayerInterface {
 			player.write(new SendInterfacePacket(getPreviousInterface()));
 			return true;
 			} else 
+				//block
 			if (player.slayerAction == 1) {
-				if(!purchase(player, ButtonData.buttonMap.get(player.getSlayerSelection()).getPoints())) {
+				if(!purchase(player,100)) {
 					player.getActionSender().sendMessage("You don't have enough points");
+					player.slayerAction = 0;
 					return false;
 				}
 				try {
-				for(int i = 0; i < 6; i++) {
 			if(blockedTasks.contains(player.getSlayerTask())){
 				player.getActionSender().sendMessage("This task is already blocked.");
 				player.getActionSender().closeAllWindows();
-				break;
+				player.slayerAction = 0;
+				return false;
 			}	
 			if(blockedTasks.size() >= 6) {
 				player.getActionSender().sendMessage("You have the maximum amount of blocks.");
-				break;
+				player.slayerAction = 0;
+				return false;
 			}
 			blockedTasks.add(player.getSlayerTask());
 			TaskInterface task1 = new TaskInterface();
 			task1.write(player);
+			player.write(new SendInterfacePacket(getPreviousInterface()));
+			player.slayerAction = 0;
 			return true;
-			} 
-		}catch (Exception name){
+	
+		}	catch (Exception name){
 					
 	}
 }
-		player.slayerAction = 0;
+	
 		case BACK:
 			if(getPreviousInterface() == 23400) {
 				player.getActionSender().sendConfig(580+(player.getSlayerOrdinal()), 0); //turn off

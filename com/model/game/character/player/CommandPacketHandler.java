@@ -596,6 +596,42 @@ public class CommandPacketHandler implements PacketType {
     private static boolean processAdminCommand(Player player, String[] cmd) {
     	
     	switch(cmd[0]) {
+    	
+    	case "move":
+			try {
+				String commandContents = cmd[1];
+				int positionOffset = Integer.parseInt(cmd[2]);
+				int x = player.absX;
+				int y = player.absY;
+				int height = player.heightLevel;
+				switch (commandContents.toLowerCase()) {
+				case "up":
+					height += positionOffset;
+					break;
+				case "down":
+					height -= positionOffset;
+					break;
+				case "north":
+					y += positionOffset;
+					break;
+				case "east":
+					x += positionOffset;
+					break;
+				case "south":
+					y -= positionOffset;
+					break;
+				case "west":
+					x -= positionOffset;
+					break;
+				default:
+					break;
+				}
+				player.getPA().movePlayer(x, y, height);
+			} catch (Exception e) {
+				e.printStackTrace();
+				player.getActionSender().sendMessage("Improper syntax, please use the following as an example: '::move up 2'.");
+			}
+		return true;
     	case "overload":
 			player.getPA().requestUpdates();
 			for (int i = 0; i < 7; i++) {
