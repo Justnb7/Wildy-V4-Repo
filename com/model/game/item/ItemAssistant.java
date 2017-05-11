@@ -2235,7 +2235,7 @@ public class ItemAssistant {
 	}
 
 	public void deleteItem2(int toremove, int toremove2) {
-		deleteItem(toremove, toremove2);
+		deleteItem(toremove, toremove2);//why
 		
 	}
 

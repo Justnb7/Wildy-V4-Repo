@@ -15,6 +15,7 @@ import com.model.game.item.itemCombination.impl.*;
 public enum ItemCombinations {
 	
 	
+	
 	SARADOMINS_BLESSED_SWORD(
 			new SaradominsBlessedSword(Optional.empty(), new Item(12809), 
 					Optional.of(Arrays.asList(new Item(11838))),

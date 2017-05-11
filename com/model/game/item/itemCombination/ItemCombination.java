@@ -91,7 +91,7 @@ public abstract class ItemCombination {
 	
 	/**
 	 * Sends the confirmation page to the player so they can choose to cancel it
-	 * @param player	the player
+	 * @param player	the player  
 	 */
 	public void sendCombineConfirmation(Player player) {
 		player.dialogue().start("COMBINE_ITEMS");
