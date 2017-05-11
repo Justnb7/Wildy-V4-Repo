@@ -11,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import com.model.Server;
@@ -90,6 +91,7 @@ import com.model.game.item.container.impl.RunePouchContainer;
 import com.model.game.item.container.impl.TradeContainer;
 import com.model.game.item.equipment.Equipment;
 import com.model.game.item.ground.GroundItemHandler;
+import com.model.game.item.itemCombination.ItemCombination;
 import com.model.game.location.Area;
 import com.model.game.location.Position;
 import com.model.game.shop.Currency;
@@ -105,6 +107,7 @@ import com.model.utility.Stopwatch;
 import com.model.utility.Utility;
 
 import io.netty.buffer.Unpooled;
+
 
 public class Player extends Entity {
 	//1 is blocking
@@ -122,8 +125,18 @@ public class Player extends Entity {
     public MutableNumber getPoisonImmunity() {
         return poisonImmunity;
     }
+    /**
+     * Handle item combinations
+     */
+    private Optional<ItemCombination> currentCombination = Optional.empty();
+	
+    public Optional<ItemCombination> getCurrentCombination() {
+		return currentCombination;
+	}
     
-    
+	public void setCurrentCombination(Optional<ItemCombination> combination) {
+		this.currentCombination = combination;
+	}
 	/**
 	 * Godwars variables
 	 * 

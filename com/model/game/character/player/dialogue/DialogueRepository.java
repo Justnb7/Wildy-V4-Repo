@@ -3,6 +3,8 @@ package com.model.game.character.player.dialogue;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.model.game.character.player.dialogue.ItemCombinationDialogue.Combine;
+import com.model.game.character.player.dialogue.ItemCombinationDialogue.Dismantle;
 import com.model.game.character.player.dialogue.impl.Imbue;
 import com.model.game.character.player.dialogue.impl.RottenPotato;
 import com.model.game.character.player.dialogue.impl.SigmundTheMerchant;
@@ -54,6 +56,12 @@ public class DialogueRepository {
 
 	static {
 		
+		/**
+		 * Item Combinations
+		 */
+		
+		dialogues.put("COMBINE_ITEMS", Combine.class);
+		dialogues.put("DISMANTEL", Dismantle.class);
 		/**
 		 * Fight caves
 		 */

@@ -55,6 +55,7 @@ public class Withdraw1Action implements PacketType {
 			break;
 			
 		case 3900:
+		case 23016:
 			if (player.getOpenShop().equals("Skillcape Shop")) {
 				player.getActionSender().sendMessage("All items in this shop cost 99K coins.");
 				return;
@@ -66,7 +67,7 @@ public class Withdraw1Action implements PacketType {
 			if (player.getOpenShop().equals("Skillcape Shop")) {
 				player.getActionSender().sendMessage("Items cannot be sold to this shop.");
 				return;
-			} else if (player.getOpenShop().equals("Death Store")) {
+			} else if (player.getOpenShop().equals("Death Store") || player.getOpenShop().equals("Slayer Equipment")) {
 				player.getActionSender().sendMessage("You cannot sell items to this store!");
 				return;
 			}

@@ -52,10 +52,10 @@ public class ClanChat extends Dialogue {
 	@Override
 	public void select(int index) {
 		if (index == 1) {
-			player.lastClanChat = "patrick";
+			player.lastClanChat = "mopar";
 			stop();
 		} else {
-			player.lastClanChat = "matthew";
+			player.lastClanChat = "help";
 			stop();
 		}
 	}

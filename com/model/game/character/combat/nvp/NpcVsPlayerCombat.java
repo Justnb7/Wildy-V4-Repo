@@ -97,7 +97,7 @@ public class NpcVsPlayerCombat {
 				}
 			}
 			if (!validateAttack(player, npc)) {
-				System.out.println("Stopping npc validation "+npc.getName());
+			//	System.out.println("Stopping npc validation "+npc.getName());
 				return;
 			}
 			

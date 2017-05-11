@@ -84,6 +84,7 @@ public class EnterAmountPacketHandler implements PacketType {
 			break;
 			
 		case 3900:
+		case 23016:
 			if (player.getOpenShop().equals("Skillcape Shop")) {
 				player.getActionSender().sendMessage("All items in this shop cost 99K coins.");
 				return;

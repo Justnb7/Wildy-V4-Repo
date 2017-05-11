@@ -8,6 +8,7 @@ import com.model.game.character.player.Player;
 import com.model.game.character.player.Skills;
 import com.model.game.item.equipment.Equipment;
 import com.model.utility.Utility;
+import com.model.utility.json.definitions.ItemDefinition;
 
 /**
  * Handles the combat's accuracy and max hit formulas.
@@ -492,7 +493,11 @@ public class CombatFormulae {
 
 	public static boolean hasBlackMaskOrSlayerHelm(Player player) {
 		return player.getItems().isWearingItem(8901) || player.getItems().isWearingItem(11864)
-				|| player.getItems().isWearingItem(11865);
+				|| player.getItems().isWearingItem(11865) || player.getItems().isWearingItem(11864)
+				|| player.getItems().isWearingItem(19639)
+				|| player.getItems().isWearingItem(19641) || player.getItems().isWearingItem(19643)
+				|| player.getItems().isWearingItem(19645) || player.getItems().isWearingItem(19647)
+				|| player.getItems().isWearingItem(19649);
 	}
 
 	public static boolean hasImbuedSlayerHelm(Player player) {

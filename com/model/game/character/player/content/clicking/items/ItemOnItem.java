@@ -1,16 +1,22 @@
 package com.model.game.character.player.content.clicking.items;
 
+import java.util.Optional;
+
 import com.model.game.character.player.Player;
 import com.model.game.character.player.Rights;
 import com.model.game.character.player.content.PotionCombinating;
 import com.model.game.character.player.content.rewards.CrystalChest;
+import com.model.game.character.player.dialogue.SimpleDialogues;
 import com.model.game.character.player.skill.crafting.GemCutting;
 import com.model.game.character.player.skill.crafting.Gems;
 import com.model.game.character.player.skill.firemaking.Firemaking;
 import com.model.game.character.player.skill.fletching.Fletching;
 import com.model.game.character.player.skill.fletching.FletchingHandler;
 import com.model.game.character.player.skill.fletching.Bolts;
+import com.model.game.item.GameItem;
 import com.model.game.item.Item;
+import com.model.game.item.itemCombination.ItemCombination;
+import com.model.game.item.itemCombination.ItemCombinations;
 import com.model.utility.json.definitions.ItemDefinition;
 
 public class ItemOnItem {
@@ -42,6 +48,23 @@ public class ItemOnItem {
 			}
 		}
 		
+		Optional<ItemCombinations> itemCombination = ItemCombinations.isCombination(new Item(usedItem.id), new Item(withItem.id));
+		
+		if (itemCombination.isPresent()) {
+			ItemCombination combination = itemCombination.get().getItemCombination();
+			if (combination.isRequirable() && !combination.hasRequirements(player)) {
+				combination.insufficientRequirements(player);
+				return;
+			}
+			if (combination.isCombinable(player)) {
+				player.setCurrentCombination(Optional.of(combination));
+				combination.showDialogue(player);
+			} else {
+				SimpleDialogues.sendStatement(player, "You don't have all of the items required for this combination.");
+				return;
+			}
+			return;
+		}
 		if (PotionCombinating.get().isPotion(usedItem) && PotionCombinating.get().isPotion(withItem)) {
 			if (PotionCombinating.get().matches(usedItem, withItem)) {
 				PotionCombinating.get().mix(player, usedItem, withItem);

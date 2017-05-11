@@ -140,7 +140,18 @@ public final class Shop {
 		player.getActionSender().sendString(name, 3901);
 		players.add(player);
 	}
-
+	public void openSlayerShop(Player player) {
+		if (Server.getMultiplayerSessionListener().inAnySession(player)) {
+			return;
+		}
+		player.setShopping(true);
+		player.getItems().resetItems(3823);
+		player.getActionSender().sendItemsOnInterface(23016, container.container(), container.size());
+		player.setOpenShop(name);
+		//player.getActionSender().sendInterfaceWithInventoryOverlay(3824, 3822);
+		player.getActionSender().sendString(name, 3901);
+		players.add(player);
+	}
 	/**
 	 * Updates the items and the containers that display items for
 	 * {@code player}.

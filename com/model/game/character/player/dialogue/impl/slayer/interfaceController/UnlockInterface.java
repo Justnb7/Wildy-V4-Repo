@@ -23,11 +23,11 @@ public class UnlockInterface {
 	
 	public enum UnlockButtons {
 		
-		GARGOYLE_SMASHER(new int[]{91110}, SlayerConstants.GARGOYLE, 
-				"Gargoyle smasher",
-				"Autmatically smash gargoyles when"
-				+ "\\nthey're on critical health, if you have"
-				+ "\\nthe right tool. \\n<col=ff0000>(120 points)</col>"),
+		TELEPORTING(new int[]{91110}, 13666, 
+				"Task Teleport",
+				"Teleport to your tasks"
+				+ "\\nby right clicking on your slayer gem"
+				+ "\\n<col=ff0000>(150 points)</col>"),
 		
 		/*SLUG_SALTER(SlayerConstants.ROCKSLUG, 
 				"Slug slater",
@@ -39,7 +39,7 @@ public class UnlockInterface {
 				"Autmatically freeze desert lizards when"
 				+ "\\nthey're on critical health, if you have ice"
 				+ "\\nwater. @red@90 points)"),*/
-		SHROOM_SPRAYER(new int[]{91111}, SlayerConstants.MUTATEZ_ZYGOMITE, 
+		/*SHROOM_SPRAYER(new int[]{91111}, SlayerConstants.MUTATEZ_ZYGOMITE, 
 				"'Shroom sprayer",
 				"Automatically spray mutated zygomites"
 				+ "\\nwhen they're on critical health, if you"
@@ -49,7 +49,7 @@ public class UnlockInterface {
 				"Broader fletching",
 				"Learn to fletch borad arrows (with level 52"
 				+ "\\nFletching) and broad bolts (with level 55"
-				+ "\\n Fletching). \\n@red@(110 points)"),
+				+ "\\n Fletching). \\n@red@(110 points)"),*/
 		
 		MALEVOLENT_MASQUERADE(new int[]{91113}, SlayerConstants.SLAYER_HELMET, 
 				"Malevolent masquerade",

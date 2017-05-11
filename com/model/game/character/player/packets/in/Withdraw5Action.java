@@ -34,6 +34,7 @@ public class Withdraw5Action implements PacketType {
             break;
             
         case 3900:
+        case 23016:
             if (player.getOpenShop().equals("Skillcape Shop")) {
                 Shop.skillBuy(player, removeId);
                 return;
