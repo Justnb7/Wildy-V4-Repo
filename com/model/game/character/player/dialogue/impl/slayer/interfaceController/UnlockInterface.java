@@ -25,9 +25,9 @@ public class UnlockInterface {
 		
 		TELEPORTING(new int[]{91110}, 13666, 
 				"Task Teleport",
-				"Teleport to your tasks"
-				+ "\\nby right clicking on your slayer gem"
-				+ "\\n<col=ff0000>(150 points)</col>"),
+				"Teleport to your tasks by right"
+				+ "\\non your slayer gem <col=ff0000>(150 points)</col>"
+				+ "\\n"),
 		
 		/*SLUG_SALTER(SlayerConstants.ROCKSLUG, 
 				"Slug slater",
@@ -39,17 +39,17 @@ public class UnlockInterface {
 				"Autmatically freeze desert lizards when"
 				+ "\\nthey're on critical health, if you have ice"
 				+ "\\nwater. @red@90 points)"),*/
-		/*SHROOM_SPRAYER(new int[]{91111}, SlayerConstants.MUTATEZ_ZYGOMITE, 
-				"'Shroom sprayer",
-				"Automatically spray mutated zygomites"
-				+ "\\nwhen they're on critical health, if you"
-				+ "\\nhave fungicide. \\n@red@110 points)"),
+		LIME_WHIP(new int[]{91111}, 20405, 
+				"Taco Limey Time",
+				"Have a chance to receive a drip of a "
+				+ "\\nime whip when killing Abbysal Demons."
+				+ "\\n \\n@red@400 points)"),
 		
 		BROADER_FLETCHING(new int[]{91112}, SlayerConstants.BROAD_ARROWS, 
 				"Broader fletching",
 				"Learn to fletch borad arrows (with level 52"
 				+ "\\nFletching) and broad bolts (with level 55"
-				+ "\\n Fletching). \\n@red@(110 points)"),*/
+				+ "\\n Fletching). \\n@red@(110 points)"),
 		
 		MALEVOLENT_MASQUERADE(new int[]{91113}, SlayerConstants.SLAYER_HELMET, 
 				"Malevolent masquerade",
