@@ -41,7 +41,7 @@ public class UnlockInterface {
 				+ "\\nwater. @red@90 points)"),*/
 		LIME_WHIP(new int[]{91111}, 20405, 
 				"Taco Limey Time",
-				"Have a chance to receive a drip of a "
+				"Have a chance to receive a drop of a "
 				+ "\\nime whip when killing Abbysal Demons."
 				+ "\\n \\n@red@400 points)"),
 		

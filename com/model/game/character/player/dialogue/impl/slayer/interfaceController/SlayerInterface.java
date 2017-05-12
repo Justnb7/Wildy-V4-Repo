@@ -196,6 +196,10 @@ public class SlayerInterface {
 		prevInterfaceId = interfaceId;
 	}
 
+	public String getButtonLowercaseName(int i){
+		return ButtonData.buttonMap.get(i).name().toLowerCase();
+	}
+	
 	/**
 	 * Checks for existing purchases and marks with checkmark
 	 * 
@@ -310,6 +314,7 @@ public class SlayerInterface {
 	public boolean purchase(Player player, int amount) {
 		if (player.getSlayerPoints() >= amount) {
 			player.setSlayerPoints(player.getSlayerPoints() - amount);
+			player.getActionSender().sendString("Reward Points: " + player.getSlayerPoints(), 23014);
 			return true;
 		} else
 			return false;
@@ -329,28 +334,21 @@ public class SlayerInterface {
 			return false;
 		}
 		player.getActionSender().sendString("Reward Points: " + player.getSlayerPoints(), 23014);
-		for (Entry<Integer, String> entrys : player.getSlayerInterface().getUnlocks().entrySet()) {
-			if (entrys.getKey() == buttonId) {
-				if (button.getAction() == Action.UNLOCK_BUTTON) {
-					player.getActionSender().sendConfig(580 + (button.ordinal() - 10), 1);
-					player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
-					return false;
-				}
-
+		if(player.getSlayerInterface().getUnlocks().containsKey(buttonId)) {
+			if (button.getAction() == Action.UNLOCK_BUTTON) {
+				player.getActionSender().sendConfig(580 + (button.ordinal() - 10), 1);
+				player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
+				return false;
 			}
 		}
-		for (Entry<Integer, Integer> entrys : player.getSlayerInterface().getExtensions().entrySet()) {
-			if (entrys.getKey() == buttonId) {
-				if (button.getAction() == Action.EXTEND_BUTTON) {
-					player.getActionSender().sendConfig(560 + (button.ordinal() - 26), 1); //turn back on
-					player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
-					return false;
-				}
+		if(player.getSlayerInterface().getExtensions().containsKey(buttonId)){
+			if (button.getAction() == Action.EXTEND_BUTTON) {
+				player.getActionSender().sendConfig(560 + (button.ordinal() - 26), 1); //turn back on
+				player.write(new SendMessagePacket("<img=8>You have already purchased this unlock.<img=8>"));
+				return false;
 			}
 		}
-
-		switch (button.getAction()) {
-		
+		switch (button.getAction()) {	
 		case INTERFACE:
 			player.write(new SendMessagePacket(
 					"Button: " + buttonId + " trying to open interface " + button.getInterface()));
@@ -443,10 +441,11 @@ public class SlayerInterface {
 					player.getActionSender().sendMessage("You don't have enough points");
 					return false;
 				}
+				///unlocks
 				if (player.getType() == 0) {
-					if(ButtonData.buttonMap.get(player.getSlayerSelection()).name().toLowerCase().equals("teleporting")){
+					if(getButtonLowercaseName(player.getSlayerSelection()).equals("teleporting")) {
 						player.getItems().addItem(6798, 1);
-						player.getActionSender().sendMessage("You have received your Slayer Teleportation scroll");
+						player.getActionSender().sendMessage("@red@You have received your Slayer Teleportation scroll");
 					}
 					player.getSlayerInterface().getUnlocks().put(player.getSlayerSelection(),
 							player.getSlayerSelectionName());
@@ -454,14 +453,14 @@ public class SlayerInterface {
 					player.getSlayerInterface().getExtensions().put(player.getSlayerSelection(),
 							player.getSlayerNpcId());
 				}
-				player.getActionSender().sendMessage("You successfully purchased X");
+				player.getActionSender().sendMessage("You successfully purchased ");
 				player.write(new SendInterfacePacket(getPreviousInterface()));
 				return true;
 			} else
 			// block
 			if (player.slayerAction == 1) {
 				if (!purchase(player, 100)) {
-					player.getActionSender().sendMessage("You don't have enough points");
+					player.getActionSender().sendMessage("@red@You don't have enough points");
 					player.slayerAction = 0;
 					return false;
 				}

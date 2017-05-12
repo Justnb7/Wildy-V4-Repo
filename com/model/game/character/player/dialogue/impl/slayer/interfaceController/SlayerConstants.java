@@ -9,6 +9,7 @@ package com.model.game.character.player.dialogue.impl.slayer.interfaceController
  */
 public class SlayerConstants {
 
+	public static int MAX_BLOCKS = 2;
 	
 	public static int ROCKSLUG = 4136;
 	public static int BANSHEE = 4135;
