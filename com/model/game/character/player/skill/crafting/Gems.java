@@ -20,7 +20,8 @@ public enum Gems {
 	RUBY(1619, 1603, 85, 34, Animation.create(887)),
 	DIAMOND(1617, 1601, 107.5, 43, Animation.create(886)),
 	DRAGONSTONE(1631, 1615, 137.5, 55, Animation.create(885)),
-	ONYX(6571, 6573, 168, 67, Animation.create(2717));
+	ONYX(6571, 6573, 168, 67, Animation.create(2717)),
+	ZENYTE(19496, 19493, 200, 92, Animation.create(7185));
 	
 	/**
 	 * The uncutId

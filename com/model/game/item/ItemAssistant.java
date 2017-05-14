@@ -1960,7 +1960,7 @@ public class ItemAssistant {
 		return freeS;
 	}
 
-	public String getItemName(int ItemID) {
+	public static String getItemName(int ItemID) {
 		if (ItemID < 0 || ItemDefinition.forId(ItemID) == null) {
 			return "Unarmed";
 		}

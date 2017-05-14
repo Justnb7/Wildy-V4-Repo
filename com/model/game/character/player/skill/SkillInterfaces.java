@@ -354,7 +354,12 @@ public class SkillInterfaces {
 			menuLine("60", "TokTz-Xil-Ek(Obsidian Knife)", 6525, 4);
 			menuLine("60", "TokTz-Mej-Tal(Obsidian Staff)", 6526, 5);
 			menuLine("60", "TokTz-Ket-Em(Obsidian Mace)", 6527, 6);
-			menuLine("70", "Abyssal Whip", 4151, 7);
+			menuLine("70", "Zamorakian Spear", 11824, 7);
+			menuLine("70", "Abyssal Whip", 4151, 8);
+			menuLine("70", "Saradomin Sword", 11838, 9);
+			menuLine("75", "Saradomin's Blessed Sword", 12809, 10);
+			menuLine("75", "Abyssal Tentacle", 12006, 11);
+			menuLine("75", "Godswords", 11802, 12);
 			optionTab("Attack", "Special", "Bronze", "Iron", "Steel", "Black",
 					"White", "Mithril", "Adamant", "Rune", "Dragon", "Barrows",
 					"Special", "Milestones", "");
@@ -384,10 +389,15 @@ public class SkillInterfaces {
 			menuLine("15", "Adamant Halberd(With 30 Attack)", 3200, 3);
 			menuLine("20", "Rune Halberd(With 40 Attack)", 3202, 4);
 			menuLine("30", "Dragon Halberd(With 60 Attack)", 3204, 5);
-			menuLine("50", "Granite Maul(With 50 Attack)", 4153, 6);
-			menuLine("60", "TzHaar-Ket-Om(Obsidian Maul)", 6528, 7);
-			menuLine("70", "Dharok's Greataxe(With 70 Attack)", 4718, 8);
+			menuLine("50", "Barrelchest Anchor(With 60 Attack)", 10887, 6);
+			menuLine("50", "Granite Armour(With 50 Defence)", 10589, 7);
+			menuLine("50", "Granite Maul(With 50 Attack)", 4153, 8);
+			menuLine("60", "TzHaar-Ket-Om(Obsidian Maul)", 6528, 9);
+			menuLine("70", "Dharok's Greataxe(With 70 Attack)", 4718, 10);
 			menuLine("70", "Torag's Hammers(With 70 Attack)", 4747, 9);
+			menuLine("75", "Abyssal Bludgeon(With 70 Attack)", 13263, 10);
+			menuLine("75", "Primordial Boots(With 75 Defence)", 13239, 11);
+			menuLine("75", "Elder Maul(With 75 Attack)", 21003, 12);
 			optionTab("Strength", "Weaponry", "Weaponry", "Armor",
 					"Milestones", "", "", "", "", "", "", "", "", "", "");
 		}
@@ -1037,6 +1047,7 @@ public class SkillInterfaces {
 			menuLine("54", "Law runes", 563, 15);
 			menuLine("65", "Death runes", 560, 16);
 			menuLine("77", "Blood runes", 565, 17);
+			menuLine("90", "Soul runes", 566, 18);
 			optionTab("RuneCrafting", "Runes", "Runes", "Multiples",
 					"Equipment", "Milestones", "", "", "", "", "", "", "", "",
 					"");
@@ -2350,6 +2361,8 @@ public class SkillInterfaces {
 			menuLine("65", "Yew Pyre Logs", 3446, 24);
 			menuLine("75", "Magic Logs", 1513, 25);
 			menuLine("80", "Magic Pyre Logs", 3448, 26);
+			menuLine("90", "Redwood logs", 19669, 27);
+			menuLine("95", "Redwood pyre logs", 19672, 28);
 			optionTab("Firemaking", "Firemaking", "Firemaking", "Equipment",
 					"Milestones", "", "", "", "", "", "", "", "", "", "");
 		}
@@ -2393,6 +2406,7 @@ public class SkillInterfaces {
 			menuLine("50", "Mahogany Tree", 6332, 10);
 			menuLine("60", "Yew Tree", 1515, 11);
 			menuLine("75", "Magic Tree", 1513, 12);
+			menuLine("90", "Redwood trees", 19669, 13);
 			optionTab("Woodcutting", "Trees", "Trees", "Hatchets", "Canoes",
 					"Milestones", "", "", "", "", "", "", "", "", "");
 		}

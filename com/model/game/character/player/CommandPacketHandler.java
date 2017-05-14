@@ -94,21 +94,7 @@ public class CommandPacketHandler implements PacketType {
     		player.getPA().showAccountSleection(player, 0);
     		break;
     		
-    	case "item":
-    		int spawnItem = Integer.parseInt(cmd[1]);
-			if (cmd.length == 3) {
-				int amount = Integer.parseInt(cmd[2]);
-				//player.getInventory().add(new Item(spawnItem, amount));
-				player.getItems().addItem(new Item(spawnItem, amount));
-				System.out.println("adding item "+spawnItem+" amount "+amount);
-			} else if (cmd.length == 2) {
-				player.getItems().addItem(new Item(spawnItem, 1));
-				//player.getInventory().add(new Item(spawnItem, 1));
-				System.out.println("adding item "+spawnItem);
-			} else {
-				player.getActionSender().sendMessage("Invalid Format - ::item <id> <amount>");
-			}
-    		return true;
+    	
     	case "getid":
  		   try {
                String itemName = ""+cmd[1];

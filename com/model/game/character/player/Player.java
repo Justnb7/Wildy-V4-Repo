@@ -3372,6 +3372,8 @@ public class Player extends Entity {
 
 	public int[] blkedTasks = new int[6];
 
+	public long alchDelay;
+
 	public int[] getBlkedTasks() {
 		return blkedTasks;
 	}
