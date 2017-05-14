@@ -144,6 +144,7 @@ public final class Shop {
 		if (Server.getMultiplayerSessionListener().inAnySession(player)) {
 			return;
 		}
+		System.out.println("here");
 		player.setShopping(true);
 		player.getItems().resetItems(3823);
 		player.getActionSender().sendItemsOnInterface(23016, container.container(), container.size());

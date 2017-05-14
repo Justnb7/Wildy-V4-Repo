@@ -222,6 +222,7 @@ public final class NPCHandler {
 		
 		Player player = World.getWorld().getPlayers().get(npc.killedBy);
 		player.lastWasHitTime = 0;
+		
 		if (player == null) {
 			return;
 		}
@@ -232,6 +233,7 @@ public final class NPCHandler {
 				player.getSlayerDeathTracker().add(npc);
 			
 			switch(npc.npcId) {
+			
 			case 6610:
 				Achievements.increase(player, AchievementType.VENENATIS, 1);
 				break;

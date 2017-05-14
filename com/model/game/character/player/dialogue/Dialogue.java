@@ -58,10 +58,6 @@ public abstract class Dialogue {
 	 * overriden, it will automatically stop the dialogue
 	 */
 	protected void next() {
-		if (player.getCurrentCombination().isPresent()) {
-			player.getCurrentCombination().get().sendCombineConfirmation(player);
-			return;
-		}
 		stop();
 	}
 

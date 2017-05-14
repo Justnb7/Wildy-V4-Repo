@@ -54,6 +54,10 @@ public class DialogueManager {
 	}
 
 	public boolean next() {
+		if (player.getCurrentCombination().isPresent()) {
+			player.getCurrentCombination().get().sendCombineConfirmation(player);
+			return false;
+		}
 		if (dialogue != null) {
 			dialogue.next();
 			return true;
@@ -101,7 +105,6 @@ public class DialogueManager {
 
 	public void start(String name, Object... parameters) {
 		dialogue = DialogueRepository.getDialogue(name);
-
 		if (dialogue != null) {
 			dialogue.player = player;
 			dialogue.start(parameters);

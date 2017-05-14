@@ -357,8 +357,8 @@ public class SlayerInterface {
 			player.getActionSender().sendMessage("Previous interface = " + getPreviousInterface());
 			return true;
 		case SHOP:
-			
 			Shop.SHOPS.get("Slayer Equipment").openSlayerShop(player);
+			player.write(new SendInterfacePacket(button.getInterface()));
 			return true;
 		case CANCEL:
 			if (!Slayer.hasTask(player))

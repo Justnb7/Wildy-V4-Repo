@@ -18,11 +18,13 @@ import com.model.game.character.player.PlayerUpdating;
 import com.model.game.character.player.Skills;
 import com.model.game.character.player.content.Feed;
 import com.model.game.character.player.skill.prayer.Prayer.Bone;
+import com.model.game.index.ItemIndex;
 import com.model.game.item.GameItem;
 import com.model.game.item.Item;
 import com.model.game.item.ground.GroundItem;
 import com.model.game.item.ground.GroundItemHandler;
 import com.model.utility.Utility;
+import com.model.utility.misc;
 import com.model.utility.json.definitions.ItemDefinition;
 import com.google.common.reflect.TypeToken;
 
@@ -197,7 +199,18 @@ public class NpcDropSystem {
 		{
 			return;
 		}
-		
+
+		if(npc.getId() == 415 && player.getSlayerInterface().getUnlocks().entrySet().toString().contains("LIMEY")) {
+			if(Utility.random(25) == 0) {
+				player.getActionSender().sendMessage("You feel your lime whip drop chances increasing...");
+			}
+			if(Utility.random(1000) == 1) {
+				Location location = null;
+				location = new Location(player.getX(), player.getY(), player.getZ());
+				GroundItemHandler.createGroundItem(new GroundItem(new Item(ItemIndex.LIME_WHIP, 1), location.getX(), location.getY(), location.getH(), player));	
+				PlayerUpdating.executeGlobalMessage("@red@[News]@blu@" + player.getName() + "@bla@ just got a @red@ LIME WHIP @bla@drop.");		
+			}
+	}
 		for(NpcDropData drops : npcDropData) {
 			
 			for(int npcs : drops.getNpcList()) {
@@ -213,6 +226,10 @@ public class NpcDropSystem {
 						}
 						else { 
 							location = new Location(npc.getX(), npc.getY(), npc.heightLevel); 
+						}
+						if(npc.getName().toLowerCase().contains("mithril dragon") && player.getSlayerInterface().getUnlocks().keySet().toString().contains("DULY_NOTED") &&
+								item.getId() == 2359){
+							item.id = 2360;
 						}
 						Bone bones = Bone.forId(item.getId());
 						if (bones != null) {

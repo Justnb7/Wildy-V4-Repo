@@ -1,6 +1,7 @@
 package com.model.game.item.bank;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,21 +54,42 @@ public class BankTab {
 	 * @param bankItem
 	 *            Removes the BankItem object from the ArrayList
 	 */
-	public void remove(BankItem bankItem) {
+	/*public void remove(BankItem bankItem) {
 
 		Iterator<BankItem> $it = bankItems.iterator();
 		while ($it.hasNext()) {
 			BankItem item = $it.next();
 			if (item != null && item.getId() == bankItem.getId()) {
-				if (item.getAmount() - bankItem.getAmount() <= 0)
+				if (item.getAmount() - bankItem.getAmount() < 0)
 					$it.remove();
 				else
 					item.setAmount(item.getAmount() - bankItem.getAmount());
 				break;
 			}
 		}
+	}*/
+	public void remove(BankItem bankItem, int type, boolean placeHolder) {
+		Collection<BankItem> items = new ArrayList<>();
+		for (BankItem item : bankItems) {
+			if (item != null && item.getId() == bankItem.getId()) {
+				if (item.getAmount() - bankItem.getAmount() <= 0) {
+					if (placeHolder && type == 0) {
+						item.setAmount(0);
+					}
+					else
+					items.add(item); 
+				} else {
+					//Stil some item amount left
+					item.setAmount(item.getAmount() - bankItem.getAmount());
+					if (item.getAmount() <= 0 && placeHolder) {
+						item.setAmount(0);
+					}
+				}
+				break;
+			}
+		}
+		bankItems.removeAll(items);
 	}
-
 	/**
 	 * 
 	 * @return The current amount of items in the bank tab

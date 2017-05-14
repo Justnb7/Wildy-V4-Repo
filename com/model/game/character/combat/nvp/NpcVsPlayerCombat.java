@@ -23,7 +23,7 @@ import com.model.utility.Utility;
  *
  */
 public class NpcVsPlayerCombat {
-
+//
 	/**
 	 * Handles the npcs combat timers
 	 * 

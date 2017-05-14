@@ -7,15 +7,34 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import com.model.game.character.player.dialogue.impl.slayer.interfaceController.SlayerConstants;
+import com.model.game.index.ItemIndex;
 import com.model.game.item.Item;
-import com.model.game.item.itemCombination.impl.SaradominsBlessedSword;
-
 import com.model.game.item.itemCombination.impl.*;
 
 public enum ItemCombinations {
 	
 	
-	
+	SLAYER_MASK(
+			new SlayerMask(Optional.empty(), new Item(ItemIndex.SLAYER_HELM), 
+					Optional.empty(),
+						new Item[] {new Item(ItemIndex.SLAYER_MASK), new Item(4155)})
+	),
+	BLACK_SLAYER_MASK(
+			new BlackSlayerMask(Optional.empty(), new Item(SlayerConstants.BLACK_SLAYER_HELMET), 
+					Optional.empty(),
+						new Item[] {new Item(ItemIndex.SLAYER_HELM), new Item(7980)})
+	),
+	RED_SLAYER_MASK(
+			new RedSlayerHelmet(Optional.empty(), new Item(SlayerConstants.RED_SLAYER_HELMET), 
+					Optional.empty(),
+						new Item[] {new Item(ItemIndex.SLAYER_HELM), new Item(8264)})
+	),
+	GREEN_SLAYER_MASK(
+			new GreenSlayerHelmet(Optional.empty(), new Item(SlayerConstants.GREEN_SLAYER_HELMET), 
+					Optional.empty(),
+						new Item[] {new Item(ItemIndex.SLAYER_HELM), new Item(8266)})
+	),
 	SARADOMINS_BLESSED_SWORD(
 			new SaradominsBlessedSword(Optional.empty(), new Item(12809), 
 					Optional.of(Arrays.asList(new Item(11838))),

@@ -626,10 +626,10 @@ public class ItemAssistant {
 	 * @return return
 	 */
 	public boolean addItem(int item, int amount) {
-		if (amount < 1) {
+		if (amount < 1 && amount != 0) {
 			amount = 1;
 		}
-		if (item <= 0) {
+		if (item <= 0 || amount <= 0) {
 			return false;
 		}
 
@@ -1292,7 +1292,6 @@ public class ItemAssistant {
 	}
 
 	public void removeFromBank(int itemId, int itemAmount, boolean updateView) {
-		System.out.println("enter");
 		BankTab tab = player.getBank().getCurrentBankTab();
 		BankItem item = new BankItem(itemId + 1, itemAmount);
 		boolean noted = false;
@@ -1339,13 +1338,36 @@ public class ItemAssistant {
 			if (freeSlots() < item.getAmount())
 				item.setAmount(freeSlots());
 		}
+		if (item.getAmount() == 0) {
+			if (!player.placeHolderWarning) {
+				player.lastPlaceHolderWarning = item.getId();
+				player.getActionSender().sendMessage("<img=3>@red@Are you sure you want to release the placeholder of " + player.getItems().getItemName(item.getId() - 1) + "?");
+				player.getActionSender().sendMessage("<img=3>@red@If so, click the item once more.");
+				player.placeHolderWarning = true;
+				return;
+			} else {
+				if (item.getId() != player.lastPlaceHolderWarning) {
+					player.placeHolderWarning = false;
+					return;
+				}
+				player.placeHolderWarning = false;
+			}
+		} else {
+			if (player.placeHolderWarning) {
+				player.placeHolderWarning = false;
+			}
+		}
 		if (item.getAmount() < 0)
 			item.setAmount(0);
+		
 		if (!noted)
 			addItem(item.getId() - 1, item.getAmount());
 		else
 			addItem(item.getId(), item.getAmount());
-		tab.remove(item);
+		int type = 0;
+		if (item.getAmount() <= 0) // if already a placeholder aka amt 0
+			type = 1;
+		tab.remove(item, type, player.placeHolders);
 		if (tab.size() == 0) {
 			player.getBank().setCurrentBankTab(player.getBank().getBankTab(0));
 		}
@@ -1354,7 +1376,84 @@ public class ItemAssistant {
 		}
 		player.getItems().resetItems(5064);
 	}
+	public void removeFromBankPlaceholder(int itemId, int itemAmount, boolean updateView) {
+		BankTab tab = player.getBank().getCurrentBankTab();
+		BankItem item = new BankItem(itemId + 1, itemAmount);
+		boolean noted = false;
+		// boolean notable = isNoted(itemId + 1);		//does this work to remove items?
+		
+		if (!player.isBanking()) {
+			return;
+		}
+		if (itemAmount <= 0)
+			return;
 
+		if (System.currentTimeMillis() - player.lastBankDeposit < 250)
+			return;
+		if (!player.isBusy()) {
+			System.out.println("block: " + player.isBanking());
+			player.getActionSender().sendRemoveInterfacePacket();
+			return;
+		}
+		if (!tab.contains(item))
+			return;
+		
+		if (Server.getMultiplayerSessionListener().inAnySession(player)) {
+			player.getActionSender().closeAllWindows();
+			return;
+		}
+		if (!tab.contains(item))
+			return;
+		if (player.takeAsNote) {
+			if (freeSlots() == 0 && !playerHasItem(itemId + 1)) {
+				player.getActionSender().sendMessage("Not enough space in your inventory.");
+				return;
+			}
+			if (getItemName(itemId).trim().equalsIgnoreCase(getItemName(itemId + 1).trim())
+					&& isNotable(itemId + 1)) {
+				noted = true;
+			} else
+				player.getActionSender().sendMessage("This item cannot be taken out as noted.");
+		}
+		if (getItemAmount(itemId) == Integer.MAX_VALUE) {
+			player.getActionSender().sendMessage("Your inventory is already holding the maximum amount of " + getItemName(itemId).toLowerCase() + " possible.");
+			return;
+		}
+		boolean stackable = isStackable(item.getId() - 1);
+		if (stackable || noted) {
+			long totalAmount = (long) getItemAmount(itemId) + (long) itemAmount;
+			if (totalAmount > Integer.MAX_VALUE)
+				item.setAmount(tab.getItemAmount(item) - getItemAmount(itemId));
+		}
+		if (tab.getItemAmount(item) < itemAmount) {
+			item.setAmount(tab.getItemAmount(item));
+		}
+		if (!stackable && !noted) {
+			if (freeSlots() < item.getAmount())
+				item.setAmount(freeSlots());
+		}
+		
+		if (item.getAmount() < 0)
+			item.setAmount(0);
+		
+		if (!noted)
+			addItem(item.getId() - 1, item.getAmount());
+		else
+			addItem(item.getId(), item.getAmount());
+		
+		int type = 0;
+		if (item.getAmount() <= 0) // if already a placeholder aka amt 0
+			type = 1;
+		tab.remove(item, type, true);		
+		
+		if (tab.size() == 0) {
+			player.getBank().setCurrentBankTab(player.getBank().getBankTab(0));
+		}
+		if (updateView) {
+			resetBank();
+		}
+		player.getItems().resetItems(5064);
+	}
 	public boolean addEquipmentToBank(int itemID, int slot, int amount,
 			boolean updateView) {
 		if (player.getArea().inWild()) {
@@ -1541,7 +1640,7 @@ public class ItemAssistant {
 					resetBank();
 					return;
 				}
-				player.getBank().getCurrentBankTab().remove(item);
+				player.getBank().getCurrentBankTab().remove(item, 0, false);
 				player.getBank().getBankTab()[tabId].add(item);
 			} else {
 				if (from > player.getBank().getCurrentBankTab().size() - 1
@@ -2072,7 +2171,7 @@ public class ItemAssistant {
 		}
 		if (item.getAmount() < 0)
 			item.setAmount(0);
-		tab.remove(item);
+		tab.remove(item, 0, player.placeHolders);
 		if (tab.size() == 0) {
 			player.getBank().setCurrentBankTab(player.getBank().getBankTab(0));
 		}

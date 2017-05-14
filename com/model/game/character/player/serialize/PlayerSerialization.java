@@ -456,13 +456,20 @@ public class PlayerSerialization {
                     		System.out.println(values[0]);
                     		p.getSlayerInterface().getBlockedTasks().add(Integer.parseInt(values[0]));
                     	}
+                   
+                    	break;
+                    	
+                    case 28:
                     	if(key.equals("slayer-unlocked")) {
-                    		//System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
+                    		System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
                     		p.getSlayerInterface().getUnlocks().put(Integer.parseInt(values[0]), values[1]);
                     		}
                     	
+                    	break;
+                    	
+                    case 29:
                     	if(key.equals("slayer-extensions")) {
-                    		//System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
+                    		System.out.println("Adding player unlocks: "+values[0]+ " VALUE 1 "+values[1]);
                     		p.getSlayerInterface().getExtensions().put(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
                     		}
                     	break;
@@ -530,8 +537,12 @@ public class PlayerSerialization {
                         mode = 25;
                     } else if (line.equals("[TASKS-DIFFICULTY-ELITE]")) {
                         mode = 26;
-                    } else if (line.equals("[SLAYER]")) {
+                    } else if (line.equals("[SLAYER-BLOCKED]")) {
                         mode = 27;
+                    }  else if (line.equals("[SLAYER-UNLOCKS]")) {
+                        mode = 28;
+                    } else if (line.equals("[SLAYER-EXTENSIONS]")) {
+                        mode = 29;
                     }
 				}
 			}

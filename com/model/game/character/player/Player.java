@@ -116,7 +116,9 @@ public class Player extends Entity {
 	public static long farmingDelay = 0;
 	public static int playerSmithing;
 	private final MutableNumber poisonImmunity = new MutableNumber();
-	
+	public boolean placeHolderWarning = false;
+	public int lastPlaceHolderWarning = 0;
+	public boolean placeHolders = true;
 	/**
      * Gets the poison immunity counter value.
      *
